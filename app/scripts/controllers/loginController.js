@@ -19,7 +19,7 @@
                 ctrl.invalidLogin = true;
                 setTimeout(function () {
                     ctrl.invalidLogin = false;
-                    console.log(ctrl.invalidLogin);
+                    $scope.$apply();
                 },1000);
                 return;
             }
@@ -27,7 +27,7 @@
                 ctrl.invalidLogin = true;
                 setTimeout(function () {
                     ctrl.invalidLogin = false;
-                    console.log(ctrl.invalidLogin);
+                    $scope.$apply();
                 },1000);
                 return;
             }
