@@ -24,7 +24,7 @@
         ctrl.go = goFn;
 
         ctrl.menulist = [
-            //{ label: "Login", state: "Login", icon: "fa fa-television" }
+            { label: "Catalogo Prodotti", state: "Catalogo Prodotti", icon: "fa fa-database" }
 
 
         ];

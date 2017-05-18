@@ -69,7 +69,24 @@
         params: {
             home: true
         }
-    });
+
+  }).state('Catalogo Prodotti', {
+    parent: 'site',
+    url: '/catalogo',
+    data: {
+        roles: []
+    },
+    views: {
+        'page@': {
+            templateUrl: "views/catalog.html",
+            controller: 'CatalogCtrl',
+            controllerAs: 'ctrl'
+        }
+    },
+    params: {
+        home: true
+    }
+})
 
   }
 
