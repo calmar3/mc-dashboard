@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    var LoginCtrl = ['$scope', '$rootScope', '$compile','$state','$http', function ($scope, $rootScope, $compile,$state,$http) {
+    var LoginCtrl = ['$scope', '$rootScope', '$compile','$state','$http','hostFactory', function ($scope, $rootScope, $compile,$state,$http,hostFactory) {
 
         var ctrl = this;
 
@@ -33,16 +33,21 @@
             }
 
             var data = {
-                username:ctrl.username,
-                password:ctrl.password
+                'username':ctrl.username,
+                'password':ctrl.password
             };
+            
+            $http.post(hostFactory.getHost()+hostFactory.getLoginAPI(),data).then(function (response) {
 
-            $http.post('http://pippobaudo.com/api/login',data).then(function (response) {
-
-                $state.go("Profilo Utente");
+                console.log(response.data);
+               $state.go("Profilo Utente");
 
             }).catch(function (error) {
-                $state.go("Profilo Utente");
+                ctrl.invalidLogin = true;
+                setTimeout(function () {
+                    ctrl.invalidLogin = false;
+                    $scope.$apply();
+                },1000);
             });
 
 
@@ -52,7 +57,7 @@
 
     }];
 
-    LoginCtrl.$inject = ['$scope', '$rootScope', '$compile','$state','$http'];
+    LoginCtrl.$inject = ['$scope', '$rootScope', '$compile','$state','$http','hostFactory'];
 
     angular.module('mc-dashboard').controller('LoginCtrl', LoginCtrl);
 

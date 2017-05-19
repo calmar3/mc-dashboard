@@ -194,9 +194,12 @@
   <script src="/scripts/modules/route.js"></script>
   <!-- /include -->
   <!-- endbuild -->
+  <!-- build:js({.tmp,app}) scripts/services.js -->
+  <!-- include: "type": "js", "files": ["scripts/services/*.js"] -->
+  <script src="/scripts/services/hostFactory.js"></script>
+  <!-- /include -->
+  <!-- endbuild -->
 
-
-  <!-- build:js({.tmp,app}) scripts/factories.js -->
   <!-- build:js({.tmp,app}) scripts/controllers.js -->
   <!-- include: "type": "js", "files": ["scripts/controllers/*.js"] -->
   <script src="/scripts/controllers/mainController.js"></script>
