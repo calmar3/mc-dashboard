@@ -1,39 +1,22 @@
 (function () {
     'use strict';
 
-    var UserCtrl = ['$scope', '$rootScope', '$compile', '$state', '$stateParams','$http', function ($scope, $rootScope, $compile, $state, $stateParams,$http) {
+    var UserCtrl = ['$scope', '$rootScope', '$compile', '$state', '$stateParams','$http','userFactory', function ($scope, $rootScope, $compile, $state, $stateParams,$http,userFactory) {
 
 
 
         var ctrl = this;
 
+        ctrl.user = userFactory.getUser();
 
+        console.log(ctrl.user);
 
-
-
-        ctrl.collapsemenu = false;
-
-        ctrl.openmenu = false;
-
-        ctrl.state = $state;
-
-
-
-
-
-        console.log("userctrl");
-
-        ctrl.menulist = [
-            { label: "Catalogo Prodotti", state: "Catalogo Prodotti", icon: "fa fa-television" }
-
-
-        ];
 
     }];
 
 
 
-    UserCtrl.$inject = ['$scope', '$rootScope', '$compile'];
+    UserCtrl.$inject = ['$scope', '$rootScope', '$compile', '$state', '$stateParams','$http','userFactory'];
 
     angular.module('mc-dashboard').controller('UserCtrl', UserCtrl);
 

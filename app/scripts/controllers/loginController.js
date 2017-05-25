@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    var LoginCtrl = ['$scope', '$rootScope', '$compile','$state','$http','hostFactory', function ($scope, $rootScope, $compile,$state,$http,hostFactory) {
+    var LoginCtrl = ['$scope', '$rootScope', '$compile','$state','$http','hostFactory','userFactory', function ($scope, $rootScope, $compile,$state,$http,hostFactory,userFactory) {
 
         var ctrl = this;
 
@@ -39,8 +39,8 @@
             
             $http.post(hostFactory.getHost()+hostFactory.getLoginAPI(),data).then(function (response) {
 
-                console.log(response.data);
-               $state.go("Profilo Utente");
+                userFactory.setUser(response.data);
+                $state.go("Profilo Utente");
 
             }).catch(function (error) {
                 ctrl.invalidLogin = true;
@@ -57,7 +57,7 @@
 
     }];
 
-    LoginCtrl.$inject = ['$scope', '$rootScope', '$compile','$state','$http','hostFactory'];
+    LoginCtrl.$inject = ['$scope', '$rootScope', '$compile','$state','$http','hostFactory','userFactory'];
 
     angular.module('mc-dashboard').controller('LoginCtrl', LoginCtrl);
 

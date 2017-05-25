@@ -7,11 +7,11 @@
             <!-- Add the bg color to the header using any of the bg-* classes -->
             <div class="widget-user-header bg-blue">
                 <div class="widget-user-image">
-                    <img class="img-circle" src="../dist/img/user7-128x128.jpg" alt="Foto da inserire">
+                    <img class="img-circle" src="images/avatar.png" alt="Foto da inserire">
                 </div>
                 <!-- /.widget-user-image -->
-                <h3 class="widget-user-username">Mario Rossi</h3>
-                <h5 class="widget-user-desc">Gestore magazzino</h5>
+                <h3 class="widget-user-username">{{ctrl.user.name}} {{ctrl.user.surname}}</h3>
+                <h5 class="widget-user-desc">{{ctrl.user.role}}</h5>
             </div>
             <div class="box-footer no-padding">
                 <ul class="nav nav-stacked">
