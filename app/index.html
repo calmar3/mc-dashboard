@@ -47,11 +47,11 @@
 
         <div class="navbar-custom-menu">
           <ul class="nav navbar-nav">
-            <li>
+            <li ng-if="!ctrl.user">
               <a href  ng-click="ctrl.go('Login')">Login</a>
             </li>
             <!-- User Account: style can be found in dropdown.less -->
-            <li class="dropdown user user-menu">
+            <li class="dropdown user user-menu" ng-if="ctrl.user">
 
 
                 <a href data-toggle="dropdown"><i class="fa fa-gears dropdown-toggle"></i></a>
@@ -60,7 +60,7 @@
                 <li class="user-header">
 
                   <p>
-                    Mario Rossi - Gestore Magazzino
+                    {{ctrl.user.name}} {{ctrl.user.surname}}
                     <small>Lavora con noi dal Gennaio 2018</small>
                   </p>
                 </li>
@@ -208,6 +208,8 @@
   <script src="/scripts/controllers/loginController.js"></script>
   <script src="/scripts/controllers/userController.js"></script>
   <script src="/scripts/controllers/catalogController.js"></script>
+  <script src="/scripts/controllers/policiesController.js"></script>
+  <script src="/scripts/controllers/personalController.js"></script>
 
   <!-- /include -->
   <!-- endbuild -->

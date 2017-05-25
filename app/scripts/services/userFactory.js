@@ -12,6 +12,23 @@
 
         userFactory.getUser = getUserFn;
 
+        userFactory.setMenu = setMenuFn;
+
+        userFactory.getMenu = getMenuFn;
+
+        userFactory.menu = null;
+
+        function getMenuFn() {
+            return userFactory.menu;
+        }
+
+        function setMenuFn(menu) {
+            if (menu!==null && menu!==undefined){
+                userFactory.menu = menu;
+            }
+        }
+
+
         function getUserFn() {
             return userFactory.user;
         }

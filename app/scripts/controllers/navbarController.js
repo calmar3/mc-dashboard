@@ -5,7 +5,7 @@
 (function () {
   'use strict';
 
-    var NavbarCtrl = ['$scope', '$rootScope', '$compile', '$state', '$stateParams','$http', function ($scope, $rootScope, $compile, $state, $stateParams,$http) {
+    var NavbarCtrl = ['$scope', '$rootScope', '$compile', '$state', '$stateParams','$http', 'userFactory', function ($scope, $rootScope, $compile, $state, $stateParams,$http, userFactory) {
 
         var ctrl = this;
 
@@ -23,12 +23,24 @@
 
         ctrl.go = goFn;
 
-        ctrl.menulist = [
-            { label: "Catalogo Prodotti", state: "Catalogo Prodotti", icon: "fa fa-database" }
+        ctrl.user = null;
 
+        ctrl.menulist = [
 
         ];
 
+
+        $scope.$watch(function () {
+            return userFactory.user;
+        }, function (res) {
+            ctrl.user = userFactory.getUser();
+        })
+
+        $scope.$watch(function () {
+            return userFactory.menu;
+        }, function (res) {
+           ctrl.menulist = userFactory.getMenu();
+        })
 
         function goFn(location) {
             $state.go(location);
@@ -52,7 +64,7 @@
 
     }];
 
-    NavbarCtrl.$inject = ['$scope', '$rootScope', '$compile', '$state', '$stateParams','$http'];
+    NavbarCtrl.$inject = ['$scope', '$rootScope', '$compile', '$state', '$stateParams','$http', 'userFactory'];
 
     angular.module('mc-dashboard').controller('NavbarCtrl', NavbarCtrl);
 } ());

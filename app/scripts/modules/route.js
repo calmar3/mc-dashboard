@@ -86,7 +86,39 @@
     params: {
         home: true
     }
-})
+}).state('Gestione Personale', {
+        parent: 'site',
+        url: '/personale',
+        data: {
+            roles: []
+        },
+        views: {
+            'page@': {
+                templateUrl: "views/personal.html",
+                controller: 'PersonalCtrl',
+                controllerAs: 'ctrl'
+            }
+        },
+        params: {
+            home: true
+        }
+    }).state('Gestione Politiche', {
+        parent: 'site',
+        url: '/politiche',
+        data: {
+            roles: []
+        },
+        views: {
+            'page@': {
+                templateUrl: "views/policies.html",
+                controller: 'PoliciesCtrl',
+                controllerAs: 'ctrl'
+            }
+        },
+        params: {
+            home: true
+        }
+    })
 
   }
 
