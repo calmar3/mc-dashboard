@@ -52,6 +52,17 @@
 
                 }
 
+                if (response.data.role === 'magazziniere') {
+
+                    var menu = [
+                        { label: "Catalogo Prodotti", state: "Catalogo Prodotti", icon: "fa fa-database" },
+                        { label: "Evasione Ordini", state: "Evasione Ordini", icon: "fa fa-users"}
+                    ];
+                    userFactory.setMenu(menu);
+
+                }
+
+
                 $state.go("Profilo Utente");
 
             }).catch(function (error) {

@@ -86,6 +86,22 @@
     params: {
         home: true
     }
+    }).state('Evasione Ordini', {
+        parent: 'site',
+        url: '/evasioneOrdini',
+        data: {
+            roles: []
+        },
+        views: {
+            'page@': {
+                templateUrl: "views/processingOrder.html",
+                controller: 'procOrdCtrl',
+                controllerAs: 'ctrl'
+            }
+        },
+        params: {
+            home: true
+        }
 }).state('Gestione Personale', {
         parent: 'site',
         url: '/personale',
