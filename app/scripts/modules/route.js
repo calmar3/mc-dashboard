@@ -118,6 +118,22 @@
         params: {
             home: true
         }
+    }).state('Gestione Ordini', {
+        parent: 'site',
+        url: '/ordini',
+        data: {
+            roles: []
+        },
+        views: {
+            'page@': {
+                templateUrl: "views/commission.html",
+                controller: 'CommissionCtrl',
+                controllerAs: 'ctrl'
+            }
+        },
+        params: {
+            home: true
+        }
     })
 
   }

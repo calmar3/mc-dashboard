@@ -1,0 +1,281 @@
+
+<div class="row" ng-show="ctrl.mode === null">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12 ">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">Lista Ordini</h3>
+                <div class="box-tools">
+                    <div class="input-group input-group-sm" style="width: 150px;">
+                        <input name="table_search" class="form-control pull-right" placeholder="Search" type="text" ng-model="ctrl.searchText">
+
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <div class="alert alert-warning alert-dismissible" ng-show="!ctrl.clicked">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <i class="icon fa fa-info"></i>Selezionare un ordine per poterlo eliminare o modificare.
+                </div>
+                <table class="table table-bordered">
+                    <tbody><tr>
+                        <th style="width: 10px">#</th>
+                        <th>Sorgente</th>
+                        <th>Destinazione</th>
+                        <th>Data</th>
+                        <th>Tempo Consegna</th>
+                    </tr>
+                    <tr style="cursor:pointer;" ng-repeat="commission in ctrl.commissions | filter:ctrl.searchFilter" ng-class="{'selected': ctrl.selected === commission}"
+                        ng-click="ctrl.select(commission)">
+                        <td>{{commission.commission.number}}</td>
+                        <td>{{commission.commission.source}}</td>
+                        <td>{{commission.commission.destination}}</td>
+                        <td>{{commission.commission.date}}</td>
+                        <td>{{commission.commission.deliveryTime}}</td>
+                    </tr>
+
+                    </tbody></table>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer clearfix">
+                <div class="btn-group pull-right">
+                    <button type="button" class="btn btn-default" ng-click="ctrl.switchMode('add')" >Aggiungi</button>
+                    <button type="button" class="btn btn-default" ng-click="ctrl.switchMode('modify')" ng-disabled = "ctrl.selected === null">Modifica</button>
+                    <button type="button" class="btn btn-default" ng-click="ctrl.switchMode('delete')" ng-disabled = "ctrl.selected === null">Elimina</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+<div class="row" ng-show="ctrl.mode === 'modify'">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12 ">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">Modifica Ordine</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <h5>
+                    <b> Sei sicuro di voler eliminare l'ordine?</b>
+                </h5>
+                <h5>Ordine:</h5>
+                <table class="table table-bordered">
+                    <tbody><tr>
+                        <th style="width: 10px">#</th>
+                        <th>Sorgente</th>
+                        <th>Destinazione</th>
+                        <th>Data</th>
+                        <th>Tempo Consegna</th>
+                    </tr>
+                    <tr >
+                        <td>{{ctrl.selected.commission.number}}</td>
+                        <td>{{ctrl.selected.commission.source}}</td>
+                        <td>{{ctrl.selected.commission.destination}}</td>
+                        <td>{{ctrl.selected.commission.date}}</td>
+                        <td>{{ctrl.selected.commission.deliveryTime}}</td>
+                    </tr>
+
+                    </tbody></table>
+                <h5>Lotti:</h5>
+                <table class="table table-bordered">
+                    <tbody><tr>
+                        <th>Prodotto</th>
+                        <th>Proprieta Prodotto</th>
+                        <th>Azienda</th>
+                        <th>Prezzo Unitario</th>
+                        <th>Quantità</th>
+                        <th>Data Scadenza</th>
+                        <th>Data Consegna</th>
+                    </tr>
+                    <tr  ng-repeat="batch in ctrl.selected.batches " style="cursor:pointer;" ng-class="{'selected': ctrl.selectedBatch === batch}"
+                        ng-click="ctrl.selectBatch(batch)">
+                        <td>{{batch.product.name}}</td>
+                        <td><span class="label label-success" ng-repeat="property in batch.product.properties">{{property}}</span></td>
+                        <td>{{batch.product.stockist}}</td>
+                        <td>{{batch.product.price}}</td>
+                        <td>{{batch.quantity}}</td>
+                        <td>{{batch.expDate}}</td>
+                        <td>{{batch.delDate}}</td>
+                    </tr>
+
+                    </tbody></table>
+            </div>
+
+            <!-- /.box-body -->
+            <div class="box-footer clearfix">
+                <div class="btn-group pull-right">
+                    <button type="button" class="btn btn-default"  >Salva</button>
+                    <button type="button" class="btn btn-default" ng-click="ctrl.switchMode(null)" ng-disabled = "ctrl.selected === null">Indietro</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="row" ng-show="ctrl.mode === 'add'">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12 ">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">Crea Ordine</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <div class="form-group">
+                    <label>Fornitore Esterno</label>
+                    <select class="form-control" ng-options="stockist as stockist for stockist in ctrl.stockists " ng-model="ctrl.stockist">
+                    </select><br>
+                    <div class="row">
+                        <div class="col-md-4 col-lg-4 col-xs-6">
+                            <label>Nuovo Lotto:</label>
+                            <select class="form-control col-lg-6" ng-options="product as product.name for product in ctrl.products " ng-model="ctrl.product">
+
+                            </select>
+                        </div>
+                        <div class="col-md-4 col-lg-4 col-xs-6">
+                            <div class="form-group">
+                                <label>Quantità</label>
+                                <input type="number" min="1" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <label>Prodotti Inseriti:</label>
+                    <table class="table table-bordered">
+                        <tbody><tr>
+                            <th style="width: 10px">#</th>
+                            <th>Sorgente</th>
+                            <th>Destinazione</th>
+                            <th>Data</th>
+                            <th>Tempo Consegna</th>
+                        </tr>
+                        <tr >
+                            <td>{{ctrl.selected.commission.number}}</td>
+                            <td>{{ctrl.selected.commission.source}}</td>
+                            <td>{{ctrl.selected.commission.destination}}</td>
+                            <td>{{ctrl.selected.commission.date}}</td>
+                            <td>{{ctrl.selected.commission.deliveryTime}}</td>
+                        </tr>
+
+                        </tbody></table>
+                </div>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer clearfix">
+                <div class="btn-group pull-right">
+                    <button type="button" class="btn btn-default"  >Salva</button>
+                    <button type="button" class="btn btn-default" ng-click="ctrl.switchMode(null)" >Indietro</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-12 col-lg-12 ">
+                    <div ng-if="ctrl.error" class="callout callout-danger pull-right" style="height=50px">
+                        <p>Errore nel creare l'ordine!</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-12 col-lg-12 ">
+                    <div ng-if="ctrl.success" class="callout callout-success pull-right" style="height=50px">
+                        <p>Ordine creato!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="row" ng-show="ctrl.mode === 'delete'">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12 ">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">Elimina Ordine</h3>
+
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+            <h5>
+               <b> Sei sicuro di voler eliminare l'ordine?</b>
+            </h5>
+                <h5>Ordine:</h5>
+                <table class="table table-bordered">
+                    <tbody><tr>
+                        <th style="width: 10px">#</th>
+                        <th>Sorgente</th>
+                        <th>Destinazione</th>
+                        <th>Data</th>
+                        <th>Tempo Consegna</th>
+                    </tr>
+                    <tr >
+                        <td>{{ctrl.selected.commission.number}}</td>
+                        <td>{{ctrl.selected.commission.source}}</td>
+                        <td>{{ctrl.selected.commission.destination}}</td>
+                        <td>{{ctrl.selected.commission.date}}</td>
+                        <td>{{ctrl.selected.commission.deliveryTime}}</td>
+                    </tr>
+
+                    </tbody></table>
+                <h5>Lotti:</h5>
+                <table class="table table-bordered">
+                    <tbody><tr>
+                        <th>Prodotto</th>
+                        <th>Proprieta Prodotto</th>
+                        <th>Azienda</th>
+                        <th>Prezzo Unitario</th>
+                        <th>Quantità</th>
+                        <th>Data Scadenza</th>
+                        <th>Data Consegna</th>
+                    </tr>
+                    <tr  ng-repeat="batch in ctrl.selected.batches ">
+                        <td>{{batch.product.name}}</td>
+                        <td><span class="label label-success" ng-repeat="property in batch.product.properties">{{property}}</span></td>
+                        <td>{{batch.product.stockist}}</td>
+                        <td>{{batch.product.price}}</td>
+                        <td>{{batch.quantity}}</td>
+                        <td>{{batch.expDate}}</td>
+                        <td>{{batch.delDate}}</td>
+                    </tr>
+
+                    </tbody></table>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer clearfix">
+                <div class="btn-group pull-right">
+                    <button type="button" class="btn btn-default" ng-click="ctrl.delete()">Elimina</button>
+                    <button type="button" class="btn btn-default" ng-click="ctrl.switchMode(null)" ng-disabled = "ctrl.selected === null">Indietro</button>
+                </div><br><br>
+                <div class="row">
+                    <div class="col-xs-12 col-md-12 col-lg-12 ">
+                        <div ng-if="ctrl.error" class="callout callout-danger pull-right" style="height=50px">
+                            <p>Errore nell'eliminazione!</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-md-12 col-lg-12 ">
+                        <div ng-if="ctrl.success" class="callout callout-success pull-right" style="height=50px">
+                            <p>Ordine Eliminato!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
