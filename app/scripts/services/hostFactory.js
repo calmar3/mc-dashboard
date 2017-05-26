@@ -10,9 +10,19 @@
 
         hostFactory.loginAPI = "api/user/login";
 
+        hostFactory.commissionAPI = "/api/commissions"
+
         hostFactory.getHost = getHostFn;
 
         hostFactory.getLoginAPI = getLoginAPIFn;
+
+        hostFactory.getCommissionAPI = getCommissionAPIFn;
+
+
+        function getCommissionAPIFn(){
+
+            return hostFactory.commissionAPI;
+        }
 
         function getHostFn() {
             return hostFactory.host;

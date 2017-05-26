@@ -7,10 +7,14 @@
 
         console.log("catalogctrl");
 
+
     }];
 
     CatalogCtrl.$inject = ['$scope', '$rootScope', '$compile'];
 
     angular.module('mc-dashboard').controller('CatalogCtrl', CatalogCtrl);
+
+
+
 
 }());
