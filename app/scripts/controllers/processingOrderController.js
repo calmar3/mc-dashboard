@@ -14,8 +14,6 @@
 
             ctrl.commissions = response.data;
 
-            console.log(ctrl.commissions);
-
 
             ctrl.showOrder = null;
 
@@ -25,9 +23,9 @@
                 else
                     ctrl.showOrder = order;
 
-                console.log(ctrl.showOrder);
-
             }
+
+
 
 
             ctrl.showProduct = null;
@@ -37,6 +35,30 @@
                 ctrl.showProduct = product;
 
             }
+
+            ctrl.toggle = function(batch,status)
+            {
+                if(status)
+                    ctrl.deliveredProducts.push(batch);
+
+                else
+                {
+                    ctrl.idx = ctrl.deliveredProducts.indexOf(batch);
+                    ctrl.deliveredProducts.splice(ctrl.idx,1);
+
+                }
+
+            }
+
+
+            ctrl.deliveredProducts = [];
+
+            ctrl.confirmDeliveredProduct = function () {
+
+                console.log(ctrl.deliveredProducts);
+
+            }
+
 
         }).catch(function (error) {
             console.log(error);
