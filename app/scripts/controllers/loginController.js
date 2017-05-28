@@ -36,7 +36,7 @@
                 'username':ctrl.username,
                 'password':ctrl.password
             };
-            
+
             $http.post(hostFactory.getHost()+hostFactory.getLoginAPI(),data).then(function (response) {
 
                 userFactory.setUser(response.data);

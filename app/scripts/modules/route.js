@@ -118,6 +118,22 @@
         params: {
             home: true
         }
+    }).state('Gestione Account', {
+        parent: 'site',
+        url: '/account',
+        data: {
+            roles: []
+        },
+        views: {
+            'page@': {
+                templateUrl: "views/account.html",
+                controller: 'AccountCtrl',
+                controllerAs: 'ctrl'
+            }
+        },
+        params: {
+            home: true
+        }
     })
 
   }

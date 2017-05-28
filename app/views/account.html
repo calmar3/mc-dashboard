@@ -1,0 +1,85 @@
+<div class="row">
+
+    <div class="col-md-6">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">Modifica Credenziali</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <div class="form-group">
+                    <label for="nomeUtente">Nome utente</label>
+                    <input type="text" class="form-control" id="nomeUtente" placeholder="Inserire il nome utente..." ng-model="ctrl.username">
+                </div>
+                <div class="form-group">
+                    <label for="newPwd">Nuova password</label>
+                    <input type="password" class="form-control" id="newPwd" placeholder="Inserire la nuova password..." ng-model="ctrl.newPassword">
+                </div>
+                <div class="form-group">
+                    <label for="confPwd">Conferma password</label>
+                    <input type="password" class="form-control" id="confPwd" placeholder="Confermare la password..." ng-model="ctrl.confirmPassword">
+                </div>
+
+                <div class="callout callout-danger" ng-if="ctrl.invalidCredential">
+                    <h4><i class="icon fa fa-warning"></i> Attenzione!</h4>
+                    Username o password invalidi
+                </div>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+                <button class="btn btn-primary pull-left" ng-click="ctrl.modify()">
+                    Modifica
+                </button>
+                <button class="btn btn-primary pull-right" ng-click="ctrl.reset()">
+                    Reset
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+
+        <!-- Profile Image -->
+
+        <!-- /.box -->
+
+        <!-- About Me Box -->
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">Modifica Informazioni Aggiuntive</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <strong><i class="fa fa-book margin-r-5"></i> Titoli di studio</strong>
+
+                <p class="text-muted">
+                    Laureato in Economia e Managment Università di Roma Tor Vergata
+                </p>
+
+                <hr>
+
+                <strong><i class="fa fa-map-marker margin-r-5"></i> Location</strong>
+
+                <p class="text-muted">Roma, Italia</p>
+
+                <hr>
+
+                <strong><i class="fa fa-pencil margin-r-5"></i> Competenze</strong>
+
+                <p>
+                    <span class="label label-danger">UI Design</span>
+                    <span class="label label-success">Coding</span>
+                    <span class="label label-info">Javascript</span>
+                    <span class="label label-warning">PHP</span>
+                    <span class="label label-primary">Node.js</span>
+                </p>
+
+                <hr>
+
+                <strong><i class="fa fa-file-text-o margin-r-5"></i> Note</strong>
+
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
+            </div>
+            <!-- /.box-body -->
+        </div>
+</div>
