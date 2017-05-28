@@ -14,6 +14,10 @@
 
         hostFactory.allProductsAPI = "api/products";
 
+        hostFactory.saveDeleteUpdateCommissionAPI = "api/commission";
+
+        hostFactory.getSaveDeleteUpdateCommissionAPI = getSaveDeleteUpdateCommissionAPIFn;
+
         hostFactory.getHost = getHostFn;
 
         hostFactory.getLoginAPI = getLoginAPIFn;
@@ -21,6 +25,10 @@
         hostFactory.getAllCommissionsAPI = getAllCommissionsAPIFn;
 
         hostFactory.getAllProductsAPI = getAllProductsAPIFn;
+
+        function getSaveDeleteUpdateCommissionAPIFn() {
+            return hostFactory.saveDeleteUpdateCommissionAPI;
+        }
 
         function getAllCommissionsAPIFn() {
             return hostFactory.allCommissionsAPI;

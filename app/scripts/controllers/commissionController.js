@@ -22,36 +22,186 @@
 
         ctrl.select = selectFn;
 
-        ctrl.delete = deleteFn;
+        ctrl.deleteCommission = deleteCommissionFn;
 
         ctrl.selectBatch = selectBatchFn;
+
+        ctrl.addBatch = addBatchFn;
+
+        ctrl.deleteBatch = deleteBatchFn;
+
+        ctrl.saveCommission = saveCommissionFn;
+
+        ctrl.updateCommission = updateCommissionFn;
+
+        ctrl.batchSize = 100;
+
+        ctrl.quantities = [];
+
+        ctrl.modify = null;
+
+        for (var i= 0 ;i < 10 ; i++){
+            ctrl.quantities.push((i+1)*ctrl.batchSize);
+        }
 
         ctrl.success = false;
 
         ctrl.error = false;
 
-        ctrl.selectedBatch = null;
-
-        ctrl.newOrder = {
-            source:"FoodEmperors"
+        ctrl.selectedBatch = {
+            quantity:ctrl.quantities[0],
+            product : null
         };
 
-        ctrl.stockists = ["Grandi Magazzini","Pigliatutto"];
+        ctrl.stockists = ["Fornitore 1","Fornitore 2"];
 
-        ctrl.stockist = ctrl.stockists[0];
+        ctrl.newOrder = {
+            source:"FoodEmperors",
+            date:"",
+            batches:[],
+            destination: ctrl.stockists[0]
+        };
 
         loadCommissions();
 
         loadProducts();
 
-        function selectBatchFn(batch) {
-            ctrl.selectedBatch = batch;
+        function saveCommissionFn() {
+            var batches = JSON.parse(JSON.stringify(ctrl.newOrder.batches));
+            if (batches.length === 0){
+                ctrl.error = true;
+                setTimeout(function () {
+                    ctrl.error = false;
+                    $scope.$apply();
+                },1500);
+                return;
+            }
+            var order = JSON.parse(JSON.stringify(ctrl.newOrder));
+            delete order.batches;
+            var data = {
+                "batches":batches,
+                "commission":order
+            };
+            /**
+             * set deliverydate and
+             * @type {Date}
+             */
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth()+1;
+            var yyyy = today.getFullYear();
+
+            if(dd<10) {
+                dd='0'+dd;
+            }
+            if(mm<10) {
+                mm='0'+mm;
+            }
+            today = dd+'/'+mm+'/'+yyyy;
+            data.commission.date = today;
+            data.commission.number = dd+mm+yyyy;
+
+            $http.post(hostFactory.getHost()+hostFactory.getSaveDeleteUpdateCommissionAPI(),data).then(function (response) {
+                loadCommissions();
+                ctrl.success = true;
+                setTimeout(function () {
+                    ctrl.success = false;
+                    ctrl.switchMode(null);
+                    $scope.$apply();
+                },1500);
+
+            }).catch(function (error) {
+                ctrl.error = true;
+                setTimeout(function () {
+                    ctrl.error = false;
+                    $scope.$apply();
+                },1500);
+            });
         }
 
-        function deleteFn() {
-            $http.get(hostFactory.getHost()+hostFactory.getAllProductsAPI()).then(function (response) {
-                console.log(response.data);
+        function updateCommissionFn() {
+            var batches = JSON.parse(JSON.stringify(ctrl.selected.batches));
+            if (batches.length === 0){
+                ctrl.error = true;
+                setTimeout(function () {
+                    ctrl.error = false;
+                    $scope.$apply();
+                },1500);
+                return;
+            }
+            var order = JSON.parse(JSON.stringify(ctrl.selected.commission));
+            delete order.batches;
+            var data = {
+                "batches":batches,
+                "commission":order
+            };
+
+            $http.put(hostFactory.getHost()+hostFactory.getSaveDeleteUpdateCommissionAPI(),data).then(function (response) {
+                loadCommissions();
                 ctrl.success = true;
+                setTimeout(function () {
+                    ctrl.success = false;
+                    ctrl.switchMode(null);
+                    $scope.$apply();
+                },1500);
+
+            }).catch(function (error) {
+                ctrl.error = true;
+                setTimeout(function () {
+                    ctrl.error = false;
+                    $scope.$apply();
+                },1500);
+            });
+        }
+
+        function addBatchFn(commission) {
+
+            ctrl.modify = false;
+            var add = true;
+            var index = 0;
+            for (var i = 0 ; i < commission.batches.length ; i++ ){
+                add = !(commission.batches[i].product.name === ctrl.selectedBatch.product.name &&
+                commission.batches[i].product.stockist === ctrl.selectedBatch.product.stockist);
+                if (!add){
+                    index = i;
+                    break;
+                }
+            }
+            if (add){
+                commission.batches.push(ctrl.selectedBatch);
+                ctrl.selectedBatch = {
+                    quantity:ctrl.quantities[0],
+                    product:null
+                };
+            }else{
+                    commission.batches[i].quantity = ctrl.selectedBatch.quantity;
+                    ctrl.selectedBatch = {
+                        quantity:ctrl.quantities[0],
+                        product:null
+                    };
+            }
+
+        }
+
+        function deleteBatchFn(index,commission) {
+            commission.batches.splice(index,1);
+        }
+
+        function selectBatchFn(batch) {
+            ctrl.modify = true;
+            ctrl.selectedBatch = batch;
+            for (var i = 0 ; i < ctrl.products.length ; i++){
+                if (ctrl.products[i].name === ctrl.selectedBatch.product.name &&
+                ctrl.products[i].stockist === ctrl.selectedBatch.product.stockist){
+                    ctrl.selectedBatch.product = ctrl.products[i];
+                }
+            }
+        }
+
+        function deleteCommissionFn() {
+            $http.delete(hostFactory.getHost()+hostFactory.getSaveDeleteUpdateCommissionAPI()+'/' + ctrl.selected.commission.id).then(function (response) {
+                ctrl.success = true;
+                loadCommissions();
                 setTimeout(function () {
                     ctrl.success = false;
                     ctrl.switchMode(null);
@@ -70,25 +220,42 @@
 
         function selectFn(commission) {
             ctrl.clicked = true;
-            if (ctrl.selected === commission)
+            if (ctrl.selected === commission){
                 ctrl.selected = null;
-            else if (ctrl.selected === null)
+            }
+            else if (ctrl.selected === null){
                 ctrl.selected = commission;
-            else
+            }
+            else{
                 ctrl.selected = commission;
+            }
+
         }
 
 
         function switchModeFn(mode) {
 
             ctrl.mode = mode;
-            if (!ctrl.mode)
+            ctrl.modify = false;
+            if (!ctrl.mode){
+                loadCommissions();
                 ctrl.selected = null;
+                ctrl.newOrder = {
+                    source:"FoodEmperors",
+                    date:"",
+                    batches:[],
+                    destination: ctrl.stockists[0]
+                };
+                ctrl.selectedBatch = {
+                    quantity:ctrl.quantities[0],
+                    product : null
+                };
+            }
         }
 
         function searchFilterFn(item) {
 
-            if (ctrl.searchText && !ctrl.searchText !== '') {
+            if (ctrl.searchText && ctrl.searchText !== '') {
                 if (item.commission.number.toString().toLowerCase().indexOf(ctrl.searchText.toLowerCase()) !== -1) {
                     return true;
                 }
@@ -108,7 +275,6 @@
 
         function loadCommissions() {
             $http.get(hostFactory.getHost()+hostFactory.getAllCommissionsAPI()).then(function (response) {
-                console.log(response.data);
                 ctrl.commissions = response.data;
             }).catch(function (error) {
                 console.log(error);
@@ -117,14 +283,12 @@
 
         function loadProducts() {
             $http.get(hostFactory.getHost()+hostFactory.getAllProductsAPI()).then(function (response) {
-                console.log(response.data);
                 ctrl.products = response.data;
-                if (ctrl.products.length>0)
-                    ctrl.product = ctrl.products[0];
             }).catch(function (error) {
                 console.log(error);
             });
         }
+
 
     }];
 
