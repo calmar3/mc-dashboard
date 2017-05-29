@@ -46,7 +46,9 @@
                     var menu = [
                         { label: "Catalogo Prodotti", state: "Catalogo Prodotti", icon: "fa fa-database" },
                         { label: "Gestione Personale", state: "Gestione Personale", icon: "fa fa-users" },
-                        { label: "Gestione Politiche", state: "Gestione Politiche", icon: "fa fa-gears" }
+                        { label: "Gestione Politiche", state: "Gestione Politiche", icon: "fa fa-gears" },
+                        { label: "Gestione Prodotti", state: "Gestione Prodotti", icon: "fa fa-gears" }
+
                     ];
                     userFactory.setMenu(menu);
 

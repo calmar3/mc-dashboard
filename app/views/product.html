@@ -1,0 +1,151 @@
+<div class="row" ng-if="ctrl.mode === null">
+
+    <div class="box">
+        <div class="box-body">
+            <div class="col-lg-6 col-md-6" >
+                <div class="box direct-chat direct-chat-primary ">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Gestione articolo ID</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="form-group with-border col-md-12">
+                            <label>Nome prodotto:</label>
+                            <input type="text" class="form-control" id="nomeProdotto" placeholder="Inserire nome prodotto..." ng-model="ctrl.product.name">
+                        </div>
+                        <div class="bootstrap-timepicker with-border col-md-12">
+                            <div class="bootstrap-timepicker-widget dropdown-menu">
+                            </div>
+                            <div class="form-group">
+                                <label>Tempo consegna medio:</label>
+
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="tempoConsegnaMedio" placeholder="Inserire tempo consegna medio..." ng-model="ctrl.product.averageDeliveryTime">
+
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-clock-o"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group with-border col-md-12">
+                            <label>Fornitore:</label>
+
+                            <input type="text" class="form-control" id="nomeFornitore" placeholder="Inserire nome fornitore..." ng-model="ctrl.product.stockist">
+                        </div>
+
+                        <div class="form-group with-border col-md-12">
+                            <label>Prezzo:</label>
+                            <input type="text" class="form-control" id="prezzo" placeholder="Inserire prezzo prodotto..." ng-model="ctrl.product.price">
+                        </div>
+
+                        <div class="form-group with-border col-md-12">
+                            <label>Inserisci Proprietà:</label>
+                            <div class="input-group input-group-sm">
+                                <input class="form-control" type="text" id="proprietà" placeholder="Inserire proprietà prodotto..." ng-model="ctrl.newProperty">
+                                <span class="input-group-btn">
+                      <button type="button" class="btn btn-primary btn-flat" ng-click="ctrl.addProperty()">Aggiungi</button>
+                    </span>
+                            </div><br>
+                            <label>Lista Proprietà:</label>
+                            <button class="btn btn-primary btn-xs" ng-repeat="property in ctrl.product.properties" ng-click="ctrl.deleteProperty($index)">{{property}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="box ">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Dettagli Prodotto selezionato</h3>
+                    </div>
+                    <div class="box-body">
+                        <table class="table table-bordered">
+                            <tbody>
+                            <tr>
+                                <th style="width: 10px">ID: {{ctrl.product.id}}</th>
+                            </tr>
+                            <tr>
+                                <th style="width: 10px">Nome Prodotto: {{ctrl.product.name}}</th>
+                            </tr>
+                            <tr>
+                                <th style="width: 10px">Tempo Consegna Medio: {{ctrl.product.averageDeliveryTime}}</th>
+                            </tr>
+                            <tr>
+                                <th style="width: 10px">Fornitore: {{ctrl.product.stockist}}</th>
+                            </tr>
+                            <tr>
+                                <th style="width: 10px">Prezzo: {{ctrl.product.price}}</th>
+                            </tr>
+                            <tr>
+                                <th style="width: 10px" >Proprietà:
+                                    <span ng-repeat="property in ctrl.product.properties">{{property}}</span>
+                                </th>
+                            </tr>
+                            </tbody></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="box-footer">
+            <div class="box-footer clearfix">
+                <div class="btn-group pull-left">
+                    <button class="btn btn-primary" ng-click="ctrl.updateProduct()">
+                        Salva
+                    </button>
+                    <button class="btn btn-primary" ng-click="ctrl.go('Catalogo Prodotti')">
+                        Indietro
+                    </button>
+                    <button class="btn btn-primary" ng-click="ctrl.switchMode('managePolicy')" ng-if="ctrl.modify">
+                        Modifca politiche
+                    </button>
+                    <button class="btn btn-primary" ng-click="ctrl.eliminateProduct()" ng-if="ctrl.modify">
+                        Elimina prodotto
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row" ng-if="ctrl.mode === 'managePolicy'">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12">
+        <div class="box box-default">
+            <div class="box-header with-border">
+
+                <h3 class="box-title">Modifica Politiche</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+
+                <table class="table table-bordered">
+                    <tbody>
+                    <tr>
+                        <th style="width: 10px">ID: {{ctrl.product.id}}</th>
+                    </tr>
+                    <tr>
+                        <th style="width: 10px">Nome Prodotto: {{ctrl.product.name}}</th>
+                    </tr>
+                    <tr>
+                        <th style="width: 10px">Tempo Consegna Medio: {{ctrl.product.averageDeliveryTime}}</th>
+                    </tr>
+                    <tr>
+                        <th style="width: 10px">Fornitore: {{ctrl.product.stockist}}</th>
+                    </tr>
+                    <tr>
+                        <th style="width: 10px">Prezzo: {{ctrl.product.price}}</th>
+                    </tr>
+                    <tr>
+                        <th style="width: 10px" >Proprietà:
+                            <span ng-repeat="property in ctrl.product.properties">{{property}}</span>
+                        </th>
+                    </tr>
+                    </tbody></table>
+            </div>
+            <div class="box-footer">
+
+            </div>
+            <!-- /.box-body -->
+        </div>
+    </div>
+</div>

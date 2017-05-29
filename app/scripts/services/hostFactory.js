@@ -10,9 +10,27 @@
 
         hostFactory.loginAPI = "api/user/login";
 
+        hostFactory.productAPI = "api/product";
+
+        hostFactory.catalogAPI = "api/catalog";
+
+
         hostFactory.getHost = getHostFn;
 
         hostFactory.getLoginAPI = getLoginAPIFn;
+
+        // API per il prodotto per prenderlo dal database
+        hostFactory.getProductAPI = getProductAPIFn;
+
+        hostFactory.getCatalogAPI = getCatalogAPIFn();
+        
+
+
+        function getCatalogAPIFn() {
+            return hostFactory.catalogAPI;
+
+        }
+
 
         function getHostFn() {
             return hostFactory.host;
@@ -23,6 +41,10 @@
             return hostFactory.loginAPI;
         }
 
+
+        function getProductAPIFn() {
+            return hostFactory.productAPI;
+        }
 
 
         return hostFactory;

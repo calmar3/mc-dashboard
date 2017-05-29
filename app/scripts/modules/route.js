@@ -70,23 +70,23 @@
             home: true
         }
 
-  }).state('Catalogo Prodotti', {
-    parent: 'site',
-    url: '/catalogo',
-    data: {
-        roles: []
-    },
-    views: {
-        'page@': {
-            templateUrl: "views/catalog.html",
-            controller: 'CatalogCtrl',
-            controllerAs: 'ctrl'
+      }).state('Catalogo Prodotti', {
+        parent: 'site',
+        url: '/catalogo',
+        data: {
+            roles: []
+        },
+        views: {
+            'page@': {
+                templateUrl: "views/catalog.html",
+                controller: 'CatalogCtrl',
+                controllerAs: 'ctrl'
+            }
+        },
+        params: {
+            home: true
         }
-    },
-    params: {
-        home: true
-    }
-}).state('Gestione Personale', {
+    }).state('Gestione Personale', {
         parent: 'site',
         url: '/personale',
         data: {
@@ -118,8 +118,25 @@
         params: {
             home: true
         }
+    }).state('Gestione Prodotti', {
+        parent: 'site',
+        url: '/prodotto',
+        data: {
+            roles: []
+        },
+        views: {
+            'page@': {
+                templateUrl: "views/product.html",
+                controller: 'ProductCtrl',
+                controllerAs: 'ctrl'
+            }
+        },
+        params: {
+            home: true,
+            product: null
+        }
     })
 
-  }
+}
 
 } ());
