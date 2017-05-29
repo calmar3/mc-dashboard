@@ -10,7 +10,9 @@
 
         hostFactory.loginAPI = "api/user/login";
 
-        hostFactory.commissionAPI = "/api/commissions"
+        hostFactory.commissionAPI = "/api/commissions";
+
+        hostFactory.BatchAPI = "api/saveBatches";
 
         hostFactory.getHost = getHostFn;
 
@@ -18,6 +20,12 @@
 
         hostFactory.getCommissionAPI = getCommissionAPIFn;
 
+        hostFactory.sendBatchAPI = sendBatchAPIFn;
+
+        function sendBatchAPIFn()
+        {
+            return hostFactory.BatchAPI;
+        }
 
         function getCommissionAPIFn(){
 

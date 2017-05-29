@@ -125,10 +125,10 @@
 
                         <td>{{commEntry.quantity}}</td>
 
-                        <td ng-show="{{commEntry.delivered}} == false"><input type="checkbox" ng-model='checkStatus' ng-click="ctrl.toggle(commEntry,checkStatus)">
+                        <td ng-show="{{commEntry.delivered}} == false" ><input type="checkbox"  ng-model='checkStatus' ng-click="ctrl.toggle(commEntry,checkStatus)">
                         </td>
 
-                        <td ng-show="{{commEntry.delivered}} != false"> <span class="glyphicon glyphicon-ok"></span></td>
+                        <td ng-show="{{commEntry.delivered}} != false" id="icon[{{commEntry.id}}]"> <span class="glyphicon glyphicon-ok" ></span></td>
                     </tr>
 
 
@@ -139,6 +139,10 @@
 
         <button type="button" class="btn btn-primary pull-left" data-toggle="modal" data-target="#modal-confirmation">
             Conferma
+        </button>
+
+        <button type="button" class="btn btn-primary pull-right" ng-click="ctrl.showOrderFn(null)">
+            Indietro
         </button>
 
         <!-- /.box-body -->
