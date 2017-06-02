@@ -28,6 +28,7 @@
                 else
                     ctrl.showOrder = order;
 
+
             }
 
             ctrl.showProduct = null;
@@ -42,6 +43,18 @@
 
             }
 
+
+            ctrl.signalProduct = null;
+
+            /**
+             * serve a far mostrare alla modal la segnalazione del prodotto stesso (articolo)
+             * @param product
+             */
+            ctrl.signalProductFn = function (product) {
+
+                ctrl.signalProduct = product;
+
+            }
 
             ctrl.deliveredProducts = [];
             /**
@@ -89,6 +102,37 @@
                 }).catch(function (error) {
                     console.log(error);
                 });
+
+            }
+
+            ctrl.signaledProducts = [];
+            /**
+             *  Quando si clicca sulla checkbox, se il click è positivo inserisce il batch nella lista dei batch da modificare,
+             *  se è negativo, lo elimina dalla lista
+             *
+             * @param batch
+             * @param status
+             */
+            ctrl.signalToggle = function(info)
+            {
+
+                var idx = ctrl.signaledProducts.indexOf(info);
+
+
+                if(idx > -1) {
+                    ctrl.signaledProducts.splice(idx,1);
+
+                }
+                else
+                {
+                    ctrl.signaledProducts.push(info);
+                }
+
+            }
+
+            ctrl.sendSignaledProduct = function () {
+
+                console.log(ctrl.signaledProducts);
 
             }
 
