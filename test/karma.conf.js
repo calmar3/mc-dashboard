@@ -38,6 +38,7 @@ module.exports = function(config) {
       'bower_components/mocha/mocha.js',
       'bower_components/morris.js/morris.js',
       'bower_components/angular-morris/build/module/angular-morris/angular-morris.min.js',
+      'bower_components/angular-ui-select/dist/select.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       'app/scripts/**/*.js',

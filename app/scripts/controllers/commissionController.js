@@ -100,7 +100,11 @@
             today = dd+'/'+mm+'/'+yyyy;
             data.commission.date = today;
             data.commission.number = dd+mm+yyyy;
-
+            for (var i = 0 ; i < data.batches.length ; i++){
+                if (data.batches[i].product.categories !== null || data.batches[i].product.categories !== undefined ||
+                    data.batches[i].product.categories.length !== 0 )
+                    delete data.batches[i].product.categories;
+            }
             $http.post(hostFactory.getHost()+hostFactory.getSaveDeleteUpdateCommissionAPI(),data).then(function (response) {
                 loadCommissions();
                 ctrl.success = true;
@@ -135,7 +139,11 @@
                 "batches":batches,
                 "commission":order
             };
-
+            for (var i = 0 ; i < data.batches.length ; i++){
+                if (data.batches[i].product.categories !== null || data.batches[i].product.categories !== undefined ||
+                    data.batches[i].product.categories.length !== 0 )
+                    delete data.batches[i].product.categories;
+            }
             $http.put(hostFactory.getHost()+hostFactory.getSaveDeleteUpdateCommissionAPI(),data).then(function (response) {
                 loadCommissions();
                 ctrl.success = true;
@@ -284,6 +292,22 @@
         function loadProducts() {
             $http.get(hostFactory.getHost()+hostFactory.getAllProductsAPI()).then(function (response) {
                 ctrl.products = response.data;
+                console.log(ctrl.products);
+                for (var i = 0 ; i < ctrl.products.length ; i++){
+                    var category = ctrl.products[0].category.id;
+                    ctrl.products[i].categories = [];
+                    var obj = ctrl.products[i].category;
+                    while(obj !== null){
+                        ctrl.products[i].categories.push(category);
+                        obj = obj.father;
+                        if (obj)
+                            category = obj.id;
+
+                    }
+                }
+                console.log(ctrl.products);
+
+
             }).catch(function (error) {
                 console.log(error);
             });

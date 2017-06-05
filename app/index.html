@@ -9,6 +9,7 @@
   <!-- build:css(.) styles/vendor.css -->
   <!-- bower:css -->
   <link rel="stylesheet" href="bower_components/morris.js/morris.css" />
+  <link rel="stylesheet" href="bower_components/angular-ui-select/dist/select.css" />
   <!-- endbower -->
   <!-- endbuild -->
   <!-- build:css(.tmp) styles/main.css -->
@@ -186,6 +187,7 @@
   <script src="bower_components/mocha/mocha.js"></script>
   <script src="bower_components/morris.js/morris.js"></script>
   <script src="bower_components/angular-morris/build/module/angular-morris/angular-morris.min.js"></script>
+  <script src="bower_components/angular-ui-select/dist/select.js"></script>
   <!-- endbower -->
   <!-- endbuild -->
   <!-- build:js({.tmp,app}) scripts/scripts.js -->
@@ -198,6 +200,12 @@
   <!-- include: "type": "js", "files": ["scripts/services/*.js"] -->
   <script src="/scripts/services/hostFactory.js"></script>
   <script src="/scripts/services/userFactory.js"></script>
+  <!-- /include -->
+  <!-- endbuild -->
+
+  <!-- build:js({.tmp,app}) scripts/filters.js -->
+  <!-- include: "type": "js", "files": ["scripts/filters/*.js"] -->
+  <script src="/scripts/filters/searchProductFilter.js"></script>
   <!-- /include -->
   <!-- endbuild -->
 
