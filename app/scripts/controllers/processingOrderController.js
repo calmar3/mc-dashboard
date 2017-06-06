@@ -14,6 +14,28 @@
 
             ctrl.commissions = response.data;
 
+            ctrl.outCommissions = [];
+
+            ctrl.inCommissions = [];
+
+
+            ctrl.commissions.forEach(function(entry) {
+
+                if(entry.commission.source == "FoodEmperors")
+                    ctrl.outCommissions.push(entry);
+
+                if(entry.commission.destination == "FoodEmperors")
+                    ctrl.inCommissions.push(entry);
+
+            });
+
+
+            console.log(ctrl.outCommissions);
+
+
+            console.log(ctrl.inCommissions);
+
+
 
             ctrl.showOrder = null;
 
@@ -105,7 +127,8 @@
 
             }
 
-            ctrl.signaledProducts = [];
+            ctrl.textSignaled = null;
+            ctrl.checkSignaled = [];
             /**
              *  Quando si clicca sulla checkbox, se il click è positivo inserisce il batch nella lista dei batch da modificare,
              *  se è negativo, lo elimina dalla lista
@@ -116,23 +139,33 @@
             ctrl.signalToggle = function(info)
             {
 
-                var idx = ctrl.signaledProducts.indexOf(info);
+                var idx = ctrl.checkSignaled.indexOf(info);
 
 
                 if(idx > -1) {
-                    ctrl.signaledProducts.splice(idx,1);
+                    ctrl.checkSignaled.splice(idx,1);
 
                 }
                 else
                 {
-                    ctrl.signaledProducts.push(info);
+                    ctrl.checkSignaled.push(info);
                 }
 
             }
 
             ctrl.sendSignaledProduct = function () {
 
-                console.log(ctrl.signaledProducts);
+                console.log(ctrl.checkSignaled);
+
+                console.log(ctrl.textSignaled);
+            }
+
+            ctrl.collapsed = false;
+
+
+            ctrl.collapse = function(boh)
+            {
+                ctrl.collapsed = boh;
 
             }
 

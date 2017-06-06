@@ -3,7 +3,7 @@
     <div class="col-xs-12" ng-show="ctrl.showOrder == null">
         <div class="box">
             <div class="box-header">
-                <h3 class="box-title">Evasione Ordini</h3>
+                <h3 class="box-title">Ordini in uscita</h3>
 
                 <div class="box-tools">
                     <div class="input-group input-group-sm" style="width: 150px;">
@@ -21,17 +21,23 @@
                     <!-- <li ng-repeat="commEntry in ctrl.commissions" style="cursor:pointer" ng-click="ctrl.go(menuentry.state)"> -->
 
                     <tbody>
-                    <tr>
+                    <tr data-toggle="collapse" data-target="#demo1" class="accordion-toggle">
                         <th>Data</th>
-                        <th>Delivery Time</th>
-                        <th>Destination</th>
-                        <th>Number</th>
-                        <th>Source</th>
+                        <th>Tempi di spedizione</th>
+                        <th>Destinatario</th>
+                        <th>Numero</th>
+                        <th>Mittente</th>
                         <th>Stato</th>
                         <th>Gestione</th>
                     </tr>
 
-                    <tr ng-repeat="commEntry in ctrl.commissions">
+                    <!--<tr>-->
+                        <!--<td colspan="6" class="hiddenRow">-->
+                            <!--<div class="accordion-body collapse" id="demo1">Demo1</div>-->
+                        <!--</td>-->
+                    <!--</tr>-->
+
+                    <tr ng-repeat="commEntry in ctrl.outCommissions">
                         <td>{{commEntry.commission.date}}</td>
                         <td>{{commEntry.commission.deliveryTime}}</td>
                         <td>{{commEntry.commission.destination}}</td>
@@ -57,6 +63,71 @@
         <!-- /.box -->
     </div>
 
+    <div class="col-xs-12" ng-show="ctrl.showOrder == null">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Ordini in entrata</h3>
+
+                <div class="box-tools">
+                    <div class="input-group input-group-sm" style="width: 150px;">
+                        <input name="table_search" class="form-control pull-right" placeholder="Search" type="text">
+
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-hover">
+                    <!-- <li ng-repeat="commEntry in ctrl.commissions" style="cursor:pointer" ng-click="ctrl.go(menuentry.state)"> -->
+
+                    <tbody>
+                    <tr data-toggle="collapse" data-target="#demo1" class="accordion-toggle">
+                        <th>Data</th>
+                        <th>Tempi di Spedizione</th>
+                        <th>Destinatario</th>
+                        <th>Numero</th>
+                        <th>Mittente</th>
+                        <th>Stato</th>
+                        <th>Gestione</th>
+                    </tr>
+
+                    <!--<tr>-->
+                    <!--<td colspan="6" class="hiddenRow">-->
+                    <!--<div class="accordion-body collapse" id="demo1">Demo1</div>-->
+                    <!--</td>-->
+                    <!--</tr>-->
+
+                    <tr ng-repeat="commEntry in ctrl.inCommissions">
+                        <td>{{commEntry.commission.date}}</td>
+                        <td>{{commEntry.commission.deliveryTime}}</td>
+                        <td>{{commEntry.commission.destination}}</td>
+                        <td>{{commEntry.commission.number}}</td>
+                        <td>{{commEntry.commission.source}}</td>
+                        <td ng-show="{{commEntry.commission.completed}} == false"><span class="label label-warning">Incompleto</span>
+                        </td>
+                        <td ng-show="{{commEntry.commission.completed}} == true"><span class="label label-success">Completo</span>
+                        </td>
+                        <td>
+                            <button type="submit" ng-click="ctrl.showOrderFn(commEntry)" class="btn btn-primary">
+                                Gestisci
+                            </button>
+                        </td>
+                    </tr>
+
+
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </div>
+
+
+
     <div class="col-xs-12" ng-show="ctrl.showOrder != null">
         <div class="box">
             <div class="box-header">
@@ -68,10 +139,10 @@
                         <tbody>
                         <tr>
                             <th>Data</th>
-                            <th>Delivery Time</th>
-                            <th>Destination</th>
-                            <th>Number</th>
-                            <th>Source</th>
+                            <th>Tempi di Spedizione</th>
+                            <th>Destinatario</th>
+                            <th>Numero</th>
+                            <th>Mittente</th>
                             <th>Stato</th>
                         </tr>
                         <td>{{ctrl.showOrder.commission.date}}</td>
@@ -103,12 +174,12 @@
 
                     <tbody>
                     <tr>
-                        <th>Product</th>
-                        <th>Del Date</th>
-                        <th>Exp Date</th>
-                        <th>Quantity</th>
+                        <th>Prodotto</th>
+                        <th>Data di Spedizione</th>
+                        <th>Data di scadenza</th>
+                        <th>Quantità</th>
                         <th>Delivered</th>
-                        <th>Segnalation</th>
+                        <th>Segnalazione</th>
                     </tr>
 
                     <tr ng-repeat="commEntry in ctrl.showOrder.batches">
@@ -164,19 +235,20 @@
 
                                     <tbody>
                                     <tr>
-                                        <th>Average Delivery Time</th>
-                                        <th>Name</th>
-                                        <th>Price</th>
-                                        <th>Properties</th>
-                                        <th>stockist</th>
+                                        <th>Tempo medio di spedizione</th>
+                                        <th>Nome</th>
+                                        <th>Prezzo</th>
+                                        <th>Proprietà</th>
+                                        <th>Stockist</th>
+                                        <th>Categoria</th>
                                     </tr>
                                     <td>{{ctrl.showProduct.averageDeliveryTime}}</td>
                                     <td>{{ctrl.showProduct.name}}</td>
                                     <td>{{ctrl.showProduct.price}}</td>
                                     <td>{{ctrl.showProduct.properties}}</td>
                                     <td>{{ctrl.showProduct.stockist}}</td>
+                                    <td>{{ctrl.showProduct.category}}</td>
                                     </tr>
-
 
                                     </tbody>
                                 </table>
@@ -211,10 +283,10 @@
                             <table class="table table-hover">
                                 <tbody>
                                 <tr>
-                                    <th>Product</th>
-                                    <th>Del Date</th>
-                                    <th>Exp Date</th>
-                                    <th>Quantity</th>
+                                    <th>Prodotto</th>
+                                    <th>Data di Spedizione</th>
+                                    <th>Data di scadenza</th>
+                                    <th>Quantità</th>
                                 </tr>
 
                                 <tr ng-repeat="commEntry in ctrl.deliveredProducts">
@@ -286,7 +358,7 @@
                                     </div>
                                 <div class="form-group">
                                     <label>Altro: </label>
-                                    <textarea class="form-control" rows="3" placeholder="Enter ..."></textarea>
+                                    <textarea class="form-control" rows="3" ng-model="ctrl.textSignaled" placeholder="Enter ..."></textarea>
                                 </div>
                             </form>
                         </div>
