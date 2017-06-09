@@ -161,7 +161,7 @@
     </div>
 
 
-    <div class="col-xs-12" ng-show="ctrl.showOrder != null">
+    <div class="col-xs-12" ng-show="ctrl.showOrder.commission.destination == 'FoodEmperors' ">
         <div class="box">
             <div class="box-header">
 
@@ -178,7 +178,7 @@
                         <th>Data di Spedizione</th>
                         <th>Data di scadenza</th>
                         <th>Quantità</th>
-                        <th>Delivered</th>
+                        <th>Ricevuto</th>
                         <th>Segnalazione</th>
                     </tr>
 
@@ -214,9 +214,63 @@
             Indietro
         </button>
 
+
         <!-- /.box-body -->
     </div>
     <!-- /.box -->
+
+    <div class="col-xs-12" ng-show="ctrl.showOrder.commission.source == 'FoodEmperors' ">
+        <div class="box">
+            <div class="box-header">
+
+                <h3 class="box-title">Lotti contenuti</h3>
+                <!-- /.box-header -->
+            </div>
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-hover">
+
+
+                    <tbody>
+                    <tr>
+                        <th>Prodotto</th>
+                        <th>Quantità richiesta</th>
+                        <th>Gestione spedizione</th>
+                    </tr>
+
+                    <tr ng-repeat="commEntry in ctrl.showOrder.batches">
+                        <td>
+                            <button type="button" class="btn btn-default" data-toggle="modal"
+                                    data-target="#modal-default" ng-click="ctrl.showProductFn(commEntry.product)" )>
+                                {{commEntry.product.name}}
+                            </button>
+                        </td>
+                        <td>{{commEntry.quantity}}</td>
+                        <td ng-show="{{commEntry.delivered}} == true"> <span class="glyphicon glyphicon-ok" ></span></td>
+                        <td ng-show="{{commEntry.delivered}} == false"><button type="button" class="btn btn-primary" ng-click="ctrl.batchSetting(commEntry)" data-toggle="modal" data-target="#modal-batchSetting">Gestisci</button>
+                        </td>
+                    </tr>
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <button type="button" class="btn btn-primary pull-left" data-toggle="modal" data-target="#modal-confirmation">
+            Conferma
+        </button>
+
+        <button type="button" class="btn btn-primary pull-right" ng-click="ctrl.showOrderFn(null)">
+            Indietro
+        </button>
+
+
+        <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+
+
+
 
     <div class="modal fade" id="modal-default" style="display: none;">
         <div class="modal-dialog">
@@ -374,6 +428,86 @@
             </div>
             <!-- /.modal-dialog -->
         </div>
+
+
+    <div class="modal fade" id="modal-batchSetting" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">Selezione Prodotto: {{ctrl.getBatch.product.name}}</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="box-body table-responsive no-padding">
+                        <div class="box-header">
+
+                            <h3 class="box-title">Riepilogo Prodotto</h3>
+                            <!-- /.box-header -->
+                        </div>
+                        <table class="table table-hover">
+
+                            <tr>
+                                <th>Nome</th>
+                                <th>Tempo medio di spedizione</th>
+                                <th>Prezzo</th>
+                                <th>Proprietà</th>
+                                <th>Stockist</th>
+                                <th>Categoria</th>
+                            </tr>
+                            <td>{{ctrl.getBatch.product.name}}</td>
+                            <td>{{ctrl.getBatch.product.averageDeliveryTime}}</td>
+                            <td>{{ctrl.getBatch.product.price}}</td>
+                            <td>{{ctrl.getBatch.product.properties}}</td>
+                            <td>{{ctrl.getBatch.product.stockist}}</td>
+                            <td>{{ctrl.getBatch.product.category}}</td>
+                            </tr>
+                        </table>
+                    </div>
+
+
+                    <div class="box-body table-responsive no-padding">
+                        <div class="box-header">
+
+                            <h3 class="box-title">Lotti disponibili</h3>
+                            <!-- /.box-header -->
+                        </div>
+                        <table class="table table-hover">
+                            <tr>
+                                <th>Prodotto</th>
+                                <th>Data di Spedizione</th>
+                                <th>Data di scadenza</th>
+                                <th>Quantità</th>
+                            </tr>
+
+
+                            <tr  ng-repeat="batches in ctrl.despBatches">
+                                <td>{{batches.product.name}}</td>
+                                <td>{{batches.delDate}}</td>
+                                <td>{{batches.expDate}}</td>
+                                <td>{{batches.quantity}}</td>
+                            </tr>
+                        </table>
+                    </div>
+
+
+
+
+
+
+                </div>
+
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary pull-left" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+
+    </div>
 
     </div>
 </div>

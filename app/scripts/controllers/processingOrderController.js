@@ -45,6 +45,7 @@
              * @param order l'ordine da mostrare
              */
             ctrl.showOrderFn = function (order) {
+
                 if(order == null)
                     ctrl.showOrder = null;
                 else
@@ -168,6 +169,28 @@
                 ctrl.collapsed = boh;
 
             }
+
+
+            ctrl.getBatch = null;
+            ctrl.despBatches = null;
+
+
+            ctrl.batchSetting = function(batch)
+            {
+
+                $http.post(hostFactory.getHost() + hostFactory.getCatalogueBatchesByProductAPI(), batch.product).then(function (response) {
+
+                    ctrl.despBatches = response.data;
+                    ctrl.getBatch = batch;
+                }).catch(function (error) {
+                    console.log(error);
+                });
+
+
+
+            }
+
+
 
         }).catch(function (error) {
             console.log(error);

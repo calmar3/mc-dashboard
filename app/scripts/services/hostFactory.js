@@ -12,7 +12,9 @@
 
         hostFactory.commissionAPI = "/api/commissions";
 
-        hostFactory.BatchAPI = "api/saveBatches";
+        hostFactory.BatchAPI = "api/batch/saveBatches";
+
+        hostFactory.catalogueBatchesByProductAPI = "api/batch/getbatchesbyprod";
 
         hostFactory.getHost = getHostFn;
 
@@ -21,6 +23,13 @@
         hostFactory.getCommissionAPI = getCommissionAPIFn;
 
         hostFactory.sendBatchAPI = sendBatchAPIFn;
+
+        hostFactory.getCatalogueBatchesByProductAPI = catalogueBatchesByProductAPIFn;
+
+        function catalogueBatchesByProductAPIFn()
+        {
+            return hostFactory.catalogueBatchesByProductAPI;
+        }
 
         function sendBatchAPIFn()
         {
