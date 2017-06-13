@@ -34,11 +34,17 @@
 
         ctrl.updateCommission = updateCommissionFn;
 
+        ctrl.getProducts = getProductsFn;
+
         ctrl.batchSize = 100;
 
         ctrl.quantities = [];
 
         ctrl.modify = null;
+
+        ctrl.categories = [];
+
+        loadCategories();
 
         for (var i= 0 ;i < 10 ; i++){
             ctrl.quantities.push((i+1)*ctrl.batchSize);
@@ -64,7 +70,25 @@
 
         loadCommissions();
 
-        loadProducts();
+        function getProductsFn(search) {
+            if (angular.isDefined(ctrl.category) && ctrl.category.length > 0 ){
+                if (search!==null && search!==undefined && search.length==3){
+                    var param = ctrl.category + " - " + search;
+                    $http.get(hostFactory.getHost()+hostFactory.getFindProductByCategoryAndProperties(param)).then(function (res) {
+                        ctrl.products = JSON.parse(JSON.stringify(res.data));
+                        console.log(ctrl.products)
+                    }).catch(function (error) {
+                        console.log(error);
+                        ctrl.products = [];
+                    });
+                }
+                else if (search!==null && search!==undefined && search.length<3)
+                    ctrl.products=[];
+            }
+            else
+                return;
+
+        }
 
         function saveCommissionFn() {
             var batches = JSON.parse(JSON.stringify(ctrl.newOrder.batches));
@@ -165,6 +189,7 @@
         function addBatchFn(commission) {
 
             ctrl.modify = false;
+            ctrl.category = null;
             var add = true;
             var index = 0;
             for (var i = 0 ; i < commission.batches.length ; i++ ){
@@ -289,29 +314,14 @@
             });
         }
 
-        function loadProducts() {
-            $http.get(hostFactory.getHost()+hostFactory.getAllProductsAPI()).then(function (response) {
-                ctrl.products = response.data;
-                console.log(ctrl.products);
-                for (var i = 0 ; i < ctrl.products.length ; i++){
-                    var category = ctrl.products[0].category.id;
-                    ctrl.products[i].categories = [];
-                    var obj = ctrl.products[i].category;
-                    while(obj !== null){
-                        ctrl.products[i].categories.push(category);
-                        obj = obj.father;
-                        if (obj)
-                            category = obj.id;
-
-                    }
-                }
-                console.log(ctrl.products);
-
-
+        function loadCategories() {
+            $http.get(hostFactory.getHost()+hostFactory.getLeafCategoriesAPI()).then(function (response) {
+                ctrl.categories = response.data;
             }).catch(function (error) {
                 console.log(error);
             });
         }
+
 
 
     }];

@@ -1,57 +1,25 @@
-angular.module('mc-dashboard').filter('searchProductFilter', function() {
+angular.module('mc-dashboard').filter('searchProductFilter', [ '$http','hostFactory',function($http,hostFactory) {
     return function(items, props) {
-        var out = [];
-        if (angular.isArray(items)) {
-            var keys = Object.keys(props);
-            items.forEach(function(item) {
-                var itemMatches = false;
-
-                for (var i = 0; i < keys.length; i++) {
-                    var prop = keys[i];
-                    var text = props[prop].toLowerCase();
-                    if (prop === 'properties'){
-                        for (var key in item[''+prop]) {
-                            if (JSON.stringify(item.properties[key]).toLowerCase().indexOf(text)!==-1){
-                                itemMatches = true;
-                                break
-                            }
-
-                        }
+        var out = items;
+        if (props.length > 3){
+            var words = props.split(" ");
+            for (var i = 0 ; i < out.length; i++ ){
+                for (var j = 0 ; j < words.length ; j++){
+                    if (out[i].description.toLowerCase().indexOf(words[j].toLowerCase()) ===-1 &&
+                        out[i].name.toLowerCase().indexOf(words[j].toLowerCase()) ===-1 &&
+                        out[i].stockist.toLowerCase().indexOf(words[j].toLowerCase()) ===-1){
+                        out.splice(i,1);
+                        i--;
+                        break;
                     }
-                    else if( prop === 'categories'){
-                        var category = item.category.id;
-                        var obj = item.category;
-                        while(true){
-                            if (JSON.stringify(category).toLowerCase().indexOf(text)!==-1){
-                                itemMatches = true;
-                                break;
-                            }
-                            obj = obj.father;
-                            if (obj){
-                                category = obj.id;
-                            }
-                            else
-                                break;
-                        }
-                    }
-                    else{
-                        if (!itemMatches && item[prop].toString().toLowerCase().indexOf(text) !== -1) {
-                            itemMatches = true;
-                            break;
-                        }
-                    }
-
                 }
-
-                if (itemMatches) {
-                    out.push(item);
-                }
-            });
-        } else {
-            // Let the output be the input untouched
-            out = items;
+            }
+            return out;
         }
+        else
+            return items;
 
-        return out;
+
+
     };
-});
+}]);
