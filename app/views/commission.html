@@ -95,7 +95,7 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-4 col-md-4 col-xs-4">
-                        <label><span style="font-weight:normal!important;">Categoia</span></label>
+                        <label><span style="font-weight:normal!important;">Categoria</span></label>
                         <select ng-options ="category.id as category.id for category in ctrl.categories" ng-model="ctrl.category" class="form-control">
 
                         </select>
@@ -141,7 +141,7 @@
                     </div>
                     <div class="col-md-3 col-lg-2 col-xs-7">
                         <div class="form-group">
-                            <label><span style="font-weight:normal!important;">Prezzo Totale</span></label>
+                            <label><span style="font-weight:normal!important;">Prezzo Tot.</span></label>
                             <input type="text" class="form-control" placeholder="{{ctrl.selectedBatch.quantity*ctrl.selectedBatch.product.price | currency:'€' }}" disabled="">
                         </div>
                     </div>
@@ -168,8 +168,8 @@
                             <th>#</th>
                             <th>Quantità</th>
                             <th>Tempo Consegna</th>
-                            <th>Prezzo Unitario</th>
-                            <th>Prezzo Totale</th>
+                            <th>Prezzo Unit.</th>
+                            <th>Prezzo Tot.</th>
                         </tr>
                         <tr ng-repeat="batch in ctrl.selected.batches" style="cursor:pointer;" ng-class="{'selected': ctrl.selectedBatch === batch}"
                             ng-click="ctrl.selectBatch(batch)">
@@ -237,20 +237,20 @@
                     </div>
                     <div class="row">
                         <div class="col-lg-4 col-md-4 col-xs-4">
-                            <label><span style="font-weight:normal!important;">Categoia</span></label>
+                            <label><span style="font-weight:normal!important;">Categoria</span></label>
                             <select ng-options ="category.id as category.id for category in ctrl.categories" ng-model="ctrl.category" class="form-control">
 
                             </select>
                         </div>
                         <div class="col-md-8 col-lg-8 col-xs-8">
                             <label><span style="font-weight:normal!important;">Prodotto</span></label>
-                            <ui-select ng-if="ctrl.mode==='add'" ng-disabled="ctrl.modify" ng-model="ctrl.selectedBatch.product"  style="min-width: 300px;" title="Scegli un prodotto" append-to-body="true">
-                                <ui-select-match placeholder="Inserire campi di ricerca">{{ctrl.selectedBatch.product.name + ' ' + ctrl.selectedBatch.product.stockist}}</ui-select-match>
+                            <ui-select  ng-if="ctrl.mode==='add'" ng-disabled="ctrl.modify" ng-model="ctrl.selectedBatch.product"  style="min-width: 300px;" title="Scegli un prodotto" append-to-body="true">
+                                <ui-select-match placeholder="Inserire campi di ricerca" >{{ctrl.selectedBatch.product.name + ' ' + ctrl.selectedBatch.product.stockist}}</ui-select-match>
                                 <ui-select-choices  repeat="product in ctrl.products | searchProductFilter: $select.search" refresh="ctrl.getProducts($select.search)" refresh-delay="0">
                                     <small>
                                         <span style="margin-right: 4px;"><b>Nome</b>: {{product.name}}</span>
                                         <span style="margin-right: 4px;"><b>Marca</b>: {{product.stockist}}</span>
-                                        <span style="margin-right: 4px;"><b>Prezzo Unitario</b>: {{product.price | currency:'€'}}</span><br>
+                                        <span style="margin-right: 4px;"><b>Prezzo Unit.</b>: {{product.price | currency:'€'}}</span><br>
                                         <span ng-repeat="(key, value) in product.properties" style="margin-right: 4px;"><b>{{key}}</b>: {{value}}</span><br>
                                         <span style="margin-right: 4px;"><b>Categoria</b>: {{product.category.id}}</span><br>
                                     </small>
@@ -277,13 +277,13 @@
                     </div>
                     <div class="col-md-3 col-lg-2 col-xs-5">
                         <div class="form-group">
-                            <label><span style="font-weight:normal!important;">Prezzo Unitario</span></label>
+                            <label><span style="font-weight:normal!important;">Prezzo Unit.</span></label>
                             <input type="text" class="form-control" placeholder="{{ctrl.selectedBatch.product.price | currency:'€' }}" disabled="">
                         </div>
                     </div>
                     <div class="col-md-3 col-lg-2 col-xs-7">
                         <div class="form-group">
-                            <label><span style="font-weight:normal!important;">Prezzo Totale</span></label>
+                            <label><span style="font-weight:normal!important;">Prezzo Tot.</span></label>
                             <input type="text" class="form-control" placeholder="{{ctrl.selectedBatch.number*ctrl.selectedBatch.quantity*ctrl.selectedBatch.product.price | currency:'€' }}" disabled="">
                         </div>
                     </div>
@@ -308,8 +308,8 @@
                                 <th>#</th>
                                 <th>Quantità</th>
                                 <th>Tempo Consegna</th>
-                                <th>Prezzo Unitario</th>
-                                <th>Prezzo Totale</th>
+                                <th>Prezzo Unit.</th>
+                                <th>Prezzo Tot.</th>
                             </tr>
                             <tr ng-repeat="batch in ctrl.newOrder.batches" style="cursor:pointer;" ng-class="{'selected': ctrl.selectedBatch === batch}"
                                 ng-click="ctrl.selectBatch(batch)">
@@ -393,7 +393,7 @@
                         <th>Prodotto</th>
                         <th>Proprieta Prodotto</th>
                         <th>Azienda</th>
-                        <th>Prezzo Unitario</th>
+                        <th>Prezzo Unit.</th>
                         <th>#</th>
                         <th>Quantità</th>
                         <th>Prezzo totale</th>

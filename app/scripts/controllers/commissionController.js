@@ -36,6 +36,10 @@
 
         ctrl.getProducts = getProductsFn;
 
+        ctrl.backupProducts = [];
+
+        ctrl.description = "";
+
         ctrl.batchSize = 100;
 
         ctrl.quantities = [];
@@ -71,11 +75,16 @@
         loadCommissions();
 
         function getProductsFn(search) {
+
+            if (ctrl.description.length > search.length)
+                ctrl.products =  JSON.parse(JSON.stringify(ctrl.backupProducts));
+            ctrl.description = search;
             if (angular.isDefined(ctrl.category) && ctrl.category.length > 0 ){
                 if (search!==null && search!==undefined && search.length==3){
                     var param = ctrl.category + " - " + search;
                     $http.get(hostFactory.getHost()+hostFactory.getFindProductByCategoryAndProperties(param)).then(function (res) {
                         ctrl.products = JSON.parse(JSON.stringify(res.data));
+                        ctrl.backupProducts =  JSON.parse(JSON.stringify(ctrl.products));
                         console.log(ctrl.products)
                     }).catch(function (error) {
                         console.log(error);
