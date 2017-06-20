@@ -12,6 +12,7 @@
         ctrl.invalidCredential = false;
         ctrl.user = userFactory.getUser();
 
+
         ctrl.modify = modifyFn;
         ctrl.reset = resetFn;
         ctrl.deleteQualification = deleteQualificationFn;
