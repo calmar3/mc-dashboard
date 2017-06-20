@@ -9,6 +9,7 @@
   <!-- build:css(.) styles/vendor.css -->
   <!-- bower:css -->
   <link rel="stylesheet" href="bower_components/morris.js/morris.css" />
+  <link rel="stylesheet" href="bower_components/angular-ui-select/dist/select.css" />
   <!-- endbower -->
   <!-- endbuild -->
   <!-- build:css(.tmp) styles/main.css -->
@@ -70,7 +71,7 @@
                 <!-- Menu Footer-->
                 <li class="user-footer">
                   <div class="pull-left">
-                    <a ui-sref="Profilo Utente" class="btn btn-default btn-flat">Profilo</a>
+                    <a href class="btn btn-default btn-flat">Profilo</a>
                   </div>
                   <div class="pull-right">
                     <a href class="btn btn-default btn-flat">Sign out</a>
@@ -204,6 +205,12 @@
   <!-- /include -->
   <!-- endbuild -->
 
+  <!-- build:js({.tmp,app}) scripts/filters.js -->
+  <!-- include: "type": "js", "files": ["scripts/filters/*.js"] -->
+  <script src="/scripts/filters/searchProductFilter.js"></script>
+  <!-- /include -->
+  <!-- endbuild -->
+
   <!-- build:js({.tmp,app}) scripts/controllers.js -->
   <!-- include: "type": "js", "files": ["scripts/controllers/*.js"] -->
   <script src="/scripts/controllers/mainController.js"></script>
@@ -213,6 +220,7 @@
   <script src="/scripts/controllers/catalogController.js"></script>
   <script src="/scripts/controllers/policiesController.js"></script>
   <script src="/scripts/controllers/personalController.js"></script>
+  <script src="/scripts/controllers/commissionController.js"></script>
   <script src="/scripts/controllers/accountController.js"></script>
 
   <!-- /include -->
