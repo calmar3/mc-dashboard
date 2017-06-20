@@ -71,10 +71,10 @@
                 <!-- Menu Footer-->
                 <li class="user-footer">
                   <div class="pull-left">
-                    <a href class="btn btn-default btn-flat">Profilo</a>
+                    <a ui-sref="Profilo Utente" class="btn btn-default btn-flat">Profilo</a>
                   </div>
                   <div class="pull-right">
-                    <a href class="btn btn-default btn-flat">Sign out</a>
+                    <button class="btn btn-default btn-flat" ng-click="ctrl.signout()">Sign out</button>
                   </div>
                 </li>
               </ul>
@@ -190,6 +190,7 @@
   <script src="bower_components/mocha/mocha.js"></script>
   <script src="bower_components/morris.js/morris.js"></script>
   <script src="bower_components/angular-morris/build/module/angular-morris/angular-morris.min.js"></script>
+  <script src="bower_components/angular-ui-select/dist/select.js"></script>
   <!-- endbower -->
   <!-- endbuild -->
   <!-- build:js({.tmp,app}) scripts/scripts.js -->
