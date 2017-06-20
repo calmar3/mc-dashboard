@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" custom-droppable>
 
     <div class="col-md-6">
         <div class="box box-primary">
@@ -72,9 +72,11 @@
 
               <br>
 
-              <div ng-repeat="skill in ctrl.user.skills" class="label label-success" ng-style="{'margin-right': '5px'}">
+              <div id="item{{skill}}" ng-repeat="skill in ctrl.user.skills" class="label label-success" ng-style="{'margin-right': '5px'}" custom-draggable>
                       {{skill}}
               </div>
+
+              <i class="fa fa-plus-circle margin-r-5" ng-click=""></i>
 
 
               <hr>
@@ -92,5 +94,6 @@
             </button>
           </div>
       </div>
+    </div>
       <!-- /.box -->
 </div>

@@ -9,15 +9,13 @@
         ctrl.confirmPassword = "";
         ctrl.newQualification = "";
         ctrl.newNote = "";
+        ctrl.invalidCredential = false;
+        ctrl.user = userFactory.getUser();
 
         ctrl.modify = modifyFn;
         ctrl.reset = resetFn;
         ctrl.deleteQualification = deleteQualificationFn;
         ctrl.modifyAboutMe = modifyAboutMeFn;
-
-        ctrl.invalidCredential = false;
-
-        ctrl.user = userFactory.getUser();
 
         function modifyFn() {
             if (ctrl.username === null || ctrl.username === undefined || ctrl.username === "") {
@@ -89,7 +87,6 @@
               },1000);
             });
         }
-
     }];
 
     AccountCtrl.$inject = ['$scope', '$rootScope', '$compile','$state','$http','hostFactory','userFactory'];
