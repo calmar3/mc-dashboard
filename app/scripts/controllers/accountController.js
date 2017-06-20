@@ -45,7 +45,7 @@
                 ctrl.user.qualifications.push(ctrl.newQualification);
             }
 
-            $http.post(hostFactory.getHost()+hostFactory.getUserUpdateAPI(), ctrl.user).then(function(response) {
+            $http.put(hostFactory.getHost()+hostFactory.getUserAPI(), ctrl.user).then(function(response) {
                 userFactory.setUser(response.data);
 
                 $state.go("Profilo Utente");

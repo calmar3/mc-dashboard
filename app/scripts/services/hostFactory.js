@@ -10,7 +10,7 @@
 
         hostFactory.loginAPI = "api/user/login";
 
-        hostFactory.userUpdateAPI = "api/user/update";
+        hostFactory.userAPI = "api/user";
 
         hostFactory.allCommissionsAPI = "api/commissions";
 
@@ -28,7 +28,7 @@
 
         hostFactory.getLoginAPI = getLoginAPIFn;
 
-        hostFactory.getUserUpdateAPI = getUserUpdateAPIFn;
+        hostFactory.getUserAPI = getUserAPIFn;
 
         hostFactory.getAllCommissionsAPI = getAllCommissionsAPIFn;
 
@@ -66,8 +66,8 @@
             return hostFactory.loginAPI;
         }
 
-        function getUserUpdateAPIFn() {
-            return hostFactory.userUpdateAPI;
+        function getUserAPIFn() {
+            return hostFactory.userAPI;
         }
 
         return hostFactory;
