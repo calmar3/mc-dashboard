@@ -82,7 +82,7 @@
             if (angular.isDefined(ctrl.category) && ctrl.category.length > 0 ){
                 if (search!==null && search!==undefined && search.length==3){
                     var param = ctrl.category + " - " + search;
-                    $http.get(hostFactory.getHost()+hostFactory.getFindProductByCategoryAndProperties(param)).then(function (res) {
+                    $http.get(hostFactory.getHost()+hostFactory.getFindProductByCategoryAndPropertiesAPI(param)).then(function (res) {
                         ctrl.products = JSON.parse(JSON.stringify(res.data));
                         ctrl.backupProducts =  JSON.parse(JSON.stringify(ctrl.products));
                         console.log(ctrl.products)

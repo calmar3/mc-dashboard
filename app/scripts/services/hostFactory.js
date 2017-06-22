@@ -18,9 +18,11 @@
 
         hostFactory.saveDeleteUpdateCommissionAPI = "api/commission";
 
-        hostFactory.findProductByProperties = "api/product/findby/category/properties";
+        hostFactory.findProductByPropertiesAPI = "api/product/findby/category/properties";
 
         hostFactory.leafCategories = "api/categories/leaf";
+
+        hostFactory.productAPI = "api/product";
 
         hostFactory.getSaveDeleteUpdateCommissionAPI = getSaveDeleteUpdateCommissionAPIFn;
 
@@ -34,16 +36,22 @@
 
         hostFactory.getAllProductsAPI = getAllProductsAPIFn;
 
-        hostFactory.getFindProductByCategoryAndProperties = getFindProductByCategoryAndPropertiesFn;
+        hostFactory.getFindProductByCategoryAndPropertiesAPI = getFindProductByCategoryAndPropertiesAPIFn;
 
         hostFactory.getLeafCategoriesAPI = getLeafCategoriesAPIFn;
+
+        hostFactory.getProductAPI = getProductAPIFn;
+
+        function getProductAPIFn() {
+            return hostFactory.productAPI;
+        }
 
         function getLeafCategoriesAPIFn() {
             return hostFactory.leafCategories;
         }
 
-        function getFindProductByCategoryAndPropertiesFn(properties) {
-            return hostFactory.findProductByProperties + '/' + properties;
+        function getFindProductByCategoryAndPropertiesAPIFn(properties) {
+            return hostFactory.findProductByPropertiesAPI + '/' + properties;
         }
 
         function getSaveDeleteUpdateCommissionAPIFn() {

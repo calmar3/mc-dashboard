@@ -1,0 +1,125 @@
+<div class="row">
+
+    <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-xs-12">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+
+                <h3 class="box-title"><i class="fa fa-gears "></i>
+                    Pannello gestione politiche
+                </h3>
+
+            </div>
+            <!-- /.panel-heading -->
+            <div class="box-body">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs">
+                    <li ng-class="{'active':ctrl.selectedTab===$index}" ng-click="ctrl.switchTab($index)" style="cursor:pointer" ng-repeat="customization in ctrl.customizations">
+                        <a data-toggle="tab">
+                            {{customization}}
+                        </a>
+                    </li>
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div class="tab-pane"  ng-class="{'active': ctrl.customizations[ctrl.selectedTab].toLowerCase() === 'prezzi' }" >
+
+                        <div class="row" class="row" style="margin-top: 5%;" ng-style>
+                            <div class="col-lg-3 col-md-3 col-xs-10 col-lg-offset-1 col-md-offset-1 col-xs-offset-1">
+                                <label><span style="font-weight:normal!important;">Categoria</span></label>
+                                <select ng-options ="category.id as category.id for category in ctrl.categories" ng-model="ctrl.category" class="form-control">
+
+                                </select>
+                            </div>
+                            <div class="col-md-7 col-lg-7 col-xs-10  col-lg-offset-0 col-md-offset-0 col-xs-offset-1">
+                                <label><span style="font-weight:normal!important;">Prodotto</span></label>
+                                <ui-select  ng-model="ctrl.product"  style="min-width: 300px;" title="Scegli un prodotto" append-to-body="true">
+                                    <ui-select-match placeholder="Inserire campi di ricerca" >{{ctrl.product.name + ' ' + ctrl.product.stockist }}</ui-select-match>
+                                    <ui-select-choices  repeat="product in ctrl.products | searchProductFilter: $select.search" refresh="ctrl.getProducts($select.search)" refresh-delay="0">
+                                        <small>
+                                            <span style="margin-right: 4px;"><b>Nome</b>: {{product.name}}</span>
+                                            <span style="margin-right: 4px;"><b>Marca</b>: {{product.stockist}}</span>
+                                            <span style="margin-right: 4px;"><b>Prezzo Unit.</b>: {{product.price | currency:'€'}}</span><br>
+                                            <span ng-repeat="(key, value) in product.properties" style="margin-right: 4px;"><b>{{key}}</b>: {{value}}</span><br>
+                                            <span style="margin-right: 4px;"><b>Categoria</b>: {{product.category.id}}</span><br>
+                                        </small>
+                                        <hr style="margin: 1px;">
+                                    </ui-select-choices>
+                                </ui-select>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-xs-10 col-xs-offset-1">
+                            <hr>
+                        </div>
+                        <div class="row"  ng-if="ctrl.product">
+                            <div class="col-lg-5 col-md-5 col-xs-5  col-lg-offset-1 col-md-offset-1 col-xs-offset-1">
+                                <div class="form-group">
+                                    <label for="name">Nome e Produttore</label>
+                                    <input ng-disabled="true" type="text" class="form-control" id="name" placeholder="{{ctrl.product.name + ' ' + ctrl.product.stockist}}">
+                                </div>
+                            </div>
+                            <div class="col-lg-5 col-md-5 col-xs-5 ">
+                                <div class="form-group">
+                                    <label for="price">Prezzo Unitario</label>
+                                    <input ng-disabled="true"type="text" class="form-control" id="price" placeholder="{{ctrl.product.price | currency: '€'}}">
+                                </div>
+                            </div>
+                            <div class="col-lg-5 col-md-5 col-xs-10  col-lg-offset-1 col-md-offset-1 col-xs-offset-1">
+                                <div class="form-group">
+                                    <label for="properties">Proprietà</label>
+                                    <input ng-disabled="true" type="text" class="form-control" id="properties" placeholder="{{ctrl.product.description}}">
+                                </div>
+                            </div>
+                            <div class="col-lg-5 col-md-5 col-xs-10  col-xs-offset-1 col-md-offset-0 col-lg-offset-0">
+                                <div class="form-group">
+                                    <label for="category">Categoria</label>
+                                    <input ng-disabled="true" type="text" class="form-control" id="category" placeholder="{{ctrl.product.category.id}}">
+                                </div>
+                            </div>
+                            <div class="col-lg-5 col-md-5 col-xs-10  col-xs-offset-1 col-md-offset-1 col-lg-offset-1">
+                                <div class="form-group">
+                                    <label for="charge">Ricarico</label>
+                                    <input ng-disabled="true" type="text" class="form-control" id="charge" placeholder="{{ctrl.product.charge*100}} %">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-5 col-md-5 col-xs-10  col-xs-offset-1 col-md-offset-0 col-lg-offset-0">
+                                <label for="charge">Modifica:</label>
+                                <div class="input-group input-group-sm">
+                                    <input type="number" step="0.01" max="1.00" min="0.01" class="form-control" ng-model="ctrl.charge">
+                                    <span class="input-group-btn">
+                                <button type="button" class="btn btn-primary btn-flat" ng-disabled="ctrl.product.name === undefined" ng-click="ctrl.setCharge()">Applica</button>
+                                </span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-12 col-lg-12 ">
+                                    <div ng-if="ctrl.error" class="callout callout-danger pull-right" style="height=50px">
+                                        <p>Errore nell'aggiornare il prodotto!</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-10 col-md-10 col-lg-10 col-xs-offset-1 col-md-offset-1 col-lg-offset-1 ">
+                                    <div ng-if="ctrl.success" class="callout callout-success pull-right" style="height=50px">
+                                        <p>Prodotto aggiornato!</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="tab-pane"  ng-class="{'active': ctrl.customizations[ctrl.selectedTab].toLowerCase() === 'fornitori' }" >
+                        promo
+                    </div>
+                    <div class="tab-pane"  ng-class="{'active': ctrl.customizations[ctrl.selectedTab].toLowerCase() === 'promo' }" >
+                        fornitori
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
