@@ -17,6 +17,8 @@
 
         ctrl.setCharge = setChargeFn;
 
+        ctrl.loadCategories = loadCategoriesFn;
+
         ctrl.description = "";
 
         ctrl.backupProducts = [];
@@ -25,7 +27,7 @@
             charge : 0
         };
 
-        loadCategories();
+        ctrl.loadCategories();
 
         function setChargeFn() {
             if (ctrl.charge && ctrl.charge >= 0.01 && ctrl.charge <= 1 && ctrl.product)
@@ -52,10 +54,11 @@
         }
 
         function switchTabFn(index) {
+            cleanChargeView();
             ctrl.selectedTab = index;
         }
 
-        function loadCategories() {
+        function loadCategoriesFn() {
             $http.get(hostFactory.getHost()+hostFactory.getLeafCategoriesAPI()).then(function (response) {
                 ctrl.categories = response.data;
             }).catch(function (error) {
@@ -75,7 +78,6 @@
                     $http.get(hostFactory.getHost()+hostFactory.getFindProductByCategoryAndPropertiesAPI(param)).then(function (res) {
                         ctrl.products = JSON.parse(JSON.stringify(res.data));
                         ctrl.backupProducts =  JSON.parse(JSON.stringify(ctrl.products));
-                        console.log(ctrl.products)
                     }).catch(function (error) {
                         console.log(error);
                         ctrl.products = [];
@@ -96,7 +98,7 @@
             };
             ctrl.description = "";
             ctrl.backupProducts = [];
-        }
+        };
 
     }];
 

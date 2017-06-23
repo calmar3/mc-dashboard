@@ -23,7 +23,7 @@
                 <div class="tab-content">
                     <div class="tab-pane"  ng-class="{'active': ctrl.customizations[ctrl.selectedTab].toLowerCase() === 'prezzi' }" >
 
-                        <div class="row" class="row" style="margin-top: 5%;" ng-style>
+                        <div class="row" class="row" style="margin-top: 5%;" ng-style ng-if="ctrl.customizations[ctrl.selectedTab].toLowerCase()==='prezzi'" ng-init="ctrl.loadCategories()">
                             <div class="col-lg-3 col-md-3 col-xs-10 col-lg-offset-1 col-md-offset-1 col-xs-offset-1">
                                 <label><span style="font-weight:normal!important;">Categoria</span></label>
                                 <select ng-options ="category.id as category.id for category in ctrl.categories" ng-model="ctrl.category" class="form-control">
@@ -110,11 +110,13 @@
                         </div>
 
                     </div>
-                    <div class="tab-pane"  ng-class="{'active': ctrl.customizations[ctrl.selectedTab].toLowerCase() === 'fornitori' }" >
-                        promo
+                    <div class="tab-pane"  ng-class="{'active': ctrl.customizations[ctrl.selectedTab].toLowerCase() === 'fornitori' }"   >
+                        <div class="row" class="row" style="margin-top: 5%;" ng-style ng-if="ctrl.customizations[ctrl.selectedTab].toLowerCase()==='fornitori'" ng-init="ctrl.loadCategories('pippo')">
+                        </div>
                     </div>
                     <div class="tab-pane"  ng-class="{'active': ctrl.customizations[ctrl.selectedTab].toLowerCase() === 'promo' }" >
-                        fornitori
+                        <div class="row" class="row" style="margin-top: 5%;" ng-style ng-if="ctrl.customizations[ctrl.selectedTab].toLowerCase()==='promo'" ng-init="ctrl.loadExpiringProducts()">
+                        </div>
                     </div>
                 </div>
             </div>
