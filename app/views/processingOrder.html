@@ -235,6 +235,7 @@
                         <th>Prodotto</th>
                         <th>Quantità richiesta</th>
                         <th>Gestione spedizione</th>
+                        <th>Lotto selezionato</th>
                     </tr>
 
                     <tr ng-repeat="commEntry in ctrl.showOrder.batches">
@@ -245,9 +246,11 @@
                             </button>
                         </td>
                         <td>{{commEntry.quantity}}</td>
-                        <td ng-show="{{commEntry.delivered}} == true"> <span class="glyphicon glyphicon-ok" ></span></td>
-                        <td ng-show="{{commEntry.delivered}} == false"><button type="button" class="btn btn-primary" ng-click="ctrl.batchSetting(commEntry)" data-toggle="modal" data-target="#modal-batchSetting">Gestisci</button>
+                        <td ng-show="{{commEntry.delivered}} == true || {{commEntry.delivered}} == ready "> <span class="glyphicon glyphicon-ok" ></span> Prodotto Spedito!</td>
+                        <td ng-show="{{commEntry.delivered}} == false"><button type="button" class="btn btn-primary" ng-click="ctrl.batchSetting(commEntry,$index)" data-toggle="modal" data-target="#modal-batchSetting">Gestisci</button>
                         </td>
+                        <td><button ng-show="ctrl.selectedBatches[$index]" type="button" class="btn btn-success" ng-click="ctrl.descBatch = ctrl.selectedBatches[$index].batch" data-toggle="modal" data-target="#modal-batchDesc"> {{ctrl.selectedBatches[$index].name}} </button>
+                    </td>
                     </tr>
 
 
@@ -256,7 +259,7 @@
             </div>
         </div>
 
-        <button type="button" class="btn btn-primary pull-left" data-toggle="modal" data-target="#modal-confirmation">
+        <button type="button" class="btn btn-primary pull-left" ng-click="ctrl.sendBatches()">
             Conferma
         </button>
 
@@ -477,7 +480,8 @@
                                 <th>Prodotto</th>
                                 <th>Data di Spedizione</th>
                                 <th>Data di scadenza</th>
-                                <th>Quantità</th>
+                                <th>Quantità Disponibile</th>
+                                <th>Seleziona</th>
                             </tr>
 
 
@@ -485,9 +489,11 @@
                                 <td>{{batches.product.name}}</td>
                                 <td>{{batches.delDate}}</td>
                                 <td>{{batches.expDate}}</td>
-                                <td>{{batches.quantity}}</td>
+                                <td>{{batches.remaining}}</td>
+                                <td><input name="batchButton" type="radio" ng-model="ctrl.selectedBatch" ng-value="batches"></td>
                             </tr>
                         </table>
+
                     </div>
 
 
@@ -499,6 +505,7 @@
 
 
                     <div class="modal-footer">
+                        <button type="button" class="btn btn-primary pull-left" data-dismiss="modal" ng-click="ctrl.confermaLotto()" >Confirm</button>
                         <button type="button" class="btn btn-primary pull-left" data-dismiss="modal">Close</button>
                     </div>
                 </div>
@@ -508,6 +515,51 @@
         </div>
 
     </div>
+
+
+
+<div class="modal fade" id="modal-batchDesc" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span></button>
+                <h4 class="modal-title">Descrizione Lotto Selezionato</h4>
+            </div>
+            <div class="modal-body">
+                <div class="box-body table-responsive no-padding">
+                    <table class="table table-hover">
+                        <tr>
+                            <td>Nome Prodotto</td>
+                            <td>{{ctrl.descBatch.product.name}}</td>
+                        </tr>
+                        <tr>
+                            <td>Data di spedizione</td>
+                            <td>{{ctrl.descBatch.delDate}}</td>
+                        </tr>
+                        <tr>
+                            <td>Data di scadenza</td>
+                            <td>{{ctrl.descBatch.expDate}}</td>
+                        </tr>
+                        <tr>
+                            <td>Quantità rimanente</td>
+                            <td>{{ctrl.descBatch.remaining}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary pull-left" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+</div>
 
     </div>
 </div>

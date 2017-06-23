@@ -18,7 +18,6 @@
 
             ctrl.inCommissions = [];
 
-
             ctrl.commissions.forEach(function(entry) {
 
                 if(entry.commission.source == "FoodEmperors")
@@ -30,15 +29,9 @@
             });
 
 
-            console.log(ctrl.outCommissions);
-
-
-            console.log(ctrl.inCommissions);
-
-
-
             ctrl.showOrder = null;
 
+            ctrl.selectedBatches = [];
 
             /**
              * Serve a mostrare la tabella con la gestione dell'ordine, se è nullo mostra la lista degli ordini disponibili
@@ -46,11 +39,19 @@
              */
             ctrl.showOrderFn = function (order) {
 
-                if(order == null)
+                if(order == null) {
                     ctrl.showOrder = null;
-                else
+                    window.location.reload(true);
+
+                }else {
                     ctrl.showOrder = order;
 
+                    var i;
+                    for(i=0;i<order.batches.length;i++)
+                       ctrl.selectedBatches[i] = 0;
+
+                    console.log(ctrl.selectedBatches);
+                }
 
             }
 
@@ -117,7 +118,7 @@
 
 
 
-                    $http.post(hostFactory.getHost() + hostFactory.sendBatchAPI(), ctrl.deliveredProducts).then(function (response) {
+                    $http.post(hostFactory.getHost() + hostFactory.postBatchAPI(), ctrl.deliveredProducts).then(function (response) {
 
                     ctrl.showOrderFn(response.data);
 
@@ -175,13 +176,52 @@
             ctrl.despBatches = null;
 
 
-            ctrl.batchSetting = function(batch)
+            ctrl.descBatch = null;
+
+
+            ctrl.batchSetting = function(batch,index)
             {
 
+                ctrl.despBatches = null;
                 $http.post(hostFactory.getHost() + hostFactory.getCatalogueBatchesByProductAPI(), batch.product).then(function (response) {
 
                     ctrl.despBatches = response.data;
                     ctrl.getBatch = batch;
+                    ctrl.selectedBatch = null;
+
+                    ctrl.confermaLotto = function () {
+
+
+                        //SelectedBatch: Batch in ingresso
+                        //newBatch: Batch in uscita
+                        console.log(ctrl.selectedBatch);
+
+                        ctrl.newBatch = ctrl.getBatch;
+
+
+
+                        ctrl.newBatch.delDate = ctrl.currentDate();
+                        ctrl.newBatch.delivered ="ready";
+                        ctrl.newBatch.expDate = ctrl.selectedBatch.expDate;
+                        ctrl.newBatch.price = ctrl.selectedBatch.price;
+                        ctrl.selectedBatch.remaining -= ctrl.newBatch.quantity;
+
+                        var idx = ctrl.showOrder.batches.indexOf(ctrl.getBatch);
+
+                        ctrl.showOrder.batches.splice(idx,1,ctrl.newBatch);
+                        // ctrl.showOrder.batches.splice(idx,0,ctrl.newBatch);
+
+
+                        ctrl.selectedBatches.splice(index,1);
+
+                        var b = new Object();
+                        b.name = ctrl.newBatch.product.name;
+                        b.batch = ctrl.newBatch;
+                        b.ourBatch = ctrl.selectedBatch;
+                        ctrl.selectedBatches.splice(index,0,b);
+
+                    }
+
                 }).catch(function (error) {
                     console.log(error);
                 });
@@ -192,10 +232,55 @@
 
 
 
+            ctrl.sendBatches = function()
+            {
+
+                var batchToSend = [];
+
+                for (var i = 0; i < ctrl.selectedBatches.length; i ++ ){
+                    if(ctrl.selectedBatches[i].batch)
+                    {
+                        batchToSend.push(ctrl.selectedBatches[i].ourBatch);
+                        batchToSend.push(ctrl.selectedBatches[i].batch);
+                    }
+                }
+
+
+                console.log(ctrl.selectedBatches);
+
+                $http.post(hostFactory.getHost() + hostFactory.postBatchesAPI(), batchToSend).then(function (response) {
+
+
+
+                    ctrl.showOrderFn(null);
+
+
+
+                }).catch(function (error) {
+                    console.log(error);
+                });
+
+                }
+
+
+
         }).catch(function (error) {
             console.log(error);
         });
 
+
+         ctrl.currentDate = function()
+        {
+            var currentTime = new Date();
+            var month = currentTime.getMonth() + 1;
+            var day = currentTime.getDate();
+            var year = currentTime.getFullYear();
+            return(day  + "/" + month  + "/" + year);
+
+
+
+
+        }
 
     }];
 

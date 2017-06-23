@@ -16,22 +16,31 @@
 
         hostFactory.catalogueBatchesByProductAPI = "api/batch/getbatchesbyprod";
 
+        hostFactory.outBatchesAPI ="api/batch/sendBatches";
+
         hostFactory.getHost = getHostFn;
 
         hostFactory.getLoginAPI = getLoginAPIFn;
 
         hostFactory.getCommissionAPI = getCommissionAPIFn;
 
-        hostFactory.sendBatchAPI = sendBatchAPIFn;
+        hostFactory.postBatchAPI = postBatchAPIFn;
 
         hostFactory.getCatalogueBatchesByProductAPI = catalogueBatchesByProductAPIFn;
+
+        hostFactory.postBatchesAPI = postOutBatchesAPIFn;
+
+        function postOutBatchesAPIFn(){
+
+            return hostFactory.outBatchesAPI;
+        }
 
         function catalogueBatchesByProductAPIFn()
         {
             return hostFactory.catalogueBatchesByProductAPI;
         }
 
-        function sendBatchAPIFn()
+        function postBatchAPIFn()
         {
             return hostFactory.BatchAPI;
         }
