@@ -134,6 +134,55 @@
         params: {
             home: true
         }
+    }).state('Gestione Ordini', {
+        parent: 'site',
+        url: '/ordini',
+        data: {
+            roles: []
+        },
+        views: {
+            'page@': {
+                templateUrl: "views/commission.html",
+                controller: 'CommissionCtrl',
+                controllerAs: 'ctrl'
+            }
+        },
+        params: {
+            home: true
+        }
+    }).state('Gestione Account', {
+        parent: 'site',
+        url: '/account',
+        data: {
+            roles: []
+        },
+        views: {
+            'page@': {
+                templateUrl: "views/account.html",
+                controller: 'AccountCtrl',
+                controllerAs: 'ctrl'
+            }
+        },
+        params: {
+            home: true
+        }
+    })
+    .state('Gestione Magazzini Periferici', {
+      parent: 'site',
+      url: '/magazzini_periferici',
+      data: {
+        roles: []
+      },
+      views: {
+        'page@': {
+          templateUrl: "views/peripheralWarehouse.html",
+          controller: 'PeripheralWarehouseCtrl',
+          controllerAs: 'ctrl'
+        }
+      },
+      params: {
+        home: true
+      }
     })
 
   }

@@ -29,6 +29,7 @@
 
         ];
 
+        ctrl.signout = signoutFn;
 
         $scope.$watch(function () {
             return userFactory.user;
@@ -55,6 +56,15 @@
 
                 ctrl.openmenu = !ctrl.openmenu;
             }
+        }
+
+        function signoutFn() {
+            if (ctrl.user != null) {
+                ctrl.user = null;
+            }
+
+            ctrl.menulist = [];
+            ctrl.go("Login");
         }
 
 

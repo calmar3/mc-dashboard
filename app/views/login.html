@@ -11,11 +11,11 @@
                     <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-xs-10 col-xs-offset-1" style="margin-top:20px; margin-bottom:20px;">
                         <div class="form-group">
                             <label for="nomeUtente">Nome utente</label>
-                            <input type="text" class="form-control" id="nomeUtente" placeholder="Inserire nome utente..." ng-model="ctrl.username">
+                            <input ng-keyup="$event.keyCode == 13 && ctrl.login()" type="text" class="form-control" id="nomeUtente" placeholder="Inserire nome utente..." ng-model="ctrl.username">
                         </div>
                         <div class="form-group">
                             <label for="pwd">Password</label>
-                            <input type="password" class="form-control" id="pwd" placeholder="Inserire password..." ng-model="ctrl.password">
+                            <input ng-keyup="$event.keyCode == 13 && ctrl.login()"  type="password" class="form-control" id="pwd" placeholder="Inserire password..." ng-model="ctrl.password">
                         </div>
 
                         <div class="callout callout-danger" ng-if="ctrl.invalidLogin">

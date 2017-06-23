@@ -18,5 +18,6 @@ angular
     'ui.router',
     'angular-flot',
     'bw.paging',
-      'ui.bootstrap'
+      'ui.bootstrap',
+      'ui.select'
   ]);
