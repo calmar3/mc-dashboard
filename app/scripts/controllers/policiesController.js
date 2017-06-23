@@ -5,38 +5,77 @@
 
         var ctrl = this;
 
-        ctrl.customizations = ["Prezzi","Fornitori","Promo"];
+        ctrl.customizations = ["Prodotti","Fornitori","Promo"];
 
         ctrl.selectedTab = 0;
 
+        ctrl.entries = [10,50,100,200];
+
+        ctrl.searchText="";
+
+        ctrl.show= ctrl.entries[0];
+
         ctrl.switchTab = switchTabFn;
+
+        ctrl.pagingAction = pagingActionFn;
 
         ctrl.products = [];
 
         ctrl.getProducts = getProductsFn;
 
-        ctrl.setCharge = setChargeFn;
+        ctrl.updateProduct = updateProductFn;
+
+        ctrl.updateBatches = updateBatchesFn;
 
         ctrl.loadCategories = loadCategoriesFn;
+
+        ctrl.getExpiringBatches = getExpiringBatchesFn;
+
+        ctrl.cleanChargeView = cleanChargeViewFn;
+
+        ctrl.searchFilter = searchFilterFn;
 
         ctrl.description = "";
 
         ctrl.backupProducts = [];
 
-        ctrl.product = {
-            charge : 0
-        };
+        ctrl.expiringBatches = [];
+
+        ctrl.shift = 0;
+
+        ctrl.currentPage=1;
 
         ctrl.loadCategories();
 
-        function setChargeFn() {
+        function updateBatchesFn() {
+            $http.put(hostFactory.getHost()+hostFactory.getBatchesAPI(),ctrl.expBatches).then(function (res) {
+                ctrl.success = true;
+                setTimeout(function () {
+                    ctrl.success = null;
+                    cleanPagination();
+                    ctrl.getExpiringBatches();
+                    $scope.$apply();
+                },1500);
+            }).catch(function (error) {
+                console.log(error);
+                ctrl.error = true;
+                setTimeout(function () {
+                    ctrl.error = null;
+                    cleanPagination();
+                    $scope.$apply();
+                },1500)
+
+            });
+        }
+
+        function updateProductFn() {
             if (ctrl.charge && ctrl.charge >= 0.01 && ctrl.charge <= 1 && ctrl.product)
                 ctrl.product.charge = ctrl.charge;
             $http.put(hostFactory.getHost()+hostFactory.getProductAPI(),ctrl.product).then(function (res) {
                 ctrl.success = true;
                setTimeout(function () {
                    ctrl.success = null;
-                   cleanChargeView();
+                   ctrl.cleanChargeView();
                    $scope.$apply();
                },1500);
             }).catch(function (error) {
@@ -44,17 +83,23 @@
                 ctrl.error = true;
                 setTimeout(function () {
                     ctrl.error = null;
-                    cleanChargeView();
+                    ctrl.cleanChargeView();
                     $scope.$apply();
                 },1500)
 
             });
             ctrl.charge = null;
-
         }
 
+        function cleanPagination() {
+            ctrl.shift = 0;
+            ctrl.currentPage = 1;
+            ctrl.pagingAction(1,ctrl.show);
+        }
         function switchTabFn(index) {
-            cleanChargeView();
+            ctrl.cleanChargeView();
+            ctrl.show = ctrl.entries[0];
+            cleanPagination();
             ctrl.selectedTab = index;
         }
 
@@ -68,7 +113,6 @@
 
 
         function getProductsFn(search) {
-
             if (ctrl.description.length > search.length)
                 ctrl.products =  JSON.parse(JSON.stringify(ctrl.backupProducts));
             ctrl.description = search;
@@ -88,17 +132,54 @@
             }
             else
                 return;
-
         }
 
-        function cleanChargeView() {
+        function cleanChargeViewFn() {
             ctrl.category = "";
-            ctrl.product = {
-                charge : 0
-            };
             ctrl.description = "";
             ctrl.backupProducts = [];
-        };
+            ctrl.product = null;
+        }
+
+        function getExpiringBatchesFn() {
+            $http.get(hostFactory.getHost()+hostFactory.getExpiringBatchesAPI()).then(function (res) {
+                ctrl.expiringBatches = JSON.parse(JSON.stringify(res.data));
+                ctrl.expBatches = JSON.parse(JSON.stringify(ctrl.expiringBatches));
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
+
+        function searchFilterFn(item) {
+            if (ctrl.searchText && !ctrl.searchText !== '') {
+                if (item.product.name.toString().toLowerCase().indexOf(ctrl.searchText.toLowerCase()) !== -1) {
+                    return true;
+                }
+                else if (item.product.stockist.toLowerCase().indexOf(ctrl.searchText.toLowerCase()) !== -1) {
+                    return true;
+                }
+                else if(item.product.description.toLowerCase().indexOf(ctrl.searchText.toLowerCase()) !== -1){
+                    return true;
+                }
+                else if(item.sale && item.sale.toLowerCase().indexOf(ctrl.searchText.toLowerCase()) !== -1){
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }else{
+                return true;
+            }
+        }
+
+        function pagingActionFn( page, pageSize) {
+
+            ctrl.shift = Math.floor(pageSize*(page-1));
+            ctrl.expBatches = JSON.parse(JSON.stringify(ctrl.expiringBatches));
+            ctrl.expBatches = ctrl.expBatches.splice(ctrl.shift,pageSize);
+            ctrl.currentPage = page;
+        }
+
 
     }];
 

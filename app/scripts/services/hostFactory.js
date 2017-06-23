@@ -24,6 +24,10 @@
 
         hostFactory.productAPI = "api/product";
 
+        hostFactory.expiringBatchesAPI = "api/batches/expiring";
+
+        hostFactory.batchesAPI = "api/batches";
+
         hostFactory.getSaveDeleteUpdateCommissionAPI = getSaveDeleteUpdateCommissionAPIFn;
 
         hostFactory.getHost = getHostFn;
@@ -41,6 +45,18 @@
         hostFactory.getLeafCategoriesAPI = getLeafCategoriesAPIFn;
 
         hostFactory.getProductAPI = getProductAPIFn;
+
+        hostFactory.getExpiringBatchesAPI = getExpiringBatchesAPIFn;
+
+        hostFactory.getBatchesAPI = getBatchesAPIFn;
+
+        function getBatchesAPIFn() {
+            return hostFactory.batchesAPI;
+        }
+
+        function getExpiringBatchesAPIFn() {
+            return hostFactory.expiringBatchesAPI;
+        }
 
         function getProductAPIFn() {
             return hostFactory.productAPI;
@@ -68,7 +84,6 @@
         function getHostFn() {
             return hostFactory.host;
         }
-
 
         function getLoginAPIFn() {
             return hostFactory.loginAPI;

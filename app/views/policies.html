@@ -1,6 +1,6 @@
 <div class="row">
 
-    <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-xs-12">
+    <div class="col-lg-12  col-md-12  col-xs-12">
         <div class="box box-primary">
             <div class="box-header with-border">
 
@@ -21,9 +21,9 @@
                 </ul>
                 <!-- Tab panes -->
                 <div class="tab-content">
-                    <div class="tab-pane"  ng-class="{'active': ctrl.customizations[ctrl.selectedTab].toLowerCase() === 'prezzi' }" >
+                    <div class="tab-pane"  ng-class="{'active': ctrl.customizations[ctrl.selectedTab].toLowerCase() === 'prodotti' }" >
 
-                        <div class="row" class="row" style="margin-top: 5%;" ng-style ng-if="ctrl.customizations[ctrl.selectedTab].toLowerCase()==='prezzi'" ng-init="ctrl.loadCategories()">
+                        <div class="row" class="row" style="margin-top: 3%;" ng-style ng-if="ctrl.customizations[ctrl.selectedTab].toLowerCase()==='prodotti'" ng-init="ctrl.loadCategories()">
                             <div class="col-lg-3 col-md-3 col-xs-10 col-lg-offset-1 col-md-offset-1 col-xs-offset-1">
                                 <label><span style="font-weight:normal!important;">Categoria</span></label>
                                 <select ng-options ="category.id as category.id for category in ctrl.categories" ng-model="ctrl.category" class="form-control">
@@ -51,14 +51,14 @@
                         <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-xs-10 col-xs-offset-1">
                             <hr>
                         </div>
-                        <div class="row"  ng-if="ctrl.product">
-                            <div class="col-lg-5 col-md-5 col-xs-5  col-lg-offset-1 col-md-offset-1 col-xs-offset-1">
+                        <div class="row" >
+                            <div class="col-lg-5 col-md-5 col-xs-10  col-lg-offset-1 col-md-offset-1 col-xs-offset-1">
                                 <div class="form-group">
                                     <label for="name">Nome e Produttore</label>
                                     <input ng-disabled="true" type="text" class="form-control" id="name" placeholder="{{ctrl.product.name + ' ' + ctrl.product.stockist}}">
                                 </div>
                             </div>
-                            <div class="col-lg-5 col-md-5 col-xs-5 ">
+                            <div class="col-lg-5 col-md-5 col-xs-10 col-xs-offset-1 col-md-offset-0 col-lg-offset-0 ">
                                 <div class="form-group">
                                     <label for="price">Prezzo Unitario</label>
                                     <input ng-disabled="true"type="text" class="form-control" id="price" placeholder="{{ctrl.product.price | currency: '€'}}">
@@ -76,32 +76,34 @@
                                     <input ng-disabled="true" type="text" class="form-control" id="category" placeholder="{{ctrl.product.category.id}}">
                                 </div>
                             </div>
-                            <div class="col-lg-5 col-md-5 col-xs-10  col-xs-offset-1 col-md-offset-1 col-lg-offset-1">
+                            <div class="col-lg-5 col-md-5 col-xs-10  col-lg-offset-1 col-md-offset-1 col-xs-offset-1">
                                 <div class="form-group">
                                     <label for="charge">Ricarico</label>
-                                    <input ng-disabled="true" type="text" class="form-control" id="charge" placeholder="{{ctrl.product.charge*100}} %">
+                                    <input ng-disabled = "ctrl.product.name === null || ctrl.product.name===undefined" type="number" min="0.01" step="0.01" class="form-control" id="charge"  ng-model="ctrl.product.charge">
                                 </div>
                             </div>
-
                             <div class="col-lg-5 col-md-5 col-xs-10  col-xs-offset-1 col-md-offset-0 col-lg-offset-0">
-                                <label for="charge">Modifica:</label>
-                                <div class="input-group input-group-sm">
-                                    <input type="number" step="0.01" max="1.00" min="0.01" class="form-control" ng-model="ctrl.charge">
-                                    <span class="input-group-btn">
-                                <button type="button" class="btn btn-primary btn-flat" ng-disabled="ctrl.product.name === undefined" ng-click="ctrl.setCharge()">Applica</button>
-                                </span>
+                                <div class="form-group">
+                                    <label for="category">Pacchetto</label>
+                                    <input ng-disabled = "ctrl.product.name === null || ctrl.product.name===undefined" type="number" min="10" step="10" max="50" class="form-control" ng-model="ctrl.product.pack">
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-xs-12 col-md-12 col-lg-12 ">
-                                    <div ng-if="ctrl.error" class="callout callout-danger pull-right" style="height=50px">
+                                <div class="col-xs-10 col-md-10 col-lg-10 col-lg-offset-1 col-md-offset-1 col-xs-offset-1 ">
+                                    <button class="btn btn-warning pull-right" ng-click="ctrl.cleanChargeView()">Pulisci</button>
+                                    <button class="btn btn-primary pull-right" ng-click="ctrl.updateProduct()" style="margin-right: 3px;">Salva</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-10 col-md-10 col-lg-10 col-xs-offset-1 col-md-offset-1 col-lg-offset-1 ">
+                                    <div ng-if="ctrl.error" class="callout callout-danger pull-right" style="height:50px">
                                         <p>Errore nell'aggiornare il prodotto!</p>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-xs-10 col-md-10 col-lg-10 col-xs-offset-1 col-md-offset-1 col-lg-offset-1 ">
-                                    <div ng-if="ctrl.success" class="callout callout-success pull-right" style="height=50px">
+                                    <div ng-if="ctrl.success" class="callout callout-success pull-right" style="height:50px">
                                         <p>Prodotto aggiornato!</p>
                                     </div>
                                 </div>
@@ -111,17 +113,90 @@
 
                     </div>
                     <div class="tab-pane"  ng-class="{'active': ctrl.customizations[ctrl.selectedTab].toLowerCase() === 'fornitori' }"   >
-                        <div class="row" class="row" style="margin-top: 5%;" ng-style ng-if="ctrl.customizations[ctrl.selectedTab].toLowerCase()==='fornitori'" ng-init="ctrl.loadCategories('pippo')">
+                        <div class="row" class="row" style="margin-top: 5%;" ng-style ng-if="ctrl.customizations[ctrl.selectedTab].toLowerCase()==='fornitori'" >
                         </div>
                     </div>
                     <div class="tab-pane"  ng-class="{'active': ctrl.customizations[ctrl.selectedTab].toLowerCase() === 'promo' }" >
-                        <div class="row" class="row" style="margin-top: 5%;" ng-style ng-if="ctrl.customizations[ctrl.selectedTab].toLowerCase()==='promo'" ng-init="ctrl.loadExpiringProducts()">
+                        <div class="row" class="row"  ng-style ng-if="ctrl.customizations[ctrl.selectedTab].toLowerCase()==='promo'" ng-init="ctrl.getExpiringBatches()">
+                            <div class="col-lg-12 col-xs-12 col-md-12">
+
+                                <div class="row" style="margin-top: 2%">
+                                    <div class="col-xs-6 col-md-6 col-lg-6"><label>Entries: </label>
+                                        <select class="form-control" style="width:50px;height:30px;display:inline;"
+                                                ng-options="entry for entry in ctrl.entries"
+                                                ng-model="ctrl.show">
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-6 col-md-6 col-lg-6"><span class="pull-right"><input ng-model="ctrl.searchText" class="form-control" placeholder="Search..."  ></span>
+                                    </div>
+                                </div>
+                                <h4>Lotti:</h4>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <tbody><tr>
+                                            <th>Prodotto</th>
+                                            <th>Proprieta Prodotto</th>
+                                            <th>Azienda</th>
+                                            <th>Prezzo Unit.</th>
+                                            <th>Rimanenze</th>
+                                            <th>Prezzo totale</th>
+                                            <th>Data Scadenza</th>
+                                            <th>Sconto</th>
+                                        </tr>
+                                        <tr  ng-repeat="batch in ctrl.expBatches | filter:ctrl.searchFilter | limitTo: ctrl.show">
+                                            <td>{{batch.product.name}}</td>
+                                            <td><span class="label label-success" ng-repeat="property in batch.product.properties">{{property}}</span></td>
+                                            <td>{{batch.product.stockist}}</td>
+                                            <td>{{batch.product.price | currency:'€'}}</td>
+                                            <td>{{batch.remaining}}</td>
+                                            <td>{{batch.price | currency:'€'}}</td>
+                                            <td>{{batch.expDate}}</td>
+                                            <td><input type="number" min="0.00" max="1" step="0.01" ng-model="batch.sale"> </td>
+                                        </tr>
+                                        </tbody></table>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-5 col-md-5 col-xs-12">
+                                        Showing {{ctrl.shift+1}} to {{ctrl.shift+ctrl.show}} of {{ctrl.expBatches.length}} entries<br>
+                                    </div>
+                                    <div class="col-lg-7 col-xs-12">
+                                        <span class="pull-right">
+                                          <div paging
+                                               page="ctrl.currentPage"
+                                               page-size="ctrl.show"
+                                               total="ctrl.expiringBatches.length"
+                                               paging-action="ctrl.pagingAction(page, pageSize)">
+                                          </div>
+                                        </span>
+                                    </div>
+                                </div><hr>
+                                    <div class="row">
+                                        <div class="col-xs-12 col-md-12 col-lg-12 ">
+                                            <button class="btn btn-primary pull-right" ng-click="ctrl.updateBatches()" >Salva</button>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-top: 1px;">
+                                        <div class="col-xs-12 col-md-12 col-lg-12">
+                                            <div ng-if="ctrl.error" class="callout callout-danger pull-right" style="height:50px;">
+                                                <p>Errore nell'aggiornare i lotti!</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-top: 1px;">
+                                        <div class="col-xs-12 col-md-12 col-lg-12  ">
+                                            <div ng-if="ctrl.success" class="callout callout-success pull-right" style="height:50px">
+                                                <p>Lotti aggiornati!</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
 
     </div>
-
-</div>

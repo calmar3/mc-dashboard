@@ -134,9 +134,7 @@
             data.commission.date = today;
             data.commission.number = dd+mm+yyyy;
             for (var i = 0 ; i < data.batches.length ; i++){
-                if (data.batches[i].product.categories !== null || data.batches[i].product.categories !== undefined ||
-                    data.batches[i].product.categories.length !== 0 )
-                    delete data.batches[i].product.categories;
+                data.batches[i].price = data.batches[i].number*data.batches[i].quantity*data.batches[i].product.price;
             }
             $http.post(hostFactory.getHost()+hostFactory.getSaveDeleteUpdateCommissionAPI(),data).then(function (response) {
                 loadCommissions();
@@ -148,6 +146,7 @@
                 },1500);
 
             }).catch(function (error) {
+                console.log(error);
                 ctrl.error = true;
                 setTimeout(function () {
                     ctrl.error = false;
@@ -173,9 +172,7 @@
                 "commission":order
             };
             for (var i = 0 ; i < data.batches.length ; i++){
-                if (data.batches[i].product.categories !== null || data.batches[i].product.categories !== undefined ||
-                    data.batches[i].product.categories.length !== 0 )
-                    delete data.batches[i].product.categories;
+                data.batches[i].price = data.batches[i].number*data.batches[i].quantity*data.batches[i].product.price;
             }
             $http.put(hostFactory.getHost()+hostFactory.getSaveDeleteUpdateCommissionAPI(),data).then(function (response) {
                 loadCommissions();
@@ -187,6 +184,7 @@
                 },1500);
 
             }).catch(function (error) {
+                console.log(error);
                 ctrl.error = true;
                 setTimeout(function () {
                     ctrl.error = false;
@@ -216,11 +214,11 @@
                     product:null
                 };
             }else{
-                    commission.batches[i].quantity = ctrl.selectedBatch.quantity;
-                    ctrl.selectedBatch = {
-                        quantity:ctrl.quantities[0],
-                        product:null
-                    };
+                commission.batches[i].quantity = ctrl.selectedBatch.quantity;
+                ctrl.selectedBatch = {
+                    quantity:ctrl.quantities[0],
+                    product:null
+                };
             }
 
         }
@@ -234,7 +232,7 @@
             ctrl.selectedBatch = batch;
             for (var i = 0 ; i < ctrl.products.length ; i++){
                 if (ctrl.products[i].name === ctrl.selectedBatch.product.name &&
-                ctrl.products[i].stockist === ctrl.selectedBatch.product.stockist){
+                    ctrl.products[i].stockist === ctrl.selectedBatch.product.stockist){
                     ctrl.selectedBatch.product = ctrl.products[i];
                 }
             }
