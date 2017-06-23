@@ -1,14 +1,13 @@
-
 (function() {
-    'use strict';
-    angular.module('mc-dashboard').factory('hostFactory', hostFactory);
+  'use strict';
+  angular.module('mc-dashboard').factory('hostFactory', hostFactory);
 
-    function hostFactory() {
-        var hostFactory = {};
+  function hostFactory() {
+    var hostFactory = {};
 
-        hostFactory.host = "http://localhost:8080/";
+    hostFactory.host = "http://localhost:8080/";
 
-        hostFactory.loginAPI = "api/user/login";
+    hostFactory.loginAPI = "api/user/login";
 
         hostFactory.userAPI = "api/user";
 
@@ -25,9 +24,29 @@
         hostFactory.getSaveDeleteUpdateCommissionAPI = getSaveDeleteUpdateCommissionAPIFn;
 
         hostFactory.getHost = getHostFn;
+    hostFactory.allPeripheralWarehouseAPI = "api/peripheralWarehouse";
 
-        hostFactory.getLoginAPI = getLoginAPIFn;
+    hostFactory.saveDeleteUpdatePeripheralWarehouseAPI = "api/peripheralWarehouse";
 
+    hostFactory.getSaveDeleteUpdatePeripheralWarehouseAPI = getSaveDeleteUpdatePeripheralWarehouseAPIFn;
+
+    hostFactory.getHost = getHostFn;
+
+    hostFactory.getLoginAPI = getLoginAPIFn;
+
+    hostFactory.getAllPeripheralWarehouseAPI = getAllPeripheralWarehouseAPIFn;
+
+    function getSaveDeleteUpdatePeripheralWarehouseAPIFn() {
+      return hostFactory.saveDeleteUpdatePeripheralWarehouseAPI;
+    }
+
+    function getAllPeripheralWarehouseAPIFn() {
+      return hostFactory.allPeripheralWarehouseAPI;
+    }
+
+    function getHostFn() {
+      return hostFactory.host;
+    }
         hostFactory.getUserAPI = getUserAPIFn;
 
         hostFactory.getAllCommissionsAPI = getAllCommissionsAPIFn;
@@ -62,9 +81,9 @@
         }
 
 
-        function getLoginAPIFn() {
-            return hostFactory.loginAPI;
-        }
+    function getLoginAPIFn() {
+      return hostFactory.loginAPI;
+    }
 
         function getUserAPIFn() {
             return hostFactory.userAPI;
@@ -72,6 +91,6 @@
 
         return hostFactory;
     }
-
+    return hostFactory;
 
 }());

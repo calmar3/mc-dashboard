@@ -150,7 +150,24 @@
         params: {
             home: true
         }
-    });
+    })
+    .state('Gestione Magazzini Periferici', {
+      parent: 'site',
+      url: '/magazzini_periferici',
+      data: {
+        roles: []
+      },
+      views: {
+        'page@': {
+          templateUrl: "views/peripheralWarehouse.html",
+          controller: 'PeripheralWarehouseCtrl',
+          controllerAs: 'ctrl'
+        }
+      },
+      params: {
+        home: true
+      }
+    })
 
   }
 

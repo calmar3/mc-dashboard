@@ -1,0 +1,326 @@
+<div class="row" ng-show="ctrl.mode === null">
+  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12 ">
+    <div class="box box-primary">
+      <div class="box-header with-border">
+        <h3 class="box-title">Lista Magazzini Periferici</h3>
+        <div class="box-tools">
+          <div class="input-group input-group-sm" style="width: 150px;">
+            <input name="table_search" class="form-control pull-right" placeholder="Search" type="text" ng-model="ctrl.searchText">
+
+            <div class="input-group-btn">
+              <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <!-- /.box-header -->
+      <div class="box-body">
+        <div class="alert alert-warning alert-dismissible" ng-show="!ctrl.clicked">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+          <i class="icon fa fa-info"></i>Selezionare un magazzino periferico per poterlo eliminare o modificare.
+        </div>
+        <div class="table-responsive">
+          <table class="table table-bordered table-condensed table-hover">
+            <tbody><tr>
+              <th style="width: 10px">ID</th>
+              <th>Nome</th>
+              <th>Indirizzo</th>
+              <th>Telefono</th>
+              <th>Gestore Magazzino</th>
+              <th>Numero dipendenti</th>
+              <th>Partita Iva</th>
+              <th>Indirizzo Server</th>
+            </tr>
+            <tr style="cursor:pointer;" ng-repeat="peripheralWarehouse in ctrl.peripheralWarehouse | filter:ctrl.searchFilter" ng-class="{'selected': ctrl.selected === peripheralWarehouse}"
+                ng-click="ctrl.select(peripheralWarehouse)">
+              <th>{{peripheralWarehouse.peripheralWarehouse.id}}</th>
+              <td>{{peripheralWarehouse.peripheralWarehouse.name}}</td>
+              <td>{{peripheralWarehouse.peripheralWarehouse.address}}</td>
+              <td>{{peripheralWarehouse.peripheralWarehouse.phone}}</td>
+              <td>{{peripheralWarehouse.peripheralWarehouse.warehouseManager}}</td>
+              <td>{{peripheralWarehouse.peripheralWarehouse.employeesNumbers}}</td>
+              <td>{{peripheralWarehouse.peripheralWarehouse.pIVA}}</td>
+              <td>{{peripheralWarehouse.peripheralWarehouse.serverAddress}}</td>
+            </tr>
+
+            </tbody></table>
+        </div>
+      </div>
+      <!-- /.box-body -->
+      <div class="box-footer clearfix">
+        <div class="btn-group pull-right">
+          <button type="button" class="btn btn-default" ng-click="ctrl.switchMode('add')" >Aggiungi</button>
+          <button type="button" class="btn btn-default" ng-click="ctrl.switchMode('modify')" ng-disabled = "ctrl.selected === null">Modifica</button>
+          <button type="button" class="btn btn-default" ng-click="ctrl.switchMode('delete')" ng-disabled = "ctrl.selected === null">Elimina</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+
+
+
+<div class="row" ng-show="ctrl.mode == 'modify'">
+   <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12 ">
+     <div class="box box-primary">
+       <div class="box-header with-border">
+         <h3 class="box-title">Modifica Magazzino Periferico</h3>
+       </div>
+       <!-- /.box-header -->
+       <div class="box-body">
+         <h5>
+           <b> Sei sicuro di voler modificare il magazzino periferico?</b>
+         </h5>
+         <h5>Magazzino Periferico:</h5>
+         <div class="form-group">
+           <div class="row">
+             <div class="col-md-4">
+             </div>
+           </div>
+           <div class="row">
+             <div class="col-md-4">
+               <div class="form-group">
+                 <label><span style="font-weight:normal!important;">ID</span></label>
+                 <input type="text" class="form-control" ng-model="ctrl.selected.peripheralWarehouse.id" >
+               </div>
+             </div>
+             <div class="col-md-4">
+               <div class="form-group">
+                 <label><span style="font-weight:normal!important;">Nome</span></label>
+                 <input type="text" class="form-control"  ng-model="ctrl.selected.peripheralWarehouse.name" >
+               </div>
+             </div>
+             <div class="col-md-4">
+               <div class="form-group">
+                 <label><span style="font-weight:normal!important;">Indirizzo</span></label>
+                 <input type="text" class="form-control" ng-model=" ctrl.selected.peripheralWarehouse.address" >
+               </div>
+             </div>
+           </div>
+           <div class="row">
+             <div class="col-md-4">
+               <div class="form-group">
+                 <label><span style="font-weight:normal!important;">Gestore Magazzino</span></label>
+                 <input type="text" class="form-control" ng-model=" ctrl.selected.peripheralWarehouse.warehouseManager" >
+               </div>
+             </div>
+             <div class="col-md-4">
+               <div class="form-group">
+                 <label><span style="font-weight:normal!important;">Numero Dipendenti</span></label>
+                 <input type="text" class="form-control"  ng-model=" ctrl.selected.peripheralWarehouse.employeesNumbers" >
+               </div>
+             </div>
+             <div class="col-md-4">
+               <div class="form-group">
+                <label><span style="font-weight:normal!important;">Telefono</span></label>
+                 <input type="text" class="form-control"  ng-model=" ctrl.selected.peripheralWarehouse.phone" >
+               </div>
+             </div>
+             <div class="col-md-4">
+               <div class="form-group">
+                 <label><span style="font-weight:normal!important;">Partita IVA</span></label>
+                 <input type="text" class="form-control"  ng-model=" ctrl.selected.peripheralWarehouse.pIVA" >
+               </div>
+             </div>
+             <div class="col-md-4">
+               <div class="form-group">
+                 <label><span style="font-weight:normal!important;">Indirizzo Server</span></label>
+                 <input type="text" class="form-control"  ng-model=" ctrl.selected.peripheralWarehouse.serverAddress" >
+               </div>
+             </div>
+           </div>
+         </div>
+       </div>
+       <!-- /.box-body -->
+       <div class="box-footer clearfix">
+         <div class="btn-group pull-right">
+           <button type="button" class="btn btn-default" ng-click="ctrl.updatePeripheralWarehouse()" >Salva</button>
+           <button type="button" class="btn btn-default" ng-click="ctrl.switchMode(null)" >Indietro</button>
+         </div>
+         <br><br>
+         <div class="row">
+           <div class="col-xs-12 col-md-12 col-lg-12 ">
+             <div ng-if="ctrl.error" class="callout callout-danger pull-right" style="height=50px">
+               <p>Errore nel modificare il magazzino periferico!</p>
+             </div>
+           </div>
+         </div>
+         <div class="row">
+           <div class="col-xs-12 col-md-12 col-lg-12 ">
+             <div ng-if="ctrl.success" class="callout callout-success pull-right" style="height=50px">
+               <p>Magazzino Periferico modificato!</p>
+             </div>
+           </div>
+         </div>
+       </div>
+      </div>
+    </div>
+ </div>
+
+
+<div class="row" ng-show="ctrl.mode === 'add'">
+  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12 ">
+    <div class="box box-primary">
+      <div class="box-header with-border">
+        <h3 class="box-title">Crea Magazzino Periferico</h3>
+      </div>
+      <!-- /.box-header -->
+      <div class="box-body">
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-4">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label><span style="font-weight:normal!important;">ID</span></label>
+                <input type="text" class="form-control" ng-model="ctrl.newPeripheralWarehouse.id" >
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label><span style="font-weight:normal!important;">Nome</span></label>
+                <input type="text" class="form-control" ng-model="ctrl.newPeripheralWarehouse.name">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label><span style="font-weight:normal!important;">Indirizzo</span></label>
+                <input type="text" class="form-control" ng-model="ctrl.newPeripheralWarehouse.address" >
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                  <label><span style="font-weight:normal!important;">Gestore Magazzino</span></label>
+                  <input type="text" class="form-control" ng-model="ctrl.newPeripheralWarehouse.warehouseManager" >
+                 </div>
+            </div>
+            <div class="col-md-4">
+               <div class="form-group">
+                 <label><span style="font-weight:normal!important;">Numero Dipendenti</span></label>
+                 <input type="text" class="form-control" ng-model="ctrl.newPeripheralWarehouse.employeesNumbers" >
+               </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label><span style="font-weight:normal!important;">Telefono</span></label>
+                <input type="text" class="form-control" ng-model="ctrl.newPeripheralWarehouse.phone" >
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label><span style="font-weight:normal!important;">Partita IVA</span></label>
+                <input type="text" class="form-control" ng-model="ctrl.newPeripheralWarehouse.pIVA" >
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label><span style="font-weight:normal!important;">Indirizzo Server</span></label>
+                <input type="text" class="form-control" ng-model="ctrl.newPeripheralWarehouse.serverAddress" >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /.box-body -->
+      <div class="box-footer clearfix">
+        <div class="btn-group pull-right">
+          <button type="button" class="btn btn-default" ng-click="ctrl.savePeripheralWarehouse()" >Salva</button>
+          <button type="button" class="btn btn-default" ng-click="ctrl.switchMode(null)" >Indietro</button>
+        </div>
+        <br><br>
+        <div class="row">
+          <div class="col-xs-12 col-md-12 col-lg-12 ">
+            <div ng-if="ctrl.error" class="callout callout-danger pull-right" style="height=50px">
+              <p>Errore nel creare il magazzino periferico!</p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 col-md-12 col-lg-12 ">
+            <div ng-if="ctrl.success" class="callout callout-success pull-right" style="height=50px">
+              <p>Magazzino Periferico creato!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<div class="row" ng-show="ctrl.mode === 'delete'">
+  <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12 ">
+    <div class="box box-primary">
+      <div class="box-header with-border">
+        <h3 class="box-title">Elimina Magazzino Periferico</h3>
+
+      </div>
+      <!-- /.box-header -->
+      <div class="box-body">
+        <h5>
+          <b> Sei sicuro di voler eliminare il magazzino periferico?</b>
+        </h5>
+        <h5>Magazzino Periferico:</h5>
+        <div class="table-responsive">
+          <table class="table table-bordered table-condensed table-hover">
+          <tbody><tr>
+            <th style="width: 10px">ID</th>
+            <th>Nome</th>
+            <th>Indirizzo</th>
+            <th>Telefono</th>
+            <th>Gestore Magazzino</th>
+            <th>Numero dipendenti</th>
+            <th>Partita IVA</th>
+            <th>Indirizzo Server</th>
+          </tr>
+          <tr >
+            <td>{{ctrl.selected.peripheralWarehouse.id}}</td>
+            <td>{{ctrl.selected.peripheralWarehouse.name}}</td>
+            <td>{{ctrl.selected.peripheralWarehouse.address}}</td>
+            <td>{{ctrl.selected.peripheralWarehouse.phone}}</td>
+            <td>{{ctrl.selected.peripheralWarehouse.warehouseManager}}</td>
+            <td>{{ctrl.selected.peripheralWarehouse.employeesNumbers}}</td>
+            <td>{{ctrl.selected.peripheralWarehouse.pIVA}}</td>
+            <td>{{ctrl.selected.peripheralWarehouse.serverAddress}}</td>
+
+          </tr>
+
+          </tbody></table>
+      </div>
+      <!-- /.box-body -->
+      <div class="box-footer clearfix">
+        <div class="btn-group pull-right">
+          <button type="button" class="btn btn-default" ng-click="ctrl.deletePeripheralWarehouse()">Elimina</button>
+          <button type="button" class="btn btn-default" ng-click="ctrl.switchMode(null)" ng-disabled = "ctrl.selected === null">Indietro</button>
+        </div><br><br>
+        <div class="row">
+          <div class="col-xs-12 col-md-12 col-lg-12 ">
+            <div ng-if="ctrl.error" class="callout callout-danger pull-right" style="height=50px">
+              <p>Errore nell'eliminazione!</p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 col-md-12 col-lg-12 ">
+            <div ng-if="ctrl.success" class="callout callout-success pull-right" style="height=50px">
+              <p>Magazzino Periferico Eliminato!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
