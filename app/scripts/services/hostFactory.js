@@ -1,5 +1,4 @@
-
-(function() {
+(function () {
     'use strict';
     angular.module('mc-dashboard').factory('hostFactory', hostFactory);
 
@@ -30,18 +29,18 @@
 
         hostFactory.catalogueBatchesByProductAPI = "api/batch/getbatchesbyprod";
 
-        hostFactory.outBatchesAPI ="api/batch/sendBatches";
+        hostFactory.outBatchesAPI = "api/batch/sendBatches";
 
         hostFactory.getHost = getHostFn;
-    hostFactory.allPeripheralWarehouseAPI = "api/peripheralWarehouse";
+        hostFactory.allPeripheralWarehouseAPI = "api/peripheralWarehouse";
 
-    hostFactory.saveDeleteUpdatePeripheralWarehouseAPI = "api/peripheralWarehouse";
+        hostFactory.saveDeleteUpdatePeripheralWarehouseAPI = "api/peripheralWarehouse";
 
-    hostFactory.getSaveDeleteUpdatePeripheralWarehouseAPI = getSaveDeleteUpdatePeripheralWarehouseAPIFn;
+        hostFactory.getSaveDeleteUpdatePeripheralWarehouseAPI = getSaveDeleteUpdatePeripheralWarehouseAPIFn;
 
-    hostFactory.getHost = getHostFn;
+        hostFactory.getHost = getHostFn;
 
-    hostFactory.getLoginAPI = getLoginAPIFn;
+        hostFactory.getLoginAPI = getLoginAPIFn;
 
         hostFactory.getCommissionAPI = getCommissionAPIFn;
 
@@ -51,39 +50,38 @@
 
         hostFactory.postBatchesAPI = postOutBatchesAPIFn;
 
-        function postOutBatchesAPIFn(){
+        function postOutBatchesAPIFn() {
 
             return hostFactory.outBatchesAPI;
         }
 
-        function catalogueBatchesByProductAPIFn()
-        {
+        function catalogueBatchesByProductAPIFn() {
             return hostFactory.catalogueBatchesByProductAPI;
         }
 
-        function postBatchAPIFn()
-        {
+        function postBatchAPIFn() {
             return hostFactory.BatchAPI;
         }
 
-        function getCommissionAPIFn(){
+        function getCommissionAPIFn() {
 
             return hostFactory.commissionAPI;
         }
 
-    hostFactory.getAllPeripheralWarehouseAPI = getAllPeripheralWarehouseAPIFn;
+        hostFactory.getAllPeripheralWarehouseAPI = getAllPeripheralWarehouseAPIFn;
 
-    function getSaveDeleteUpdatePeripheralWarehouseAPIFn() {
-      return hostFactory.saveDeleteUpdatePeripheralWarehouseAPI;
-    }
+        function getSaveDeleteUpdatePeripheralWarehouseAPIFn() {
+            return hostFactory.saveDeleteUpdatePeripheralWarehouseAPI;
+        }
 
-    function getAllPeripheralWarehouseAPIFn() {
-      return hostFactory.allPeripheralWarehouseAPI;
-    }
+        function getAllPeripheralWarehouseAPIFn() {
+            return hostFactory.allPeripheralWarehouseAPI;
+        }
 
-    function getHostFn() {
-      return hostFactory.host;
-    }
+        function getHostFn() {
+            return hostFactory.host;
+        }
+
         hostFactory.getUserAPI = getUserAPIFn;
 
         hostFactory.getAllCommissionsAPI = getAllCommissionsAPIFn;
@@ -113,14 +111,15 @@
         function getAllProductsAPIFn() {
             return hostFactory.allProductsAPI;
         }
+
         function getHostFn() {
             return hostFactory.host;
         }
 
 
-    function getLoginAPIFn() {
-      return hostFactory.loginAPI;
-    }
+        function getLoginAPIFn() {
+            return hostFactory.loginAPI;
+        }
 
         function getUserAPIFn() {
             return hostFactory.userAPI;
@@ -128,6 +127,7 @@
 
         return hostFactory;
     }
+
     return hostFactory;
 
 }());

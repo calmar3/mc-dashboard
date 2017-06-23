@@ -4,13 +4,13 @@
 (function () {
     'use strict';
 
-    var procOrdCtrl = ['$scope', '$rootScope', '$compile','$http','hostFactory', function ($scope, $rootScope, $compile,$http,hostFactory) {
+    var procOrdCtrl = ['$scope', '$rootScope', '$compile', '$http', 'hostFactory', function ($scope, $rootScope, $compile, $http, hostFactory) {
 
         var ctrl = this;
 
         console.log("processingOrderctrl");
 
-        $http.get(hostFactory.getHost()+hostFactory.getCommissionAPI()).then(function (response) {
+        $http.get(hostFactory.getHost() + hostFactory.getCommissionAPI()).then(function (response) {
 
             ctrl.commissions = response.data;
 
@@ -18,12 +18,12 @@
 
             ctrl.inCommissions = [];
 
-            ctrl.commissions.forEach(function(entry) {
+            ctrl.commissions.forEach(function (entry) {
 
-                if(entry.commission.source == "FoodEmperors")
+                if (entry.commission.source == "FoodEmperors")
                     ctrl.outCommissions.push(entry);
 
-                if(entry.commission.destination == "FoodEmperors")
+                if (entry.commission.destination == "FoodEmperors")
                     ctrl.inCommissions.push(entry);
 
             });
@@ -39,16 +39,16 @@
              */
             ctrl.showOrderFn = function (order) {
 
-                if(order == null) {
+                if (order == null) {
                     ctrl.showOrder = null;
                     window.location.reload(true);
 
-                }else {
+                } else {
                     ctrl.showOrder = order;
 
                     var i;
-                    for(i=0;i<order.batches.length;i++)
-                       ctrl.selectedBatches[i] = 0;
+                    for (i = 0; i < order.batches.length; i++)
+                        ctrl.selectedBatches[i] = 0;
 
                     console.log(ctrl.selectedBatches);
                 }
@@ -88,17 +88,15 @@
              * @param batch
              * @param status
              */
-            ctrl.toggle = function(batch,status)
-            {
+            ctrl.toggle = function (batch, status) {
 
-                if(status) {
+                if (status) {
                     batch.delivered = "true";
                     ctrl.deliveredProducts.push(batch);
                 }
-                else
-                {
+                else {
                     ctrl.idx = ctrl.deliveredProducts.indexOf(batch);
-                    ctrl.deliveredProducts.splice(ctrl.idx,1);
+                    ctrl.deliveredProducts.splice(ctrl.idx, 1);
 
                 }
 
@@ -115,10 +113,7 @@
                 console.log(ctrl.deliveredProducts);
 
 
-
-
-
-                    $http.post(hostFactory.getHost() + hostFactory.postBatchAPI(), ctrl.deliveredProducts).then(function (response) {
+                $http.post(hostFactory.getHost() + hostFactory.postBatchAPI(), ctrl.deliveredProducts).then(function (response) {
 
                     ctrl.showOrderFn(response.data);
 
@@ -138,18 +133,16 @@
              * @param batch
              * @param status
              */
-            ctrl.signalToggle = function(info)
-            {
+            ctrl.signalToggle = function (info) {
 
                 var idx = ctrl.checkSignaled.indexOf(info);
 
 
-                if(idx > -1) {
-                    ctrl.checkSignaled.splice(idx,1);
+                if (idx > -1) {
+                    ctrl.checkSignaled.splice(idx, 1);
 
                 }
-                else
-                {
+                else {
                     ctrl.checkSignaled.push(info);
                 }
 
@@ -165,8 +158,7 @@
             ctrl.collapsed = false;
 
 
-            ctrl.collapse = function(boh)
-            {
+            ctrl.collapse = function (boh) {
                 ctrl.collapsed = boh;
 
             }
@@ -179,8 +171,7 @@
             ctrl.descBatch = null;
 
 
-            ctrl.batchSetting = function(batch,index)
-            {
+            ctrl.batchSetting = function (batch, index) {
 
                 ctrl.despBatches = null;
                 $http.post(hostFactory.getHost() + hostFactory.getCatalogueBatchesByProductAPI(), batch.product).then(function (response) {
@@ -199,26 +190,25 @@
                         ctrl.newBatch = ctrl.getBatch;
 
 
-
                         ctrl.newBatch.delDate = ctrl.currentDate();
-                        ctrl.newBatch.delivered ="ready";
+                        ctrl.newBatch.delivered = "ready";
                         ctrl.newBatch.expDate = ctrl.selectedBatch.expDate;
                         ctrl.newBatch.price = ctrl.selectedBatch.price;
                         ctrl.selectedBatch.remaining -= ctrl.newBatch.quantity;
 
                         var idx = ctrl.showOrder.batches.indexOf(ctrl.getBatch);
 
-                        ctrl.showOrder.batches.splice(idx,1,ctrl.newBatch);
+                        ctrl.showOrder.batches.splice(idx, 1, ctrl.newBatch);
                         // ctrl.showOrder.batches.splice(idx,0,ctrl.newBatch);
 
 
-                        ctrl.selectedBatches.splice(index,1);
+                        ctrl.selectedBatches.splice(index, 1);
 
                         var b = new Object();
                         b.name = ctrl.newBatch.product.name;
                         b.batch = ctrl.newBatch;
                         b.ourBatch = ctrl.selectedBatch;
-                        ctrl.selectedBatches.splice(index,0,b);
+                        ctrl.selectedBatches.splice(index, 0, b);
 
                     }
 
@@ -227,19 +217,15 @@
                 });
 
 
-
             }
 
 
-
-            ctrl.sendBatches = function()
-            {
+            ctrl.sendBatches = function () {
 
                 var batchToSend = [];
 
-                for (var i = 0; i < ctrl.selectedBatches.length; i ++ ){
-                    if(ctrl.selectedBatches[i].batch)
-                    {
+                for (var i = 0; i < ctrl.selectedBatches.length; i++) {
+                    if (ctrl.selectedBatches[i].batch) {
                         batchToSend.push(ctrl.selectedBatches[i].ourBatch);
                         batchToSend.push(ctrl.selectedBatches[i].batch);
                     }
@@ -251,17 +237,14 @@
                 $http.post(hostFactory.getHost() + hostFactory.postBatchesAPI(), batchToSend).then(function (response) {
 
 
-
                     ctrl.showOrderFn(null);
-
 
 
                 }).catch(function (error) {
                     console.log(error);
                 });
 
-                }
-
+            }
 
 
         }).catch(function (error) {
@@ -269,22 +252,19 @@
         });
 
 
-         ctrl.currentDate = function()
-        {
+        ctrl.currentDate = function () {
             var currentTime = new Date();
             var month = currentTime.getMonth() + 1;
             var day = currentTime.getDate();
             var year = currentTime.getFullYear();
-            return(day  + "/" + month  + "/" + year);
-
-
+            return (day + "/" + month + "/" + year);
 
 
         }
 
     }];
 
-    procOrdCtrl.$inject = ['$scope', '$rootScope', '$compile','$http','hostFactory'];
+    procOrdCtrl.$inject = ['$scope', '$rootScope', '$compile', '$http', 'hostFactory'];
 
     angular.module('mc-dashboard').controller('procOrdCtrl', procOrdCtrl);
 
