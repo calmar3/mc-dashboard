@@ -1,13 +1,14 @@
+
 (function() {
-  'use strict';
-  angular.module('mc-dashboard').factory('hostFactory', hostFactory);
+    'use strict';
+    angular.module('mc-dashboard').factory('hostFactory', hostFactory);
 
-  function hostFactory() {
-    var hostFactory = {};
+    function hostFactory() {
+        var hostFactory = {};
 
-    hostFactory.host = "http://localhost:8080/";
+        hostFactory.host = "http://localhost:8080/";
 
-    hostFactory.loginAPI = "api/user/login";
+        hostFactory.loginAPI = "api/user/login";
 
         hostFactory.userAPI = "api/user";
 
@@ -23,6 +24,14 @@
 
         hostFactory.getSaveDeleteUpdateCommissionAPI = getSaveDeleteUpdateCommissionAPIFn;
 
+        hostFactory.commissionAPI = "/api/commissions";
+
+        hostFactory.BatchAPI = "api/batch/saveBatches";
+
+        hostFactory.catalogueBatchesByProductAPI = "api/batch/getbatchesbyprod";
+
+        hostFactory.outBatchesAPI ="api/batch/sendBatches";
+
         hostFactory.getHost = getHostFn;
     hostFactory.allPeripheralWarehouseAPI = "api/peripheralWarehouse";
 
@@ -33,6 +42,34 @@
     hostFactory.getHost = getHostFn;
 
     hostFactory.getLoginAPI = getLoginAPIFn;
+
+        hostFactory.getCommissionAPI = getCommissionAPIFn;
+
+        hostFactory.postBatchAPI = postBatchAPIFn;
+
+        hostFactory.getCatalogueBatchesByProductAPI = catalogueBatchesByProductAPIFn;
+
+        hostFactory.postBatchesAPI = postOutBatchesAPIFn;
+
+        function postOutBatchesAPIFn(){
+
+            return hostFactory.outBatchesAPI;
+        }
+
+        function catalogueBatchesByProductAPIFn()
+        {
+            return hostFactory.catalogueBatchesByProductAPI;
+        }
+
+        function postBatchAPIFn()
+        {
+            return hostFactory.BatchAPI;
+        }
+
+        function getCommissionAPIFn(){
+
+            return hostFactory.commissionAPI;
+        }
 
     hostFactory.getAllPeripheralWarehouseAPI = getAllPeripheralWarehouseAPIFn;
 
