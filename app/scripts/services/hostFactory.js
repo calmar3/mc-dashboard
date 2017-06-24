@@ -21,6 +21,8 @@
 
         hostFactory.leafCategories = "api/categories/leaf";
 
+        hostFactory.deliveryNoteAPI = "api/delivery";
+
         hostFactory.getSaveDeleteUpdateCommissionAPI = getSaveDeleteUpdateCommissionAPIFn;
 
         hostFactory.getHost = getHostFn;
@@ -35,6 +37,8 @@
     hostFactory.getLoginAPI = getLoginAPIFn;
 
     hostFactory.getAllPeripheralWarehouseAPI = getAllPeripheralWarehouseAPIFn;
+
+    hostFactory.getSaveDeleteUpdateDeliveryAPI = getSaveDeleteUpdateDeliveryAPIFn;
 
     function getSaveDeleteUpdatePeripheralWarehouseAPIFn() {
       return hostFactory.saveDeleteUpdatePeripheralWarehouseAPI;
@@ -78,6 +82,10 @@
         }
         function getHostFn() {
             return hostFactory.host;
+        }
+
+        function getSaveDeleteUpdateDeliveryAPIFn() {
+            return hostFactory.deliveryNoteAPI;
         }
 
 
