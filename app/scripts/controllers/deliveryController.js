@@ -72,16 +72,6 @@
         function genDeliveryNoteFn(commissionDto) {
             ctrl.currentCommissionDto = commissionDto;
             ctrl.currentBatches = ctrl.batchDel[commissionDto.commission.number];
-
-            /*var doc = new jsPDF();
-            var elementHandler = {
-                '#ignorePDF': function (element, renderer) {
-                    return true;
-                }
-            };
-            var source = window.document.getElementById("modal-deliveryConfirm")[0];
-            doc.fromHTML(source, 15, 15, {'width': 180, 'elementHandlers': elementHandler});
-            doc.output("dataurlnewwindow");*/
         }
 
         function getDate() {
@@ -107,10 +97,30 @@
             return day + "/" + month + "/" + year;
         }
 
+        function genPdf() {
+            var doc = new jsPDF('p', 'pt');
+            var text = "Documento di trasporto" + " - " + ctrl.deliveryNote.business + " - " + ctrl.deliveryNote.date;
+
+            var columns = ["Prodotto", "Quantità", "Lotto", "Prezzo", "Descrizione"];
+            var rows = [];
+            for (var i = 0; i < ctrl.currentBatches.length; i++) {
+                rows.push([ctrl.currentBatches[i].product.name, ctrl.currentBatches[i].quantity, ctrl.currentBatches[i].number, ctrl.currentBatches[i].price, ctrl.currentBatches[i].product.description]);
+            }
+            doc.autoTable(columns, rows, {
+                margin: {top: 60},
+                addPageContent: function(data) {
+                    doc.text(text, 40, 30);
+                }
+            });
+            doc.output("dataurlnewwindow");
+        }
+
         function sendDeliveryNoteFn() {
             ctrl.deliveryNote.date = getDate();
             ctrl.deliveryNote.business = "FoodEmperors";
             ctrl.deliveryNote.batches = ctrl.currentBatches;
+
+            genPdf();
 
             var len = ctrl.deliveryNote.batches.length;
             for (var i = 0; i < len; i++) {
