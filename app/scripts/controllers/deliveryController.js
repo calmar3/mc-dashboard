@@ -71,16 +71,20 @@
         }
 
         function setStateFn(batch) {
-            if (batch.delivered === "true") {
+            if (batch.status === 0) {
+                return "In lavorazione";
+            }
+
+            else if (batch.status === 1) {
                 return "Pronto";
             }
 
-            else if (batch.delivered === "Spedito") {
+            else if (batch.status === 2) {
                 return "Spedito";
             }
 
             else {
-                return "Non Spedibile";
+                return "Segnalato";
             }
         }
 
@@ -139,7 +143,7 @@
 
             var len = ctrl.deliveryNote.batches.length;
             for (var i = 0; i < len; i++) {
-                ctrl.deliveryNote.batches[i].delivered = "Spedito";
+                ctrl.deliveryNote.batches[i].status = 2;
             }
 
             $http.post(hostFactory.getHost() + hostFactory.getSaveDeleteUpdateDeliveryAPI(), ctrl.deliveryNote).then(function(response) {

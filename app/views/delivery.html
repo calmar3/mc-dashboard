@@ -1,4 +1,4 @@
-<div ng-repeat="commissionDto in ctrl.commissionsDto" id="prova">
+<div ng-repeat="commissionDto in ctrl.commissionsDto">
     <div class="row" ng-show="!ctrl.isCompleted(commissionDto.commission)">
         <div class="col-md-12">
             <div class="box box-primary">
@@ -30,7 +30,7 @@
                                 <td>{{ctrl.setState(batch)}}</td>
                                 <td>
                                     <input type="checkbox" name="prod" ng-click="ctrl.addBatch(batch, this)"
-                                    ng-disabled="batch.delivered !== 'true'">
+                                    ng-disabled="batch.status !== 1">
                                 </td>
                             </tr>
 
@@ -57,7 +57,7 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span></button>
-                <h4 class="modal-title">Spedizione ordine: {{ctrl.currentCommissionDto.commission.number}}</h4>
+                <h4 class="modal-title">Spedizione ordine: {{ctrl.currentCommissionDto.commission.id}}</h4>
             </div>
             <div class="modal-body">
                 <div class="box-body table-responsive no-padding">
