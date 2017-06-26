@@ -1,13 +1,13 @@
-(function () {
-    'use strict';
-    angular.module('mc-dashboard').factory('hostFactory', hostFactory);
+(function() {
+  'use strict';
+  angular.module('mc-dashboard').factory('hostFactory', hostFactory);
 
-    function hostFactory() {
-        var hostFactory = {};
+  function hostFactory() {
+    var hostFactory = {};
 
-        hostFactory.host = "http://localhost:8080/";
+    hostFactory.host = "http://localhost:8080/";
 
-        hostFactory.loginAPI = "api/user/login";
+    hostFactory.loginAPI = "api/user/login";
 
         hostFactory.userAPI = "api/user";
 
@@ -20,6 +20,8 @@
         hostFactory.findProductByProperties = "api/product/findby/category/properties";
 
         hostFactory.leafCategories = "api/categories/leaf";
+
+        hostFactory.deliveryNoteAPI = "api/delivery";
 
         hostFactory.getSaveDeleteUpdateCommissionAPI = getSaveDeleteUpdateCommissionAPIFn;
 
@@ -70,9 +72,11 @@
 
         hostFactory.getAllPeripheralWarehouseAPI = getAllPeripheralWarehouseAPIFn;
 
-        function getSaveDeleteUpdatePeripheralWarehouseAPIFn() {
-            return hostFactory.saveDeleteUpdatePeripheralWarehouseAPI;
-        }
+    hostFactory.getSaveDeleteUpdateDeliveryAPI = getSaveDeleteUpdateDeliveryAPIFn;
+
+    function getSaveDeleteUpdatePeripheralWarehouseAPIFn() {
+      return hostFactory.saveDeleteUpdatePeripheralWarehouseAPI;
+    }
 
         function getAllPeripheralWarehouseAPIFn() {
             return hostFactory.allPeripheralWarehouseAPI;
@@ -114,6 +118,10 @@
 
         function getHostFn() {
             return hostFactory.host;
+        }
+
+        function getSaveDeleteUpdateDeliveryAPIFn() {
+            return hostFactory.deliveryNoteAPI;
         }
 
 
