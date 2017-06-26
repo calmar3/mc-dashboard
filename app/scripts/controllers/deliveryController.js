@@ -13,6 +13,7 @@
         ctrl.currentCommissionDto = null;
         ctrl.currentBatches = null;
         ctrl.deliveryNote = {};
+        ctrl.deliveryNotes = null;
 
         ctrl.isCompleted = isCompletedFn;
         ctrl.addBatch = addBatchFn;
@@ -31,7 +32,21 @@
             })
         }
 
-        loadCommission();
+        function loadDeliveryNotes() {
+            $http.get(hostFactory.getHost() + hostFactory.getSaveDeleteUpdateDeliveryAPI()).then(function (response) {
+
+                ctrl.deliveryNotes = response.data;
+            });
+        }
+
+        if (window.document.URL === "http://localhost:9000/#!/gestione_bolle") {
+            loadCommission();
+        }
+
+        else {
+            loadDeliveryNotes();
+        }
+
 
         function isCompletedFn(commission) {
             if (commission.completed === "true") {

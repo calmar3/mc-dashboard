@@ -1,0 +1,38 @@
+<div ng-repeat="deliveryNote in ctrl.deliveryNotes">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Bolla di trasporto: {{deliveryNote.id}}</h3>
+                </div>
+
+                <!-- /.box-header -->
+
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tr>
+                                <th>Prodotto</th>
+                                <th>Quantità</th>
+                                <th>Lotto</th>
+                                <th>Prezzo</th>
+                                <th ng-style="{'width': '250px'}">Descrizione</th>
+                            </tr>
+
+                            <tr ng-repeat="batch in deliveryNote.batches">
+                                <td>{{batch.product.name}}</td>
+                                <td>{{batch.quantity}}</td>
+                                <td>{{batch.number}}</td>
+                                <td>{{batch.price}}</td>
+                                <td>{{batch.product.description}}</td>
+                            </tr>
+
+                        </table>
+
+                    </div>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+</div>
