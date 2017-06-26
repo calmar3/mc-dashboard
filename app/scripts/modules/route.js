@@ -183,8 +183,38 @@
       params: {
         home: true
       }
+    }).state('Gestione Bolle', {
+        parent: 'site',
+        url: '/gestione_bolle',
+        data: {
+            roles: []
+        },
+        views: {
+            'page@': {
+                templateUrl: "views/delivery.html",
+                controller: 'DeliveryCtrl',
+                controllerAs: 'ctrl'
+            }
+        },
+        params: {
+            home: true
+        }
+    }).state('Visualizza Bolle', {
+        parent: 'site',
+        url: '/visualizza_bolle',
+        data: {
+            roles: []
+        },
+        views: {
+            'page@': {
+                templateUrl: "views/deliveryCompleted.html",
+                controller: 'DeliveryCtrl',
+                controllerAs: 'ctrl'
+            }
+        },
+        params: {
+            home: true
+        }
     })
-
   }
-
-} ());
+}());
