@@ -190,15 +190,15 @@
                         <td>{{commEntry.delDate}}</td>
                         <td>{{commEntry.expDate}}</td>
                         <td>{{commEntry.quantity}}</td>
-                        <td ng-show="{{commEntry.delivered}} == false"><input type="checkbox" ng-model='checkStatus'
+                        <td ng-show="{{commEntry.status}} == 0"><input type="checkbox" ng-model='checkStatus'
                                                                               ng-click="ctrl.toggle(commEntry,checkStatus)">
                         </td>
-                        <td ng-show="{{commEntry.delivered}} == true"><span class="glyphicon glyphicon-ok"></span></td>
-                        <td ng-show="{{commEntry.delivered}} == signaled"><i class="icon fa fa-warning"></i> Prodotto
+                        <td ng-show="{{commEntry.status}} == 2"><span class="glyphicon glyphicon-ok"></span></td>
+                        <td ng-show="{{commEntry.status}} == 3"><i class="icon fa fa-warning"></i> Prodotto
                             Segnalato!
                         </td>
                         <td>
-                            <button type="button" class="btn btn-warning" ng-show="{{commEntry.delivered}} == false"
+                            <button type="button" class="btn btn-warning" ng-show="{{commEntry.status}} == 0"
                                     data-toggle="modal" data-target="#modal-segnalation"
                                     ng-click="ctrl.signalProductFn(commEntry.product)"> Segnala
                             </button>
@@ -251,10 +251,10 @@
                             </button>
                         </td>
                         <td>{{commEntry.quantity}}</td>
-                        <td ng-show="{{commEntry.delivered}} == true || {{commEntry.delivered}} == ready "><span
+                        <td ng-show="{{commEntry.status}} == 2 || {{commEntry.status}} == 1 "><span
                                 class="glyphicon glyphicon-ok"></span> Prodotto Spedito!
                         </td>
-                        <td ng-show="{{commEntry.delivered}} == false">
+                        <td ng-show="{{commEntry.status}} == 0">
                             <button type="button" class="btn btn-primary" ng-click="ctrl.batchSetting(commEntry,$index)"
                                     data-toggle="modal" data-target="#modal-batchSetting">Gestisci
                             </button>

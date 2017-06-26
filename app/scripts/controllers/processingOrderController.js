@@ -45,12 +45,12 @@
 
                 } else {
                     ctrl.showOrder = order;
-
+                    console.log(ctrl.showOrder);
                     var i;
                     for (i = 0; i < order.batches.length; i++)
                         ctrl.selectedBatches[i] = 0;
 
-                    console.log(ctrl.selectedBatches);
+
                 }
 
             }
@@ -91,7 +91,7 @@
             ctrl.toggle = function (batch, status) {
 
                 if (status) {
-                    batch.delivered = "true";
+                    batch.status = 2;
                     ctrl.deliveredProducts.push(batch);
                 }
                 else {
@@ -192,7 +192,7 @@
 
 
                         ctrl.newBatch.delDate = ctrl.currentDate();
-                        ctrl.newBatch.delivered = "ready";
+                        ctrl.newBatch.status = 1;
                         ctrl.newBatch.expDate = ctrl.selectedBatch.expDate;
                         ctrl.newBatch.price = ctrl.selectedBatch.price;
                         ctrl.selectedBatch.remaining -= ctrl.newBatch.quantity;
