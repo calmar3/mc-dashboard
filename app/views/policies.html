@@ -113,7 +113,82 @@
 
                     </div>
                     <div class="tab-pane"  ng-class="{'active': ctrl.customizations[ctrl.selectedTab].toLowerCase() === 'fornitori' }"   >
-                        <div class="row" class="row" style="margin-top: 5%;" ng-style ng-if="ctrl.customizations[ctrl.selectedTab].toLowerCase()==='fornitori'" >
+                        <div class="row" class="row" style="margin-top: 1%;" ng-init="ctrl.loadExternalSuppliers()" ng-style ng-if="ctrl.customizations[ctrl.selectedTab].toLowerCase()==='fornitori'" >
+                            <div class="col-lg-3 col-md-6 col-xs-12" >
+                                <div class="form-group">
+                                    <label >Fornitore</label>
+                                    <input  type="text" class="form-control"  placeholder="Inserire il nome del fornitore" ng-model="ctrl.newExternalSupplier.name">
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-xs-12">
+                                <div class="form-group">
+                                    <label >P. IVA</label>
+                                    <input  type="text" class="form-control"  placeholder="Inserire la partita iva" ng-model="ctrl.newExternalSupplier.vat">
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-xs-12">
+                                <div class="form-group">
+                                    <label >Indirizzo</label>
+                                    <input type="text" class="form-control"  placeholder="Inserire l'indirizzo" ng-model="ctrl.newExternalSupplier.address">
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-xs-12">
+                                <div class="form-group">
+                                    <label >Mail</label>
+                                    <input  type="email" class="form-control"  placeholder="Inserire la mail" ng-model="ctrl.newExternalSupplier.mail">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-10 col-md-10 col-lg-10 col-lg-offset-1 col-md-offset-1 col-xs-offset-1 ">
+                                    <button class="btn btn-danger pull-right" ng-click="ctrl.deleteSupplier()" ng-disabled="!ctrl.modifySupplier">Elimina</button>
+                                    <button class="btn btn-warning pull-right" ng-click="ctrl.cleanSupplier()" style="margin-right: 3px;">Pulisci</button>
+                                    <button class="btn btn-primary pull-right" ng-click="ctrl.uploadSupplier()" style="margin-right: 3px;">Salva</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-10 col-md-10 col-lg-10 col-xs-offset-1 col-md-offset-1 col-lg-offset-1 ">
+                                    <div ng-if="ctrl.error" class="callout callout-danger pull-right" style="height:50px; margin-top:1px;">
+                                        <p>Errore!</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-10 col-md-10 col-lg-10 col-xs-offset-1 col-md-offset-1 col-lg-offset-1 ">
+                                    <div ng-if="ctrl.success" class="callout callout-success pull-right" style="height:50px; margin-top:1px;">
+                                        <p>Fatto!</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-lg-12 col-md-12"><hr></div>
+                            <div class="col-lg-4 col-xs-12 col-md-6" style="cursor:pointer;" ng-repeat="externalSupplier in ctrl.externalSuppliers" ng-click="ctrl.selectSupplier($index)">
+                                <div class="box box-widget widget-user-2">
+                                    <!-- Add the bg color to the header using any of the bg-* classes -->
+                                    <div class="widget-user-header bg-red" ng-show="ctrl.panelColours[$index]==='bg-red'">
+                                        <h3 class="widget-user-username">{{externalSupplier.name}}</h3>
+                                        <h5 class="widget-user-desc">{{externalSupplier.address}}</h5>
+                                    </div>
+                                    <div class="widget-user-header bg-blue" ng-show="ctrl.panelColours[$index]==='bg-blue'">
+                                        <h3 class="widget-user-username">{{externalSupplier.name}}</h3>
+                                        <h5 class="widget-user-desc">{{externalSupplier.address}}</h5>
+                                    </div>
+                                    <div class="widget-user-header bg-green" ng-show="ctrl.panelColours[$index]==='bg-green'">
+                                        <h3 class="widget-user-username">{{externalSupplier.name}}</h3>
+                                        <h5 class="widget-user-desc">{{externalSupplier.address}}</h5>
+                                    </div>
+                                    <div class="widget-user-header bg-yellow" ng-show="ctrl.panelColours[$index]==='bg-yellow'">
+                                        <h3 class="widget-user-username">{{externalSupplier.name}}</h3>
+                                        <h5 class="widget-user-desc">{{externalSupplier.address}}</h5>
+                                    </div>
+                                    <div class="box-footer no-padding">
+                                        <ul class="nav nav-stacked">
+                                            <li><a href="">Partita IVA<span class="pull-right badge bg-blue">{{externalSupplier.vat}}</span></a></li>
+                                            <li><a href="">Con noi da<span class="pull-right badge bg-green">{{externalSupplier.partnership}}</span></a></li>
+                                            <li><a href="">Mail<span class="pull-right badge bg-red">{{externalSupplier.mail}}</span></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                     <div class="tab-pane"  ng-class="{'active': ctrl.customizations[ctrl.selectedTab].toLowerCase() === 'promo' }" >

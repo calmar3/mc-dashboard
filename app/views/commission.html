@@ -56,8 +56,7 @@
 
 </div>
 
-
-
+<!-- MODIFY MODE -->
 
 <div class="row" ng-show="ctrl.mode === 'modify'">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12 ">
@@ -150,7 +149,8 @@
                 <div class="row">
                     <div class="col-lg-3 col-xs-3 col-md-3 pull-right">
 
-                        <button type="button" class="btn btn-block btn-primary btn-xs " ng-click="ctrl.addBatch(ctrl.selected)">Aggiungi</button>
+                        <button ng-disabled="ctrl.selectedBatch.product.id === null || ctrl.selectedBatch.product.id === undefined || ctrl.selectedBatch.number === undefined || ctrl.selectedBatch.number< 1 "
+                                type="button" class="btn btn-block btn-primary btn-xs " ng-click="ctrl.addBatch(ctrl.selected)">Aggiungi</button>
                     </div>
 
                 </div>
@@ -198,14 +198,14 @@
                 <br><br>
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 ">
-                        <div ng-if="ctrl.error" class="callout callout-danger pull-right" style="height=50px">
+                        <div ng-if="ctrl.error" class="callout callout-danger pull-right" style="height:50px">
                             <p>Errore nel modificare l'ordine!</p>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 ">
-                        <div ng-if="ctrl.success" class="callout callout-success pull-right" style="height=50px">
+                        <div ng-if="ctrl.success" class="callout callout-success pull-right" style="height:50px">
                             <p>Ordine modificato!</p>
                         </div>
                     </div>
@@ -217,6 +217,7 @@
 
 </div>
 
+<!-- ADD MODE -->
 
 <div class="row" ng-show="ctrl.mode === 'add'">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12 ">
@@ -264,7 +265,7 @@
                     <div class="col-md-3 col-lg-4 col-xs-6">
                         <div class="form-group">
                             <label> <span style="font-weight:normal!important;">Quantità</span></label>
-                            <input  class="form-control" type="number" min="1" ng-model="ctrl.selectedBatch.number">
+                            <input  class="form-control" type="number" min="0" ng-model="ctrl.selectedBatch.number">
                         </div>
                     </div>
                     <div class="col-md-3 col-lg-4 col-xs-6">
@@ -292,7 +293,8 @@
                     <div class="row">
                         <div class="col-lg-3 col-xs-3 col-md-3 pull-right">
 
-                            <button type="button" class="btn btn-block btn-primary btn-xs " ng-click="ctrl.addBatch(ctrl.newOrder)">Aggiungi</button>
+                            <button ng-disabled="ctrl.selectedBatch.product.id === null || ctrl.selectedBatch.product.id === undefined || ctrl.selectedBatch.number === undefined || ctrl.selectedBatch.number< 1 "
+                                    type="button" class="btn btn-block btn-primary btn-xs " ng-click="ctrl.addBatch(ctrl.newOrder)">Aggiungi</button>
                         </div>
 
                     </div>
@@ -337,14 +339,14 @@
                 <br><br>
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 ">
-                        <div ng-if="ctrl.error" class="callout callout-danger pull-right" style="height=50px">
+                        <div ng-if="ctrl.error" class="callout callout-danger pull-right" style="height:50px">
                             <p>Errore nel creare l'ordine!</p>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 ">
-                        <div ng-if="ctrl.success" class="callout callout-success pull-right" style="height=50px">
+                        <div ng-if="ctrl.success" class="callout callout-success pull-right" style="height:50px">
                             <p>Ordine creato!</p>
                         </div>
                     </div>
@@ -356,6 +358,8 @@
     </div>
 
 </div>
+
+<!-- DELETE MODE -->
 
 <div class="row" ng-show="ctrl.mode === 'delete'">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12 ">
@@ -427,14 +431,14 @@
                 </div><br><br>
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 ">
-                        <div ng-if="ctrl.error" class="callout callout-danger pull-right" style="height=50px">
+                        <div ng-if="ctrl.error" class="callout callout-danger pull-right" style="height:50px">
                             <p>Errore nell'eliminazione!</p>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 ">
-                        <div ng-if="ctrl.success" class="callout callout-success pull-right" style="height=50px">
+                        <div ng-if="ctrl.success" class="callout callout-success pull-right" style="height:50px">
                             <p>Ordine Eliminato!</p>
                         </div>
                     </div>

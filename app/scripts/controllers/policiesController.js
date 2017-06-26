@@ -35,6 +35,10 @@
 
         ctrl.searchFilter = searchFilterFn;
 
+        ctrl.loadExternalSuppliers = loadExternalSuppliersFn;
+
+        ctrl.cleanSupplier = cleanSupplierFn;
+
         ctrl.description = "";
 
         ctrl.backupProducts = [];
@@ -46,6 +50,127 @@
         ctrl.currentPage=1;
 
         ctrl.loadCategories();
+
+        ctrl.cleanSupplier();
+
+        ctrl.colours = ["bg-blue","bg-red","bg-green","bg-yellow"];
+
+        ctrl.panelColours = [];
+
+        ctrl.uploadSupplier = uploadSupplierFn;
+
+        ctrl.selectSupplier = selectSupplierFn;
+
+        ctrl.deleteSupplier = deleteSupplierFn;
+
+        function uploadSupplierFn() {
+            if (ctrl.modifySupplier)
+                updateExternalSupplier();
+            else
+                saveExternalSupplier();
+
+        }
+
+        function deleteSupplierFn() {
+            $http.delete(hostFactory.getHost()+hostFactory.getExternalSupplierAPI()+'/'+ctrl.newExternalSupplier.id).then(function (res) {
+                ctrl.success = true;
+                setTimeout(function () {
+                    ctrl.success = null;
+                    ctrl.cleanSupplier();
+                    ctrl.loadExternalSuppliers();
+                    $scope.$apply();
+                },1500);
+            }).catch(function (error) {
+                console.log(error);
+                ctrl.error = true;
+                setTimeout(function () {
+                    ctrl.error = null;
+                    ctrl.cleanSupplier();
+                    $scope.$apply();
+                },1500);
+
+            });
+        }
+
+        function selectSupplierFn(index) {
+            ctrl.newExternalSupplier = ctrl.externalSuppliers[index];
+            ctrl.modifySupplier = true;
+        }
+
+        function saveExternalSupplier() {
+            if (ctrl.newExternalSupplier.name === "" || ctrl.newExternalSupplier.vat === "" || ctrl.newExternalSupplier.address==="" ||
+            ctrl.newExternalSupplier.mail==="" ){
+                ctrl.error = true;
+                setTimeout(function () {
+                    ctrl.error = null;
+                    $scope.$apply();
+                },1500);
+                return;
+            }
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth()+1; //January is 0!
+            var yyyy = today.getFullYear();
+
+            if(dd<10) {
+                dd = '0'+dd
+            }
+
+            if(mm<10) {
+                mm = '0'+mm
+            }
+
+            ctrl.newExternalSupplier.partnership = dd + '/' + mm + '/' + yyyy;
+            $http.post(hostFactory.getHost()+hostFactory.getExternalSupplierAPI(),ctrl.newExternalSupplier).then(function (res) {
+                ctrl.success = true;
+                setTimeout(function () {
+                    ctrl.success = null;
+                    ctrl.cleanSupplier();
+                    ctrl.loadExternalSuppliers();
+                    $scope.$apply();
+                },1500);
+            }).catch(function (error) {
+                console.log(error);
+                ctrl.error = true;
+                setTimeout(function () {
+                    ctrl.error = null;
+                    ctrl.cleanSupplier();
+                    $scope.$apply();
+                },1500);
+
+            });
+        }
+
+        function updateExternalSupplier() {
+            if (ctrl.newExternalSupplier.name === "" || ctrl.newExternalSupplier.vat === "" || ctrl.newExternalSupplier.address==="" ||
+                ctrl.newExternalSupplier.mail==="" || ctrl.newExternalSupplier.partnership === ""){
+                ctrl.error = true;
+                setTimeout(function () {
+                    ctrl.error = null;
+                    $scope.$apply();
+                },1500);
+                return;
+            }
+
+            $http.put(hostFactory.getHost()+hostFactory.getExternalSupplierAPI(),ctrl.newExternalSupplier).then(function (res) {
+                ctrl.success = true;
+                setTimeout(function () {
+                    ctrl.success = null;
+                    ctrl.cleanSupplier();
+                    ctrl.loadExternalSuppliers();
+                    $scope.$apply();
+                },1500);
+            }).catch(function (error) {
+                console.log(error);
+                ctrl.error = true;
+                setTimeout(function () {
+                    ctrl.error = null;
+                    ctrl.cleanSupplier();
+                    $scope.$apply();
+                },1500);
+
+            });
+        }
 
         function updateBatchesFn() {
             $http.put(hostFactory.getHost()+hostFactory.getBatchesAPI(),ctrl.expBatches).then(function (res) {
@@ -73,11 +198,11 @@
                 ctrl.product.charge = ctrl.charge;
             $http.put(hostFactory.getHost()+hostFactory.getProductAPI(),ctrl.product).then(function (res) {
                 ctrl.success = true;
-               setTimeout(function () {
-                   ctrl.success = null;
-                   ctrl.cleanChargeView();
-                   $scope.$apply();
-               },1500);
+                setTimeout(function () {
+                    ctrl.success = null;
+                    ctrl.cleanChargeView();
+                    $scope.$apply();
+                },1500);
             }).catch(function (error) {
                 console.log(error);
                 ctrl.error = true;
@@ -100,12 +225,24 @@
             ctrl.cleanChargeView();
             ctrl.show = ctrl.entries[0];
             cleanPagination();
+            ctrl.cleanSupplier();
             ctrl.selectedTab = index;
         }
 
         function loadCategoriesFn() {
             $http.get(hostFactory.getHost()+hostFactory.getLeafCategoriesAPI()).then(function (response) {
                 ctrl.categories = response.data;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
+
+        function loadExternalSuppliersFn() {
+            $http.get(hostFactory.getHost()+hostFactory.getExternalSuppliersAPI()).then(function (response) {
+                ctrl.externalSuppliers = response.data;
+                ctrl.panelColours = [];
+                for (var i = 0 ; i < ctrl.externalSuppliers.length ; i++)
+                    ctrl.panelColours.push(ctrl.colours[ Math.floor(Math.random()*(3-0+1)+0)]);
             }).catch(function (error) {
                 console.log(error);
             });
@@ -173,11 +310,21 @@
         }
 
         function pagingActionFn( page, pageSize) {
-
             ctrl.shift = Math.floor(pageSize*(page-1));
             ctrl.expBatches = JSON.parse(JSON.stringify(ctrl.expiringBatches));
             ctrl.expBatches = ctrl.expBatches.splice(ctrl.shift,pageSize);
             ctrl.currentPage = page;
+        }
+
+        function cleanSupplierFn() {
+            ctrl.newExternalSupplier = {
+                name:"",
+                vat:"",
+                partnership:"",
+                address:"",
+                mail:""
+            };
+            ctrl.modifySupplier = false;
         }
 
 

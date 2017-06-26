@@ -28,6 +28,10 @@
 
         hostFactory.batchesAPI = "api/batches";
 
+        hostFactory.externalSupplierAPI = "api/supplier";
+
+        hostFactory.externalSuppliersAPI = "api/suppliers";
+
         hostFactory.getSaveDeleteUpdateCommissionAPI = getSaveDeleteUpdateCommissionAPIFn;
 
         hostFactory.getHost = getHostFn;
@@ -49,6 +53,18 @@
         hostFactory.getExpiringBatchesAPI = getExpiringBatchesAPIFn;
 
         hostFactory.getBatchesAPI = getBatchesAPIFn;
+
+        hostFactory.getExternalSupplierAPI = getExternalSupplierAPIFn;
+
+        hostFactory.getExternalSuppliersAPI = getExternalSuppliersAPIFn;
+
+        function getExternalSupplierAPIFn() {
+            return hostFactory.externalSupplierAPI;
+        }
+
+        function getExternalSuppliersAPIFn() {
+            return hostFactory.externalSuppliersAPI;
+        }
 
         function getBatchesAPIFn() {
             return hostFactory.batchesAPI;
