@@ -39,7 +39,7 @@
             });
         }
 
-        if (window.document.URL === "http://localhost:9000/#!/gestione_bolle") {
+        if (window.document.URL.match("gestione_bolle")){
             loadCommission();
         }
 
