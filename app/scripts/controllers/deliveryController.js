@@ -26,7 +26,7 @@
 
                 ctrl.commissionsDto = response.data;
                 ctrl.commissionsDto.forEach(function (item) {
-                    var num_order = item.commission.number;
+                    var num_order = item.commission.id;
                     ctrl.batchDel[num_order] = [];
                 });
             })
