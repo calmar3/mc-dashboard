@@ -169,7 +169,7 @@
 
 
             ctrl.descBatch = null;
-
+            ctrl.confirmationButton = 0;
 
             ctrl.batchSetting = function (batch, index) {
 
@@ -179,6 +179,7 @@
                     ctrl.despBatches = response.data;
                     ctrl.getBatch = batch;
                     ctrl.selectedBatch = null;
+
 
                     ctrl.confermaLotto = function () {
 
@@ -209,6 +210,8 @@
                         b.batch = ctrl.newBatch;
                         b.ourBatch = ctrl.selectedBatch;
                         ctrl.selectedBatches.splice(index, 0, b);
+
+                        ctrl.confirmationButton = 1;
 
                     }
 
