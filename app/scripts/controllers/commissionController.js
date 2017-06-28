@@ -90,7 +90,7 @@
             if (ctrl.description.length > search.length)
                 ctrl.products =  JSON.parse(JSON.stringify(ctrl.backupProducts));
             ctrl.description = search;
-            if (angular.isDefined(ctrl.category) && ctrl.category.length > 0 ){
+            if (angular.isDefined(ctrl.category) && ctrl.category!== null && ctrl.category.length > 0 ){
                 if (search!==null && search!==undefined && search.length==3){
                     var param = ctrl.category + " - " + search;
                     $http.get(hostFactory.getHost()+hostFactory.getFindProductByCategoryAndPropertiesAPI(param)).then(function (res) {
@@ -295,7 +295,7 @@
                     source:"FoodEmperors",
                     date:"",
                     batches:[],
-                    destination: ctrl.stockists[0]
+                    destination: ctrl.externalSuppliers[0]
                 };
                 ctrl.selectedBatch = {
                     quantity:ctrl.quantities[0],

@@ -46,6 +46,7 @@
 
         hostFactory.outBatchesAPI = "api/batch/sendBatches";
 
+
         /**
          * che cambia tra le ultime due?
          * @type {string}
@@ -148,7 +149,7 @@
         }
 
         function getFindProductByCategoryAndPropertiesAPIFn(properties) {
-            return hostFactory.findProductByProperties + '/' + properties;
+            return hostFactory.findProductByPropertiesAPI + '/' + properties;
         }
 
         function getSaveDeleteUpdateCommissionAPIFn() {
