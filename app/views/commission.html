@@ -191,7 +191,7 @@
             <!-- /.box-body -->
             <div class="box-footer clearfix">
                 <div class="btn-group pull-right">
-                    <button type="button" class="btn btn-default" ng-click="ctrl.updateCommission()" >Salva</button>
+                    <button type="button" ng-disabled="ctrl.selected.batches.length < 1 " class="btn btn-default" ng-click="ctrl.updateCommission()" >Salva</button>
                     <button type="button" class="btn btn-default" ng-click="ctrl.switchMode(null)">Indietro</button>
                 </div>
 
@@ -229,7 +229,7 @@
             <div class="box-body">
                 <div class="form-group">
                     <label>Fornitore Esterno</label>
-                    <select class="form-control" ng-options="stockist as stockist for stockist in ctrl.stockists " ng-model="ctrl.newOrder.destination">
+                    <select class="form-control" ng-options="externalSupplier.name as externalSupplier.name + ' - ' + externalSupplier.address + ' - ' + externalSupplier.mail for externalSupplier in ctrl.externalSuppliers " ng-model="ctrl.newOrder.destination">
                     </select><hr>
                     <div class="row">
                         <div class="col-md-4 col-lg-4 col-xs-6">
@@ -333,7 +333,7 @@
             <!-- /.box-body -->
             <div class="box-footer clearfix">
                 <div class="btn-group pull-right">
-                    <button type="button" class="btn btn-default" ng-click="ctrl.saveCommission()" >Salva</button>
+                    <button type="button" ng-disabled = "ctrl.newOrder.batches.length < 1 " class="btn btn-default" ng-click="ctrl.saveCommission()" >Salva</button>
                     <button type="button" class="btn btn-default" ng-click="ctrl.switchMode(null)" >Indietro</button>
                 </div>
                 <br><br>

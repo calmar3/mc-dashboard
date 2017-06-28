@@ -63,12 +63,25 @@
 
         ctrl.deleteSupplier = deleteSupplierFn;
 
+        ctrl.addPack = addPackFn;
+
+        ctrl.removePack = removePackFn;
+
+        function removePackFn(index) {
+            ctrl.product.pack.splice(index,1);
+        }
+        function addPackFn() {
+            if (ctrl.product && ctrl.product.pack && ctrl.pack && ctrl.product.pack.indexOf(ctrl.pack)===-1){
+                ctrl.product.pack.push(ctrl.pack);
+                ctrl.pack = null;
+            }
+        }
+
         function uploadSupplierFn() {
             if (ctrl.modifySupplier)
                 updateExternalSupplier();
             else
                 saveExternalSupplier();
-
         }
 
         function deleteSupplierFn() {

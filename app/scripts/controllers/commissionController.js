@@ -63,16 +63,27 @@
             product : null
         };
 
-        ctrl.stockists = ["Fornitore 1","Fornitore 2"];
+        ctrl.externalSuppliers = [];
 
         ctrl.newOrder = {
             source:"FoodEmperors",
             date:"",
             batches:[],
-            destination: ctrl.stockists[0]
+            completed : false,
+            destination: ctrl.externalSuppliers[0]
         };
 
         loadCommissions();
+
+        loadExternalSuppliers();
+
+        function loadExternalSuppliers() {
+            $http.get(hostFactory.getHost()+hostFactory.getExternalSuppliersAPI()).then(function (response) {
+                ctrl.externalSuppliers = response.data;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
 
         function getProductsFn(search) {
 
@@ -85,7 +96,6 @@
                     $http.get(hostFactory.getHost()+hostFactory.getFindProductByCategoryAndPropertiesAPI(param)).then(function (res) {
                         ctrl.products = JSON.parse(JSON.stringify(res.data));
                         ctrl.backupProducts =  JSON.parse(JSON.stringify(ctrl.products));
-                        console.log(ctrl.products)
                     }).catch(function (error) {
                         console.log(error);
                         ctrl.products = [];
@@ -135,6 +145,7 @@
             data.commission.number = dd+mm+yyyy;
             for (var i = 0 ; i < data.batches.length ; i++){
                 data.batches[i].price = data.batches[i].number*data.batches[i].quantity*data.batches[i].product.price;
+                data.batches[i].status = 0;
             }
             $http.post(hostFactory.getHost()+hostFactory.getSaveDeleteUpdateCommissionAPI(),data).then(function (response) {
                 loadCommissions();
