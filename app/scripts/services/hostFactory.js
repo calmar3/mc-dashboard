@@ -1,13 +1,14 @@
+
 (function() {
-  'use strict';
-  angular.module('mc-dashboard').factory('hostFactory', hostFactory);
+    'use strict';
+    angular.module('mc-dashboard').factory('hostFactory', hostFactory);
 
-  function hostFactory() {
-    var hostFactory = {};
+    function hostFactory() {
+        var hostFactory = {};
 
-    hostFactory.host = "http://localhost:8080/";
+        hostFactory.host = "http://localhost:8080/";
 
-    hostFactory.loginAPI = "api/user/login";
+        hostFactory.loginAPI = "api/user/login";
 
         hostFactory.userAPI = "api/user";
 
@@ -17,26 +18,45 @@
 
         hostFactory.saveDeleteUpdateCommissionAPI = "api/commission";
 
-        hostFactory.findProductByProperties = "api/product/findby/category/properties";
+        hostFactory.findProductByPropertiesAPI = "api/product/findby/category/properties";
 
         hostFactory.leafCategories = "api/categories/leaf";
 
         hostFactory.deliveryNoteAPI = "api/delivery";
 
-        hostFactory.getSaveDeleteUpdateCommissionAPI = getSaveDeleteUpdateCommissionAPIFn;
+        hostFactory.productAPI = "api/product";
+
+        hostFactory.expiringBatchesAPI = "api/batches/expiring";
+
+        hostFactory.batchesAPI = "api/batches";
+
+        hostFactory.externalSupplierAPI = "api/supplier";
+
+        hostFactory.externalSuppliersAPI = "api/suppliers";
 
         hostFactory.commissionAPI = "/api/commissions";
 
+        /**
+         * esiste già e dovrebbe chiamarsi api/batches
+         * @type {string}
+         */
         hostFactory.BatchAPI = "api/batch/saveBatches";
 
         hostFactory.catalogueBatchesByProductAPI = "api/batch/getbatchesbyprod";
 
         hostFactory.outBatchesAPI = "api/batch/sendBatches";
 
-        hostFactory.getHost = getHostFn;
+        /**
+         * che cambia tra le ultime due?
+         * @type {string}
+         */
         hostFactory.allPeripheralWarehouseAPI = "api/peripheralWarehouse";
 
         hostFactory.saveDeleteUpdatePeripheralWarehouseAPI = "api/peripheralWarehouse";
+
+        hostFactory.getSaveDeleteUpdateCommissionAPI = getSaveDeleteUpdateCommissionAPIFn;
+
+        hostFactory.getHost = getHostFn;
 
         hostFactory.getSaveDeleteUpdatePeripheralWarehouseAPI = getSaveDeleteUpdatePeripheralWarehouseAPIFn;
 
@@ -51,6 +71,30 @@
         hostFactory.getCatalogueBatchesByProductAPI = catalogueBatchesByProductAPIFn;
 
         hostFactory.postBatchesAPI = postOutBatchesAPIFn;
+
+        hostFactory.getAllPeripheralWarehouseAPI = getAllPeripheralWarehouseAPIFn;
+
+        hostFactory.getSaveDeleteUpdateDeliveryAPI = getSaveDeleteUpdateDeliveryAPIFn;
+
+        hostFactory.getUserAPI = getUserAPIFn;
+
+        hostFactory.getAllCommissionsAPI = getAllCommissionsAPIFn;
+
+        hostFactory.getAllProductsAPI = getAllProductsAPIFn;
+
+        hostFactory.getFindProductByCategoryAndPropertiesAPI = getFindProductByCategoryAndPropertiesAPIFn;
+
+        hostFactory.getLeafCategoriesAPI = getLeafCategoriesAPIFn;
+
+        hostFactory.getProductAPI = getProductAPIFn;
+
+        hostFactory.getExpiringBatchesAPI = getExpiringBatchesAPIFn;
+
+        hostFactory.getBatchesAPI = getBatchesAPIFn;
+
+        hostFactory.getExternalSupplierAPI = getExternalSupplierAPIFn;
+
+        hostFactory.getExternalSuppliersAPI = getExternalSuppliersAPIFn;
 
         function postOutBatchesAPIFn() {
 
@@ -70,37 +114,40 @@
             return hostFactory.commissionAPI;
         }
 
-        hostFactory.getAllPeripheralWarehouseAPI = getAllPeripheralWarehouseAPIFn;
-
-    hostFactory.getSaveDeleteUpdateDeliveryAPI = getSaveDeleteUpdateDeliveryAPIFn;
-
-    function getSaveDeleteUpdatePeripheralWarehouseAPIFn() {
-      return hostFactory.saveDeleteUpdatePeripheralWarehouseAPI;
-    }
+        function getSaveDeleteUpdatePeripheralWarehouseAPIFn() {
+            return hostFactory.saveDeleteUpdatePeripheralWarehouseAPI;
+        }
 
         function getAllPeripheralWarehouseAPIFn() {
             return hostFactory.allPeripheralWarehouseAPI;
         }
 
-        function getHostFn() {
-            return hostFactory.host;
+
+        function getExternalSupplierAPIFn() {
+            return hostFactory.externalSupplierAPI;
         }
 
-        hostFactory.getUserAPI = getUserAPIFn;
+        function getExternalSuppliersAPIFn() {
+            return hostFactory.externalSuppliersAPI;
+        }
 
-        hostFactory.getAllCommissionsAPI = getAllCommissionsAPIFn;
+        function getBatchesAPIFn() {
+            return hostFactory.batchesAPI;
+        }
 
-        hostFactory.getAllProductsAPI = getAllProductsAPIFn;
+        function getExpiringBatchesAPIFn() {
+            return hostFactory.expiringBatchesAPI;
+        }
 
-        hostFactory.getFindProductByCategoryAndProperties = getFindProductByCategoryAndPropertiesFn;
-
-        hostFactory.getLeafCategoriesAPI = getLeafCategoriesAPIFn;
+        function getProductAPIFn() {
+            return hostFactory.productAPI;
+        }
 
         function getLeafCategoriesAPIFn() {
             return hostFactory.leafCategories;
         }
 
-        function getFindProductByCategoryAndPropertiesFn(properties) {
+        function getFindProductByCategoryAndPropertiesAPIFn(properties) {
             return hostFactory.findProductByProperties + '/' + properties;
         }
 
@@ -136,6 +183,5 @@
         return hostFactory;
     }
 
-    return hostFactory;
 
 }());
