@@ -215,6 +215,22 @@
         params: {
             home: true
         }
+    }).state('Registrazione', {
+        parent: 'site',
+        url: '/registrazione',
+        data: {
+            roles: []
+        },
+        views: {
+            'page@': {
+                templateUrl: "views/createUser.html",
+                controller: 'RegistrationCtrl',
+                controllerAs: 'ctrl'
+            }
+        },
+        params: {
+            home: true
+        }
     })
   }
 }());
