@@ -58,7 +58,8 @@
 
                     var menu = [
                         { label: "Catalogo Prodotti", state: "Catalogo Prodotti", icon: "fa fa-database" },
-                        { label: "Evasione Ordini", state: "Evasione Ordini", icon: "fa fa-users"}
+                        { label: "Evasione Ordini", state: "Evasione Ordini", icon: "fa fa-users"},
+                        { label: "Storico", state: "Storico", icon: "fa fa-users"}
                     ];
                     userFactory.setMenu(menu);
 
