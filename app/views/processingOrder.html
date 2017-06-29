@@ -1,4 +1,9 @@
-<div class="row">git
+<a class="btn btn-app pull-right" ng-click="ctrl.showHistory()">
+    <span class="badge bg-teal">{{ctrl.orderCompleted}}</span>
+    <i class="fa fa-inbox"></i> Storico Ordini
+</a>
+
+<div class="row">
 
     <div class="col-xs-12" ng-show="ctrl.showOrder == null">
         <div class="box box-info">
@@ -191,7 +196,7 @@
                         <td>{{commEntry.expDate}}</td>
                         <td>{{commEntry.quantity}}</td>
                         <td ng-show="{{commEntry.status}} == 0"><input type="checkbox" ng-model='checkStatus'
-                                                                              ng-click="ctrl.toggle(commEntry,checkStatus)">
+                                                                       ng-click="ctrl.toggle(commEntry,checkStatus)">
                         </td>
                         <td ng-show="{{commEntry.status}} == 2"><span class="glyphicon glyphicon-ok"></span></td>
                         <td ng-show="{{commEntry.status}} == 3"><i class="icon fa fa-warning"></i> Prodotto
@@ -211,7 +216,8 @@
             </div>
         </div>
 
-        <button type="button"  ng-disabled ="ctrl.deliveredProducts.length == 0" class="btn btn-primary pull-left" data-toggle="modal" data-target="#modal-confirmation">
+        <button type="button" ng-disabled="ctrl.deliveredProducts.length == 0" class="btn btn-primary pull-left"
+                data-toggle="modal" data-target="#modal-confirmation">
             Conferma
         </button>
 
@@ -273,7 +279,8 @@
             </div>
         </div>
 
-        <button type="button" ng-disabled="!ctrl.confirmationButton" class="btn btn-primary pull-left" ng-click="ctrl.sendBatches()">
+        <button type="button" ng-disabled="!ctrl.confirmationButton" class="btn btn-primary pull-left"
+                ng-click="ctrl.sendBatches()">
             Conferma
         </button>
 
@@ -525,7 +532,8 @@
 
 
             <div class="modal-footer">
-                <button type="button" ng-disabled="ctrl.selectedBatch == null" class="btn btn-primary pull-left" data-dismiss="modal"
+                <button type="button" ng-disabled="ctrl.selectedBatch == null" class="btn btn-primary pull-left"
+                        data-dismiss="modal"
                         ng-click="ctrl.confermaLotto()">Confirm
                 </button>
                 <button type="button" class="btn btn-primary pull-left" data-dismiss="modal">Close</button>

@@ -4,7 +4,7 @@
 (function () {
     'use strict';
 
-    var procOrdCtrl = ['$scope', '$rootScope', '$compile', '$http', 'hostFactory', function ($scope, $rootScope, $compile, $http, hostFactory) {
+    var procOrdCtrl = ['$scope', '$rootScope', '$compile', '$http', '$state', 'hostFactory', function ($scope, $rootScope, $compile, $http, $state, hostFactory) {
 
         var ctrl = this;
 
@@ -18,14 +18,19 @@
 
             ctrl.inCommissions = [];
 
+            ctrl.orderCompleted = 0;
+
             ctrl.commissions.forEach(function (entry) {
 
-                if (entry.commission.source == "FoodEmperors")
-                    ctrl.outCommissions.push(entry);
+                if (entry.commission.completed == "false") {
+                    if (entry.commission.source == "FoodEmperors")
+                        ctrl.outCommissions.push(entry);
 
-                if (entry.commission.destination == "FoodEmperors")
-                    ctrl.inCommissions.push(entry);
-
+                    if (entry.commission.destination == "FoodEmperors")
+                        ctrl.inCommissions.push(entry);
+                }
+                else
+                    ctrl.orderCompleted++;
             });
 
 
@@ -255,6 +260,11 @@
         });
 
 
+        ctrl.showHistory = function () {
+            $state.go("Storico");
+
+        }
+
         ctrl.currentDate = function () {
             var currentTime = new Date();
             var month = currentTime.getMonth() + 1;
@@ -267,7 +277,7 @@
 
     }];
 
-    procOrdCtrl.$inject = ['$scope', '$rootScope', '$compile', '$http', 'hostFactory'];
+    procOrdCtrl.$inject = ['$scope', '$rootScope', '$compile', '$http', '$state', 'hostFactory'];
 
     angular.module('mc-dashboard').controller('procOrdCtrl', procOrdCtrl);
 
