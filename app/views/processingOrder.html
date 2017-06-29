@@ -8,7 +8,7 @@
     <div class="col-xs-12" ng-show="ctrl.showOrder == null">
         <div class="box box-info">
             <div class="box-header">
-                <h3 class="box-title">Ordini in uscita</h3>
+                <h3 class="box-title">Ordini Ricevuti</h3>
 
                 <div class="box-tools">
                     <div class="input-group input-group-sm" style="width: 150px;">
@@ -26,7 +26,7 @@
                     <!-- <li ng-repeat="commEntry in ctrl.commissions" style="cursor:pointer" ng-click="ctrl.go(menuentry.state)"> -->
 
                     <tbody>
-                    <tr data-toggle="collapse" data-target="#demo1" class="accordion-toggle">
+                    <tr>
                         <th>Data</th>
                         <th>Tempi di spedizione</th>
                         <th>Destinatario</th>
@@ -35,13 +35,6 @@
                         <th>Stato</th>
                         <th>Gestione</th>
                     </tr>
-
-                    <!--<tr>-->
-                    <!--<td colspan="6" class="hiddenRow">-->
-                    <!--<div class="accordion-body collapse" id="demo1">Demo1</div>-->
-                    <!--</td>-->
-                    <!--</tr>-->
-
                     <tr ng-repeat="commEntry in ctrl.outCommissions">
                         <td>{{commEntry.commission.date}}</td>
                         <td>{{commEntry.commission.deliveryTime}}</td>
@@ -71,7 +64,7 @@
     <div class="col-xs-12" ng-show="ctrl.showOrder == null">
         <div class="box box-info">
             <div class="box-header">
-                <h3 class="box-title">Ordini in entrata</h3>
+                <h3 class="box-title">Ordini Effettuati</h3>
 
                 <div class="box-tools">
                     <div class="input-group input-group-sm" style="width: 150px;">
