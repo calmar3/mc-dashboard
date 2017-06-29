@@ -36,7 +36,7 @@
                 'username':ctrl.username,
                 'password':ctrl.password
             };
-
+            
             $http.post(hostFactory.getHost()+hostFactory.getLoginAPI(),data).then(function (response) {
 
                 userFactory.setUser(response.data);
@@ -47,7 +47,8 @@
                         { label: "Catalogo Prodotti", state: "Catalogo Prodotti", icon: "fa fa-database" },
                         { label: "Gestione Personale", state: "Gestione Personale", icon: "fa fa-users" },
                         { label: "Gestione Politiche", state: "Gestione Politiche", icon: "fa fa-gears" },
-                        { label: "Gestione Magazzini Periferici", state: "Gestione Magazzini Periferici", icon: "fa fa-gears" }
+                        { label: "Gestione Magazzini Periferici", state: "Gestione Magazzini Periferici", icon: "fa fa-gears" },
+                        { label: "Gestione Prodotti", state: "Gestione Prodotti", icon: "fa fa-gears" }
 
                     ];
                     userFactory.setMenu(menu);

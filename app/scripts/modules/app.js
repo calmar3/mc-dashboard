@@ -19,5 +19,6 @@ angular
     'angular-flot',
     'bw.paging',
       'ui.bootstrap',
-      'ui.select'
+      'ui.select',
+      'ui.tree'
   ]);

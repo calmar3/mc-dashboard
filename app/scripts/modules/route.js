@@ -247,8 +247,25 @@
         params: {
             home: true
         }
+    }).state('Gestione Prodotti', {
+        parent: 'site',
+        url: '/prodotto',
+        data: {
+            roles: []
+        },
+        views: {
+            'page@': {
+                templateUrl: "views/product.html",
+                controller: 'ProductCtrl',
+                controllerAs: 'ctrl'
+            }
+        },
+        params: {
+            home: true,
+            product: null
+        }
     })
 
-
   }
-}());
+
+} ());

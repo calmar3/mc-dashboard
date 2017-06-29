@@ -1,0 +1,446 @@
+
+<div class="row" ng-if="ctrl.mode === null">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Catalogo Prodotti Magazzino</h3>
+
+                <div class="box-tools">
+                    <div class="input-group input-group-sm" style="width: 150px;">
+                        <input name="table_search" class="form-control pull-right" placeholder="Search" type="text" ng-model="ctrl.searchProduct">
+
+                        <div class="input-group-btn">
+                            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-hover">
+                    <tbody>
+                    <tr>
+                        <th>Nome prodotto</th>
+                        <th>Fornitore</th>
+                        <th>Categoria</th>
+                        <th>Proprietà</th>
+                        <th>Tempo consegna medio</th>
+                        <th>Prezzo (€)</th>
+                        <th>Impostazioni</th>
+
+
+                    </tr>
+                    <tr ng-repeat="product in ctrl.products" ng-class="{ 'selected' : product.outdated}">
+                        <td>{{product.name}}</td>
+                        <td>{{product.stockist}}</td>
+                        <td >
+                            <span class="label label-danger" ng-style="{'margin-right': '5px'}">{{product.category.id}}</span>
+                        </td>
+                        <td >
+                            <span ng-repeat="property in product.properties" class="label label-success" ng-style="{'margin-right': '5px'}">{{property}}</span>
+                            <span ng-repeat="oproperty in product.propertylist" class="label label-info" ng-style="{'margin-right': '5px'}">{{oproperty.id}}</span>
+                        </td>
+                        <td>{{product.averageDeliveryTime}}</td>
+                        <td>{{product.price | currency:'€'}}</td>
+                        <td>
+                            <div class="box-footer" ng-if="!product.outdated">
+                                <button class="btn btn-flat" ng-click="ctrl.switchMode('manageProduct',$index)">
+                                    Gestisci
+                                </button>
+                            </div>
+                        </td>
+
+                    </tr>
+                    </tbody>
+                </table>
+
+
+            </div>
+
+            <div class="box-footer">
+                <button class="btn btn-warning pull-left" ng-click="ctrl.switchMode('catalogTree')">
+                    Visualizza struttura catalogo prodotti
+                </button>
+
+                <button class="btn btn-primary pull-right"  ng-click="ctrl.switchMode('createProduct')">
+                    Aggiungi prodotto
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+</div>
+
+<div class="row" ng-if="ctrl.mode === 'createProduct'">
+
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12">
+        <div class="box box-default">
+
+            <!-- /.box-header -->
+            <div class="box-header with-border">
+                <h3 class="box-title">Aggiungi nuovo Articolo</h3>
+            </div>
+
+
+            <!-- /.box-body -->
+            <div class="box-body">
+                <table class="table table-bordered">
+                    <div class="row">
+                        <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-xs-10 col-xs-offset-1" style="margin-top:20px; margin-bottom:20px;">
+                            <div class="form-group">
+                                <label for="nomeProdotto">Nome prodotto</label>
+                                <input type="text" class="form-control" id="nomeProdotto" placeholder="Inserire nome prodotto..." ng-model="ctrl.productName">
+                            </div>
+                            <div class="form-group">
+                                <label for="averageDeliveryTime">Average Delivery Time</label>
+                                <input type="number" class="form-control" id="averageDeliveryTime" placeholder="Inserire tempo di consegna medio..." ng-model="ctrl.deliveryTime">
+                            </div>
+                            <div class="form-group">
+                                <label for="stockist">Stockist</label>
+                                <input type="string" class="form-control" id="stockist" placeholder="Inserire stocchista..." ng-model="ctrl.stockists">
+                            </div>
+                            <div class="form-group">
+                                <label for="price">Prezzo</label>
+                                <input type="number" class="form-control" id="price" placeholder="Inserire prezzo..." ng-model="ctrl.prices">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" >
+
+                        <label>Scegli la tipologia del nuovo aritcolo </label>
+                        <select class="form-control" ng-options="category as category.id for category in ctrl.categories" ng-model="ctrl.selectedCategory" ng-change="ctrl.loadProperties()"></select>
+
+                    </div>
+
+                    <div class="form-group" ng-show="ctrl.selectedCategory ">
+                        <label >Scegliere le caratteristiche del nuovo articolo:</label>
+                        <div class="row"  ng-repeat="(key,value) in ctrl.properties" >
+                            <div class="col-lg-12" >
+                                <label>{{key}}</label>
+                                <div class="input-group input-group-sm" >
+                                    <input ng-if="value === 'string'"  class="form-control" type="text"  ng-model="ctrl.productProperties[$index]" >
+                                    <input ng-if="value === 'float'"  class="form-control" type="number"  ng-model="ctrl.productProperties[$index]" >
+                                    <span class="input-group-btn">
+                                        <button type="button"  class="btn btn-primary btn-flat" ng-model="ctrl.newProperty" ng-click="ctrl.addPropertyToNewProduct($index,key)">
+                                            Aggiungi
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-show="ctrl.selectedCategory">
+                        <label >Scegli le proprietà aggiuntive del nuovo articolo:</label>
+                        <div class="row"   >
+                            <div class="col-lg-3" ng-repeat="property in ctrl.otherProperty">
+                                <div class="form-group">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" ng-checked="ctrl.selectedProperties[$index]" ng-model="ctrl.selectedProperties[$index]" ng-change="ctrl.addOtherProperties(ctrl.otherProperty[$index])">
+                                            {{property.id}}
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </table>
+            </div>
+
+            <div class="box-footer">
+                <button class="btn btn-primary pull-right" ng-click="ctrl.switchMode(null)">
+                    Indietro
+                </button>
+                <button class="btn btn-primary pull-right" ng-click="ctrl.saveNewProduct()">
+                    Salva
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- -->
+<div class="row" ng-if="ctrl.mode === 'manageProduct'">
+
+    <div class="box">
+
+        <div class="box-body">
+
+            <div class="col-lg-6 col-md-6" >
+                <div class="box direct-chat direct-chat-primary ">
+
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Gestione articolo ID</h3>
+                    </div>
+                    <div class="box-body">
+
+                        <div class="input-group">
+                            <div class="form-group with-border col-md-12">
+                                <label>Nome prodotto:</label>
+                                <input type="text" class="form-control" id="prdName" placeholder="Inserire nome prodotto..." ng-model="ctrl.product.name">
+                            </div>
+
+                            <div class="form-group with-border col-md-12">
+                                <label>Tempo consegna medio:</label>
+                                <input type="text" class="form-control" id="tempoConsegnaMedio" placeholder="Inserire tempo consegna medio..." ng-model="ctrl.product.averageDeliveryTime">
+                            </div>
+
+                            <div class="form-group with-border col-md-12">
+                                <label>Fornitore:</label>
+                                <input type="text" class="form-control" id="nomeFornitore" placeholder="Inserire nome fornitore..." ng-model="ctrl.product.stockist">
+                            </div>
+
+                            <div class="form-group with-border col-md-12">
+                                <label>Prezzo:</label>
+                                <input type="text" class="form-control" id="prezzo" placeholder="Inserire prezzo prodotto..." ng-model="ctrl.product.price">
+                            </div>
+
+                            <div class="form-group with-border col-md-12">
+                                <label>Lista Proprietà:</label>
+                                <div class="row"  ng-repeat="(key,value) in ctrl.product.properties" >
+                                    <div class="col-lg-12">
+                                        <label>{{key}}</label>
+                                        <div class="input-group input-group-sm">
+                                            <input class="form-control" type="text" id="proprietà"  ng-model="ctrl.product.properties[key]">
+                                            <span class="input-group-btn">
+                                                <button type="button" class="btn btn-default btn-flat pull-right" ng-model="ctrl.changedProperty" ng-click="ctrl.changeProductProperty($index,key)">
+                                                    Modifica
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label >Scegli le Proprietà aggiuntive del prodotto:</label>
+                                    <div class="row"   >
+                                        <div class="col-lg-3" ng-repeat="property in ctrl.otherProperty">
+                                            <div class="form-group">
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <input id="{{property.id}}" name="{{property.id}}" type="checkbox"  ng-checked="ctrl.product.propertiesId.indexOf(property.id)>-1" ng-model="ctrl.selectedProperties[$index]" ng-change="ctrl.changeOtherPropertiesStatus(ctrl.otherProperty[$index])">
+                                                        {{property.id}}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="box-footer">
+                        <div class="btn-group pull-right">
+                            <button type="button" ng-click="ctrl.updateProduct()" class="btn btn-primary">
+                                Salva
+                            </button>
+                            <button type="button" class="btn btn-default" ng-click="ctrl.switchMode(null)">
+                                Indietro
+                            </button>
+                            <button type="button" class="btn btn-danger" ng-click="ctrl.eliminateProduct()" >
+                                Elimina prodotto
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-lg-6 col-md-6">
+
+                <div class="box box-info">
+
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Dettagli Prodotto selezionato</h3>
+                    </div>
+                    <div class="box-body">
+                        <table class="table table-bordered">
+                            <tbody>
+                            <tr>
+                                <th style="width: 10px">
+                                    ID: {{ctrl.product.id}}
+                                </th>
+                            </tr>
+                            <tr>
+                                <th style="width: 10px">
+                                    Nome Prodotto: {{ctrl.product.name}}
+                                </th>
+                            </tr>
+                            <tr>
+                                <th style="width: 10px">
+                                    Tempo Consegna Medio: {{ctrl.product.averageDeliveryTime}}
+                                </th>
+                            </tr>
+                            <tr>
+                                <th style="width: 10px">
+                                    Fornitore: {{ctrl.product.stockist}}
+                                </th>
+                            </tr>
+                            <tr>
+                                <th style="width: 10px">
+                                    Prezzo: {{ctrl.product.price}}
+                                </th>
+                            </tr>
+                            <tr>
+                                <th style="width: 10px" >Proprietà:
+                                    <span ng-repeat="property in ctrl.product.properties">
+                                        <span class="label knob-label">
+                                            {{property}}
+                                        </span>
+                                    </span>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th style="width: 10px" >Caratteristiche:
+                                    <span ng-repeat="oP in ctrl.product.propertylist">
+                                        <span class="label label-info">
+                                            {{oP.id}}
+                                        </span>
+                                    </span>
+                                </th>
+                            </tr>
+
+
+                            </tbody></table>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<div class="row" ng-if="ctrl.mode === 'catalogTree'">
+
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+
+                <h3 class="box-title">Catalogo dei Prodotti</h3>
+
+                <div class="box-body">
+
+                    <div ui-tree  data-clone-enabled="false"  data-nodrop-enabled="true">
+                        <ol ui-tree-nodes="" ng-model="ctrl.categories" data-nodrop-enabled="true" data-clone-enabled="false" data-drag-enabled="false">
+                            <li ng-repeat="mainCategory in ctrl.categories" ui-tree-node>
+                                <div ui-tree-handle>
+                                    {{mainCategory.id}}
+                                </div>
+                                <ol ui-tree-nodes="" ng-model="ctrl.categories"  data-clone-enabled="false" data-drag-enabled="false">
+                                    <li ng-repeat="subCategory in ctrl.categories[$index].sons" ui-tree-node>
+                                        <div ui-tree-handle>
+                                            {{subCategory.id}}
+                                        </div>
+                                        <ol ui-tree-nodes=""  ng-model="ctrl.categories"   data-clone-enabled="false" data-drag-enabled="false">
+                                            <li ng-if="prod in ctrl.categories[$index].sons[$index].sons" ng-repeat="prod in ctrl.categories[$index].sons[$index].sons" ui-tree-node>
+                                                <div ui-tree-handle>
+                                                    {{prod.id}}
+                                                </div>
+                                                <ol ui-tree-nodes="" ng-model="ctrl.categories" data-nodrop-enabled="true" data-clone-enabled="false" data-drag-enabled="false">
+                                                    <li ng-repeat="ciao in ctrl.categories[$index].sons[$index].sons[$index].sons" ui-tree-node>
+                                                        <div ui-tree-handle>
+                                                            {{ciao.id}}
+                                                        </div>
+                                                    </li>
+                                                </ol>
+                                            </li>
+                                        </ol>
+                                    </li>
+                                </ol>
+                            </li>
+                        </ol>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="box-footer">
+                <button class="btn btn-primary pull-right" ng-click="ctrl.switchMode(null)">
+                    Indietro
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div ng-if="asf" class="col-sm-6">
+    <div ui-tree=""  class="angular-ui-tree" data-nodrop-enabled="true" data-clone-enabled="false"> Albero prodotti
+        <ol ui-tree-nodes="" ng-model="ctrl.tree" class="ng-pristine ng-untouched ng-valid angular-ui-tree-nodes" data-nodrop-enabled="true">
+            <!-- ngRepeat: node in data -->
+
+            <li ng-repeat="mainCategory in ctrl.tree.category"  ui-tree-node="" class="angular-ui-tree-node" collapsed="false" expand-on-hover="false" data-clone-enabled="false">
+                <div ui-tree-handle="" class="tree-node tree-node-content angular-ui-tree-handle" >
+                    <!-- ngIf: node.nodes && node.nodes.length > 0 -->
+                    <a class="btn btn-success btn-xs">
+                                            <span class="glyphicon glyphicon-chevron-down" ng-class="{'glyphicon-chevron-right': collapsed,'glyphicon-chevron-down': !collapsed}">
+                                            </span>
+                    </a>
+                    <!-- end ngIf: node.nodes && node.nodes.length > 0 -->
+                    {{mainCategory}}
+
+                </div>
+                <ol ui-tree-nodes="" data-nodrop-enabled="false"  ng-model="ctrl.tree.category.subcategory" ng-class="{hidden: collapsed}" class="ng-pristine ng-untouched ng-valid angular-ui-tree-nodes">
+                    <!-- ngRepeat: node in node.nodes --><!-- ngInclude: 'nodes_renderer.html' -->
+                    <li ng-repeat="son in ctrl.tree.category.subcategory" ng-if="ctrl.parents === false" ui-tree-node="" class="angular-ui-tree-node" collapsed="false" expand-on-hover="false" data-nodrop-enabled="true">
+                        <div ui-tree-handle="" class="tree-node tree-node-content angular-ui-tree-handle">
+                            <!-- ngIf: node.nodes && node.nodes.length > 0 -->
+                            <a class="btn btn-success btn-xs"  data-nodrag="" ng-click="toggle(this)">
+                                                <span class="glyphicon glyphicon-chevron-down" ng-class="{'glyphicon-chevron-right': collapsed,'glyphicon-chevron-down': !collapsed}">
+                                                </span>
+                            </a>
+                            <!-- end ngIf: node.nodes && node.nodes.length > 0 -->
+                            {{son.id}}
+                        </div>
+
+                        <ol ui-tree-nodes="" ng-model="ctrl.products" ng-class="{hidden: collapsed}" class="ng-pristine ng-untouched ng-valid angular-ui-tree-nodes" data-nodrop-enabled="true">
+                            <!-- ngRepeat: node in node.nodes --><!-- ngInclude: 'nodes_renderer.html' -->
+                            <li ng-repeat="node in ctrl.products" ui-tree-node="" class="angular-ui-tree-node" collapsed="false" expand-on-hover="false" data-nodrop-enabled="true">
+                                <div ui-tree-handle="" class="tree-node tree-node-content angular-ui-tree-handle">
+                                    <!-- ngIf: node.nodes && node.nodes.length > 0 -->
+                                    {{node.name}}
+                                </div>
+
+                                <ol ui-tree-nodes="" ng-model="ctrl.products" ng-class="{hidden: collapsed}" class="ng-pristine ng-untouched ng-valid angular-ui-tree-nodes">
+                                    <!-- ngRepeat: node in node.nodes -->
+                                </ol>
+                            </li>
+                            <!-- end ngRepeat: node in node.nodes -->
+                        </ol>
+                    </li>
+                    <!-- end ngRepeat: node in node.nodes --><!-- ngInclude: 'nodes_renderer.html' -->
+                    <li ng-repeat="node in ctrl.products" ui-tree-node="" class="angular-ui-tree-node" collapsed="false" expand-on-hover="false" data-nodrop-enabled="true">
+                        <div ui-tree-handle="" class="tree-node tree-node-content angular-ui-tree-handle">
+                            <!-- ngIf: node.nodes && node.nodes.length > 0 -->
+                            {{node.name}}
+                        </div>
+                    </li>
+                </ol>
+            </li>
+            <!-- end ngRepeat: node in data -->
+        </ol>
+    </div>
+</div>
+
+
