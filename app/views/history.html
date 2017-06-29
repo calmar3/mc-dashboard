@@ -42,7 +42,7 @@
                         <td>{{commEntry.commission.destination}}</td>
                         <td>{{commEntry.commission.number}}</td>
                         <td>{{commEntry.commission.source}}</td>
-                        <td ng-show="{{commEntry.commission.completed}} == true"><span class="label label-success">Completo</span>
+                        <td ng-show="commEntry.commission.completed"><span class="label label-success">Completo</span>
                         </td>
                         <td>
                             <button type="submit" ng-click="ctrl.showOrderFn(commEntry)" class="btn btn-primary"
@@ -104,7 +104,7 @@
                         <td>{{commEntry.commission.destination}}</td>
                         <td>{{commEntry.commission.number}}</td>
                         <td>{{commEntry.commission.source}}</td>
-                        <td ng-show="{{commEntry.commission.completed}} == true"><span class="label label-success">Completo</span>
+                        <td ng-show="commEntry.commission.completed"><span class="label label-success">Completo</span>
                         </td>
                         <td>
                             <button type="submit" ng-click="ctrl.showOrderFn(commEntry)" class="btn btn-primary"

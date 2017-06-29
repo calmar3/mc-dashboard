@@ -35,10 +35,6 @@
 
         hostFactory.commissionAPI = "/api/commissions";
 
-        /**
-         * esiste già e dovrebbe chiamarsi api/batches
-         * @type {string}
-         */
         hostFactory.BatchAPI = "api/batch/saveBatches";
 
         hostFactory.catalogueBatchesByProductAPI = "api/batch/getbatchesbyprod";

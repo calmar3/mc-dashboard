@@ -28,7 +28,7 @@
 
                 ctrl.commissions.forEach(function (entry) {
 
-                    if (entry.commission.completed == "false") {
+                    if (!entry.commission.completed) {
                         if (entry.commission.source == "FoodEmperors")
                             ctrl.outCommissions.push(entry);
 
