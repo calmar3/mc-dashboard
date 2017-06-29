@@ -19,7 +19,7 @@
 
         hostFactory.findProductByProperties = "api/product/findby/category/properties";
 
-        hostFactory.leafCategories = "api/categories/leaf";
+      hostFactory.leafCategories = "api/categories/leaf";
 
         hostFactory.getSaveDeleteUpdateCommissionAPI = getSaveDeleteUpdateCommissionAPIFn;
 
@@ -29,7 +29,9 @@
 
         hostFactory.catalogueBatchesByProductAPI = "api/batch/getbatchesbyprod";
 
-        hostFactory.outBatchesAPI = "api/batch/sendBatches";
+        hostFactory.catalogueBatchesAPI = "api/batch/getallbatches";
+
+      hostFactory.outBatchesAPI = "api/batch/sendBatches";
 
         hostFactory.getHost = getHostFn;
         hostFactory.allPeripheralWarehouseAPI = "api/peripheralWarehouse";
@@ -48,7 +50,10 @@
 
         hostFactory.getCatalogueBatchesByProductAPI = catalogueBatchesByProductAPIFn;
 
-        hostFactory.postBatchesAPI = postOutBatchesAPIFn;
+      hostFactory.getCatalogueBatchesAPI = catalogueBatchesAPIFn;
+
+
+      hostFactory.postBatchesAPI = postOutBatchesAPIFn;
 
         function postOutBatchesAPIFn() {
 
@@ -58,6 +63,10 @@
         function catalogueBatchesByProductAPIFn() {
             return hostFactory.catalogueBatchesByProductAPI;
         }
+
+      function catalogueBatchesAPIFn() {
+        return hostFactory.catalogueBatchesAPI;
+      }
 
         function postBatchAPIFn() {
             return hostFactory.BatchAPI;
@@ -88,8 +97,6 @@
 
         hostFactory.getAllProductsAPI = getAllProductsAPIFn;
 
-        hostFactory.getFindProductByCategoryAndProperties = getFindProductByCategoryAndPropertiesFn;
-
         hostFactory.getLeafCategoriesAPI = getLeafCategoriesAPIFn;
 
         function getLeafCategoriesAPIFn() {
@@ -111,11 +118,6 @@
         function getAllProductsAPIFn() {
             return hostFactory.allProductsAPI;
         }
-
-        function getHostFn() {
-            return hostFactory.host;
-        }
-
 
         function getLoginAPIFn() {
             return hostFactory.loginAPI;
