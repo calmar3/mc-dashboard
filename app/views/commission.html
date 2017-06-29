@@ -56,8 +56,7 @@
 
 </div>
 
-
-
+<!-- MODIFY MODE -->
 
 <div class="row" ng-show="ctrl.mode === 'modify'">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12 ">
@@ -69,7 +68,7 @@
             <div class="box-body">
                 <h5>Ordine:</h5>
                 <div class="table-responsive">
-                    <table class="table table-bordered table-condensed table-hover">
+                    <table class="table table-bordered table-condensed table-hover ">
                         <tbody><tr>
                             <th style="width: 10px">#</th>
                             <th>Sorgente</th>
@@ -150,7 +149,8 @@
                 <div class="row">
                     <div class="col-lg-3 col-xs-3 col-md-3 pull-right">
 
-                        <button type="button" class="btn btn-block btn-primary btn-xs " ng-click="ctrl.addBatch(ctrl.selected)">Aggiungi</button>
+                        <button ng-disabled="ctrl.selectedBatch.product.id === null || ctrl.selectedBatch.product.id === undefined || ctrl.selectedBatch.number === undefined || ctrl.selectedBatch.number< 1 "
+                                type="button" class="btn btn-block btn-primary btn-xs " ng-click="ctrl.addBatch(ctrl.selected)">Aggiungi</button>
                     </div>
 
                 </div>
@@ -191,21 +191,21 @@
             <!-- /.box-body -->
             <div class="box-footer clearfix">
                 <div class="btn-group pull-right">
-                    <button type="button" class="btn btn-default" ng-click="ctrl.updateCommission()" >Salva</button>
+                    <button type="button" ng-disabled="ctrl.selected.batches.length < 1 " class="btn btn-default" ng-click="ctrl.updateCommission()" >Salva</button>
                     <button type="button" class="btn btn-default" ng-click="ctrl.switchMode(null)">Indietro</button>
                 </div>
 
                 <br><br>
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 ">
-                        <div ng-if="ctrl.error" class="callout callout-danger pull-right" style="height=50px">
+                        <div ng-if="ctrl.error" class="callout callout-danger pull-right" style="height:50px">
                             <p>Errore nel modificare l'ordine!</p>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 ">
-                        <div ng-if="ctrl.success" class="callout callout-success pull-right" style="height=50px">
+                        <div ng-if="ctrl.success" class="callout callout-success pull-right" style="height:50px">
                             <p>Ordine modificato!</p>
                         </div>
                     </div>
@@ -217,6 +217,7 @@
 
 </div>
 
+<!-- ADD MODE -->
 
 <div class="row" ng-show="ctrl.mode === 'add'">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12 ">
@@ -228,7 +229,7 @@
             <div class="box-body">
                 <div class="form-group">
                     <label>Fornitore Esterno</label>
-                    <select class="form-control" ng-options="stockist as stockist for stockist in ctrl.stockists " ng-model="ctrl.newOrder.destination">
+                    <select class="form-control" ng-options="externalSupplier.name as externalSupplier.name + ' - ' + externalSupplier.address + ' - ' + externalSupplier.mail for externalSupplier in ctrl.externalSuppliers " ng-model="ctrl.newOrder.destination">
                     </select><hr>
                     <div class="row">
                         <div class="col-md-4 col-lg-4 col-xs-6">
@@ -264,7 +265,7 @@
                     <div class="col-md-3 col-lg-4 col-xs-6">
                         <div class="form-group">
                             <label> <span style="font-weight:normal!important;">Quantità</span></label>
-                            <input  class="form-control" type="number" min="1" ng-model="ctrl.selectedBatch.number">
+                            <input  class="form-control" type="number" min="0" ng-model="ctrl.selectedBatch.number">
                         </div>
                     </div>
                     <div class="col-md-3 col-lg-4 col-xs-6">
@@ -292,7 +293,8 @@
                     <div class="row">
                         <div class="col-lg-3 col-xs-3 col-md-3 pull-right">
 
-                            <button type="button" class="btn btn-block btn-primary btn-xs " ng-click="ctrl.addBatch(ctrl.newOrder)">Aggiungi</button>
+                            <button ng-disabled="ctrl.selectedBatch.product.id === null || ctrl.selectedBatch.product.id === undefined || ctrl.selectedBatch.number === undefined || ctrl.selectedBatch.number< 1 "
+                                    type="button" class="btn btn-block btn-primary btn-xs " ng-click="ctrl.addBatch(ctrl.newOrder)">Aggiungi</button>
                         </div>
 
                     </div>
@@ -300,7 +302,7 @@
 
                     <label>Prodotti Inseriti:</label>
                     <div class="table-responsive">
-                        <table class="table table-bordered table-condensed table-hover">
+                        <table class="table table-bordered table-condensed table-hover ">
                             <tbody><tr>
                                 <th>Prodotto</th>
                                 <th>Azienda</th>
@@ -331,20 +333,20 @@
             <!-- /.box-body -->
             <div class="box-footer clearfix">
                 <div class="btn-group pull-right">
-                    <button type="button" class="btn btn-default" ng-click="ctrl.saveCommission()" >Salva</button>
+                    <button type="button" ng-disabled = "ctrl.newOrder.batches.length < 1 " class="btn btn-default" ng-click="ctrl.saveCommission()" >Salva</button>
                     <button type="button" class="btn btn-default" ng-click="ctrl.switchMode(null)" >Indietro</button>
                 </div>
                 <br><br>
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 ">
-                        <div ng-if="ctrl.error" class="callout callout-danger pull-right" style="height=50px">
+                        <div ng-if="ctrl.error" class="callout callout-danger pull-right" style="height:50px">
                             <p>Errore nel creare l'ordine!</p>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 ">
-                        <div ng-if="ctrl.success" class="callout callout-success pull-right" style="height=50px">
+                        <div ng-if="ctrl.success" class="callout callout-success pull-right" style="height:50px">
                             <p>Ordine creato!</p>
                         </div>
                     </div>
@@ -356,6 +358,8 @@
     </div>
 
 </div>
+
+<!-- DELETE MODE -->
 
 <div class="row" ng-show="ctrl.mode === 'delete'">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12 ">
@@ -370,49 +374,54 @@
                     <b> Sei sicuro di voler eliminare l'ordine?</b>
                 </h5>
                 <h5>Ordine:</h5>
-                <table class="table table-bordered">
-                    <tbody><tr>
-                        <th style="width: 10px">#</th>
-                        <th>Sorgente</th>
-                        <th>Destinazione</th>
-                        <th>Data</th>
-                        <th>Tempo Consegna</th>
-                    </tr>
-                    <tr >
-                        <td>{{ctrl.selected.commission.number}}</td>
-                        <td>{{ctrl.selected.commission.source}}</td>
-                        <td>{{ctrl.selected.commission.destination}}</td>
-                        <td>{{ctrl.selected.commission.date}}</td>
-                        <td>{{ctrl.selected.commission.deliveryTime }} g </td>
-                    </tr>
+                <div class="table-responsive">
+                    <table class="table table-bordered ">
+                        <tbody><tr>
+                            <th style="width: 10px">#</th>
+                            <th>Sorgente</th>
+                            <th>Destinazione</th>
+                            <th>Data</th>
+                            <th>Tempo Consegna</th>
+                        </tr>
+                        <tr >
+                            <td>{{ctrl.selected.commission.number}}</td>
+                            <td>{{ctrl.selected.commission.source}}</td>
+                            <td>{{ctrl.selected.commission.destination}}</td>
+                            <td>{{ctrl.selected.commission.date}}</td>
+                            <td>{{ctrl.selected.commission.deliveryTime }} g </td>
+                        </tr>
 
-                    </tbody></table>
+                        </tbody></table>
+                </div>
                 <h5>Lotti:</h5>
-                <table class="table table-bordered">
-                    <tbody><tr>
-                        <th>Prodotto</th>
-                        <th>Proprieta Prodotto</th>
-                        <th>Azienda</th>
-                        <th>Prezzo Unit.</th>
-                        <th>#</th>
-                        <th>Quantità</th>
-                        <th>Prezzo totale</th>
-                        <th>Data Scadenza</th>
-                        <th>Data Consegna</th>
-                    </tr>
-                    <tr  ng-repeat="batch in ctrl.selected.batches ">
-                        <td>{{batch.product.name}}</td>
-                        <td><span class="label label-success" ng-repeat="property in batch.product.properties">{{property}}</span></td>
-                        <td>{{batch.product.stockist}}</td>
-                        <td>{{batch.product.price | currency:'€'}}</td>
-                        <td>{{batch.number}}</td>
-                        <td>{{batch.quantity}}</td>
-                        <td>{{batch.number*batch.quantity*batch.product.price | currency:'€'}}</td>
-                        <td>{{batch.expDate}}</td>
-                        <td>{{batch.delDate}}</td>
-                    </tr>
+                <div class="table-responsive">
 
-                    </tbody></table>
+                    <table class="table table-bordered">
+                        <tbody><tr>
+                            <th>Prodotto</th>
+                            <th>Proprieta Prodotto</th>
+                            <th>Azienda</th>
+                            <th>Prezzo Unit.</th>
+                            <th>#</th>
+                            <th>Quantità</th>
+                            <th>Prezzo totale</th>
+                            <th>Data Scadenza</th>
+                            <th>Data Consegna</th>
+                        </tr>
+                        <tr ng-repeat="batch in ctrl.selected.batches">
+                            <td>{{batch.product.name}}</td>
+                            <td><span class="label label-success" ng-repeat="property in batch.product.properties">{{property}}</span></td>
+                            <td>{{batch.product.stockist}}</td>
+                            <td>{{batch.product.price | currency:'€'}}</td>
+                            <td>{{batch.number}}</td>
+                            <td>{{batch.quantity}}</td>
+                            <td>{{batch.number*batch.quantity*batch.product.price | currency:'€'}}</td>
+                            <td>{{batch.expDate}}</td>
+                            <td>{{batch.delDate}}</td>
+                        </tr>
+
+                        </tbody></table>
+                </div>
             </div>
             <!-- /.box-body -->
             <div class="box-footer clearfix">
@@ -422,14 +431,14 @@
                 </div><br><br>
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 ">
-                        <div ng-if="ctrl.error" class="callout callout-danger pull-right" style="height=50px">
+                        <div ng-if="ctrl.error" class="callout callout-danger pull-right" style="height:50px">
                             <p>Errore nell'eliminazione!</p>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-xs-12 col-md-12 col-lg-12 ">
-                        <div ng-if="ctrl.success" class="callout callout-success pull-right" style="height=50px">
+                        <div ng-if="ctrl.success" class="callout callout-success pull-right" style="height:50px">
                             <p>Ordine Eliminato!</p>
                         </div>
                     </div>

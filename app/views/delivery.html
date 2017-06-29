@@ -1,0 +1,102 @@
+<div ng-repeat="commissionDto in ctrl.commissionsDto">
+    <div class="row" ng-show="!ctrl.isCompleted(commissionDto.commission)">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Ordine: {{commissionDto.commission.id}}</h3>
+                </div>
+
+                <!-- /.box-header -->
+
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tr>
+                                <th>Prodotto</th>
+                                <th>Quantità</th>
+                                <th>Lotto</th>
+                                <th>Prezzo</th>
+                                <th ng-style="{'width': '250px'}">Descrizione</th>
+                                <th>Stato</th>
+                                <th>Selezione</th>
+                            </tr>
+
+                            <tr ng-repeat="batch in commissionDto.batches">
+                                <td>{{batch.product.name}}</td>
+                                <td>{{batch.quantity}}</td>
+                                <td>{{batch.number}}</td>
+                                <td>{{batch.price}}</td>
+                                <td>{{batch.product.description}}</td>
+                                <td>{{ctrl.setState(batch)}}</td>
+                                <td>
+                                    <input type="checkbox" name="prod" ng-click="ctrl.addBatch(batch, this)"
+                                    ng-disabled="batch.status !== 1">
+                                </td>
+                            </tr>
+
+                        </table>
+
+                    </div>
+                </div>
+                <!-- /.box-body -->
+
+                <div class="box-footer">
+                    <button class="btn btn-primary pull-left" ng-click="ctrl.genDeliveryNote(commissionDto)" data-toggle="modal"
+                    data-target="#modal-deliveryConfirm">
+                        Crea Bolla
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-deliveryConfirm" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span></button>
+                <h4 class="modal-title">Spedizione ordine: {{ctrl.currentCommissionDto.commission.id}}</h4>
+            </div>
+            <div class="modal-body">
+                <div class="box-body table-responsive no-padding">
+                    <div class="box-header">
+
+                        <h3 class="box-title">Riepilogo Bolla</h3>
+                        <!-- /.box-header -->
+                    </div>
+                    <table class="table table-hover">
+
+                        <tr>
+                            <th>Prodotto</th>
+                            <th>Quantità</th>
+                            <th>Lotto</th>
+                            <th>Prezzo</th>
+                            <th>Descrizione</th>
+                        </tr>
+
+                        <tr ng-repeat="batch in ctrl.currentBatches">
+                            <td>{{batch.product.name}}</td>
+                            <td>{{batch.quantity}}</td>
+                            <td>{{batch.number}}</td>
+                            <td>{{batch.price}}</td>
+                            <td>{{batch.product.description}}</td>
+                        </tr>
+
+                    </table>
+                </div>
+            </div>
+
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary pull-left" data-dismiss="modal"
+                        ng-click="ctrl.sendDeliveryNote()" ng-disabled="!ctrl.currentBatches.length">Conferma
+                </button>
+                <button type="button" class="btn btn-primary pull-right" data-dismiss="modal">Chiudi</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>

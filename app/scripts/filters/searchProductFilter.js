@@ -1,4 +1,4 @@
-angular.module('mc-dashboard').filter('searchProductFilter', [ '$http','hostFactory',function($http,hostFactory) {
+angular.module('mc-dashboard').filter('searchProductFilter', [ function() {
     return function(items, props) {
         var out = items;
         if (props.length > 3){
