@@ -31,7 +31,8 @@
 
 </head>
 
-<body class="hold-transition skin-blue sidebar-mini" ng-controller="NavbarCtrl as ctrl" ng-class="{'sidebar-collapse':ctrl.collapsemenu,'sidebar-open':ctrl.openmenu}" >
+<body class="hold-transition skin-blue sidebar-mini" ng-controller="NavbarCtrl as ctrl" ng-class="{'sidebar-collapse':ctrl.collapsemenu,'sidebar-open':ctrl.openmenu}"
+      ng-init="ctrl.retrieveCookie()" >
 
   <div class="wrapper">
 
@@ -208,6 +209,7 @@
   <!-- include: "type": "js", "files": ["scripts/services/*.js"] -->
   <script src="/scripts/services/hostFactory.js"></script>
   <script src="/scripts/services/userFactory.js"></script>
+  <script src="scripts/services/authFactory.js"></script>
   <!-- /include -->
   <!-- endbuild -->
 

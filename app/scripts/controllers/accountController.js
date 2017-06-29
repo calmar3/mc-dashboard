@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    var AccountCtrl = ['$scope', '$rootScope', '$compile','$state','$http','hostFactory','userFactory', function ($scope, $rootScope, $compile,$state,$http,hostFactory,userFactory) {
+    var AccountCtrl = ['$scope', '$rootScope', '$compile','$state','$http', '$cookies','hostFactory','userFactory', function ($scope, $rootScope, $compile,$state,$http, $cookies,hostFactory,userFactory) {
 
         var ctrl = this;
         ctrl.newPassword = "";
@@ -31,6 +31,7 @@
             ctrl.user.password = ctrl.newPassword;
 
             $http.put(hostFactory.getHost()+hostFactory.getUserAPI(), ctrl.user).then(function(response) {
+                var cookie = $cookies.get('myCookie');;
                 userFactory.setUser(response.data);
 
                 $state.go("Profilo Utente");
@@ -74,7 +75,7 @@
         }
     }];
 
-    AccountCtrl.$inject = ['$scope', '$rootScope', '$compile','$state','$http','hostFactory','userFactory'];
+    AccountCtrl.$inject = ['$scope', '$rootScope', '$compile','$state','$http', '$cookies','hostFactory','userFactory'];
 
     angular.module('mc-dashboard').controller('AccountCtrl', AccountCtrl);
 }());

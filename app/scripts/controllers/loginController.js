@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    var LoginCtrl = ['$scope', '$rootScope', '$compile','$state','$http','hostFactory','userFactory', function ($scope, $rootScope, $compile,$state,$http,hostFactory,userFactory) {
+    var LoginCtrl = ['$scope', '$rootScope', '$compile','$state','$http', '$cookies','hostFactory','userFactory', 'authFactory', function ($scope, $rootScope, $compile,$state,$http,$cookies,hostFactory,userFactory, authFactory) {
 
         var ctrl = this;
 
@@ -13,6 +13,11 @@
 
         ctrl.invalidLogin = false;
 
+        initController();
+
+        function initController() {
+            authFactory.logout();
+        }
 
         function loginFn() {
             if (ctrl.username === null || ctrl.username === undefined || ctrl.username===""){
@@ -36,55 +41,24 @@
                 'username':ctrl.username,
                 'password':ctrl.password
             };
-            
-            $http.post(hostFactory.getHost()+hostFactory.getLoginAPI(),data).then(function (response) {
 
-                userFactory.setUser(response.data);
-
-                if (response.data.role === 'admin') {
-
-                    var menu = [
-                        { label: "Catalogo Prodotti", state: "Catalogo Prodotti", icon: "fa fa-database" },
-                        { label: "Gestione Personale", state: "Gestione Personale", icon: "fa fa-users" },
-                        { label: "Gestione Politiche", state: "Gestione Politiche", icon: "fa fa-gears" },
-                        { label: "Gestione Magazzini Periferici", state: "Gestione Magazzini Periferici", icon: "fa fa-gears" },
-                        { label: "Gestione Prodotti", state: "Gestione Prodotti", icon: "fa fa-gears" }
-
-                    ];
-                    userFactory.setMenu(menu);
-
+            authFactory.login(data, function (result) {
+                if (result === true) {
+                    $state.go('Profilo Utente');
                 }
-
-                if (response.data.role === 'magazziniere') {
-
-                    var menu = [
-                        { label: "Catalogo Prodotti", state: "Catalogo Prodotti", icon: "fa fa-database" },
-                        { label: "Evasione Ordini", state: "Evasione Ordini", icon: "fa fa-users"},
-                        { label: "Storico", state: "Storico", icon: "fa fa-users"}
-                    ];
-                    userFactory.setMenu(menu);
-
+                else {
+                    ctrl.invalidLogin = true;
+                    setTimeout(function() {
+                        ctrl.invalidLogin = false;
+                        $scope.$apply();
+                    }, 1000);
                 }
-
-
-                $state.go("Profilo Utente");
-
-            }).catch(function (error) {
-                ctrl.invalidLogin = true;
-                setTimeout(function () {
-                    ctrl.invalidLogin = false;
-                    $scope.$apply();
-                },1000);
-            });
-
-
-
-
+            })
         }
 
     }];
 
-    LoginCtrl.$inject = ['$scope', '$rootScope', '$compile','$state','$http','hostFactory','userFactory'];
+    LoginCtrl.$inject = ['$scope', '$rootScope', '$compile','$state','$http','$cookies','hostFactory','userFactory', 'authFactory'];
 
     angular.module('mc-dashboard').controller('LoginCtrl', LoginCtrl);
 

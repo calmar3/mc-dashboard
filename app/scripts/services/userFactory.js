@@ -3,7 +3,7 @@
     'use strict';
     angular.module('mc-dashboard').factory('userFactory', userFactory);
 
-    function userFactory() {
+    function userFactory($cookies) {
         var userFactory = {};
 
         userFactory.user = null;

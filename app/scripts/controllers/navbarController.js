@@ -5,13 +5,9 @@
 (function () {
   'use strict';
 
-    var NavbarCtrl = ['$scope', '$rootScope', '$compile', '$state', '$stateParams','$http', 'userFactory', function ($scope, $rootScope, $compile, $state, $stateParams,$http, userFactory) {
+    var NavbarCtrl = ['$scope', '$rootScope', '$compile', '$state', '$stateParams','$http', '$cookies', 'userFactory', 'authFactory', function ($scope, $rootScope, $compile, $state, $stateParams,$http, $cookies, userFactory, authFactory) {
 
         var ctrl = this;
-
-
-
-
 
         ctrl.collapsemenu = false;
 
@@ -31,17 +27,23 @@
 
         ctrl.signout = signoutFn;
 
+        ctrl.retrieveCookie = retrieveCookieFn;
+
+        function retrieveCookieFn() {
+            authFactory.retrieveCookie();
+        }
+
         $scope.$watch(function () {
             return userFactory.user;
         }, function (res) {
             ctrl.user = userFactory.getUser();
-        })
+        });
 
         $scope.$watch(function () {
             return userFactory.menu;
         }, function (res) {
            ctrl.menulist = userFactory.getMenu();
-        })
+        });
 
         function goFn(location) {
             $state.go(location);
@@ -59,12 +61,9 @@
         }
 
         function signoutFn() {
-            if (ctrl.user != null) {
-                ctrl.user = null;
-            }
-
-            ctrl.menulist = [];
-            ctrl.go("Login");
+            authFactory.logout();
+            ctrl.user = null;
+            $state.go('Login');
         }
 
 
@@ -74,7 +73,7 @@
 
     }];
 
-    NavbarCtrl.$inject = ['$scope', '$rootScope', '$compile', '$state', '$stateParams','$http', 'userFactory'];
+    NavbarCtrl.$inject = ['$scope', '$rootScope', '$compile', '$state', '$stateParams','$http', '$cookies', 'userFactory', 'authFactory'];
 
     angular.module('mc-dashboard').controller('NavbarCtrl', NavbarCtrl);
 } ());
