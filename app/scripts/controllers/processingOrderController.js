@@ -287,6 +287,57 @@
 
         }
 
+        ctrl.InSearchText = null;
+        ctrl.OutSearchText = null;
+
+
+        ctrl.InSearchFilter = function (item) {
+
+
+            if (ctrl.InSearchText && ctrl.InSearchText !== '') {
+                if (item.commission.number.toString().toLowerCase().indexOf(ctrl.InSearchText.toLowerCase()) !== -1) {
+                    return true;
+                }
+                else if (item.commission.source.toLowerCase().indexOf(ctrl.InSearchText.toLowerCase()) !== -1) {
+                    return true;
+                }
+                else if(item.commission.destination.toLowerCase().indexOf(ctrl.InSearchText.toLowerCase()) !== -1){
+                    return true;
+                }
+                else if(item.commission.date.toLowerCase().indexOf(ctrl.InSearchText.toLowerCase()) !== -1){
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }else{
+                return true;
+            }
+        }
+
+
+        ctrl.OutSearchFilter = function (item) {
+
+            if (ctrl.OutSearchText && ctrl.OutSearchText !== '') {
+                if (item.commission.number.toString().toLowerCase().indexOf(ctrl.OutSearchText.toLowerCase()) !== -1) {
+                    return true;
+                }
+                else if (item.commission.source.toLowerCase().indexOf(ctrl.OutSearchText.toLowerCase()) !== -1) {
+                    return true;
+                }
+                else if(item.commission.destination.toLowerCase().indexOf(ctrl.OutSearchText.toLowerCase()) !== -1){
+                    return true;
+                }
+                else if(item.commission.date.toLowerCase().indexOf(ctrl.OutSearchText.toLowerCase()) !== -1){
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }else{
+                return true;
+            }
+        }
     }];
 
     procOrdCtrl.$inject = ['$scope', '$rootScope', '$compile', '$http', '$state', 'hostFactory'];
