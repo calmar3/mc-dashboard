@@ -169,14 +169,16 @@
                 ctrl.product.categories.length !== 0 )
                 delete ctrl.product.categories;
 
-            $http.put(hostFactory.getHost()+hostFactory.getProductAPI()+"/update", ctrl.product).then(function (response) {
+            $http.put(hostFactory.getHost()+hostFactory.getProductAPI(), ctrl.product).then(function (response) {
                 ctrl.refresh();
                 ctrl.switchMode(null);
             }).catch(function (error) {
                 console.log(error);
             });
 
-            $http.post(hostFactory.getHost()+hostFactory.getProductAPI()+"/save", ctrl.product).then(function (response) {
+            $http.post(hostFactory.getHost()+hostFactory.getProductAPI(), ctrl.product).then(function (response) {
+
+
                 ctrl.refresh();
                 ctrl.switchMode(null);
             }).catch(function (error) {

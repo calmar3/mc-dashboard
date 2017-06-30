@@ -71,9 +71,9 @@
 
         function searchBatchFilter(item) {
          if (ctrl.searchText && ctrl.searchText !== ''){
-          var words = ctrl.searchText.split(" ");
+
           for (var i = 0; i < ctrl.searchText.length; i++) {
-            for (var j = 0; j < words.length; j++) {
+
               if (item.product.description.toLowerCase().indexOf(ctrl.searchText.toLowerCase()) !== -1) {
                 return true;
               }
@@ -87,7 +87,7 @@
                 return false;
               }
             }
-          }
+
         } else {
           return true;
         }
