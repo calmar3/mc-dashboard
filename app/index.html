@@ -121,12 +121,12 @@
     <div class="content-wrapper" style="min-height:{{ctrl.minheight}}px">
       <!-- Content Header (Page header) -->
 
-      <section class="content-header" style="margin-top: 4%;">
-        <h1>
+      <section class="content-header" >
+        <h1 style="margin-top: 3.5%;">
           {{ctrl.state.current.name}}
           <small>FoodEmperors</small>
         </h1>
-        <ol class="breadcrumb">
+        <ol class="breadcrumb" style="margin-top: 3.5%;">
           <li style="cursor:pointer" ng-click="ctrl.go('Home')"><a><i class="fa fa-dashboard"></i> Home</a></li>
           <li ng-if="ctrl.state.current.parent!='site'" class="active">{{ctrl.state.current.parent}}</li>
           <li ng-if="ctrl.state.current.name!=='Home'" class="active">{{ctrl.state.current.name}}</li>

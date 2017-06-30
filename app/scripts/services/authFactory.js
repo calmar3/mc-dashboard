@@ -20,9 +20,7 @@
                 if (response.data.token) {
                     var cookie = $cookies.get('myCookie');
                     $cookies.putObject('myCookie', response.data);
-
                     $http.defaults.headers.common.token = response.data.token;
-                    console.log($http.defaults.headers.common.token);
                     cookie = $cookies.get('myCookie');
                     userFactory.setUser(JSON.parse(cookie).user);
                     callback(true);
@@ -37,6 +35,7 @@
         function logoutFn() {
             $cookies.remove('myCookie');
             userFactory.setUser(null);
+            userFactory.menu = [];
             $http.defaults.headers.common.token = '';
         }
 
@@ -45,11 +44,14 @@
             if (cookie === null || cookie === undefined) {
                 return;
             }
+            $http.defaults.headers.common.token = JSON.parse(cookie).token;
             userFactory.setUser(JSON.parse(cookie).user);
         }
 
         function authorizeFn() {
             var cookie = $cookies.get('myCookie');
+            if ($state.current.name === 'Home')
+                return true;
 
             if (cookie === null || cookie === undefined) {
                 $state.go('Login');
@@ -57,6 +59,7 @@
             }
 
             var role = JSON.parse(cookie).user.role.toString();
+
 
             /* Se vuoto tutti possono accedere alla pagina */
             if ($state.current.data.roles.length === 0) {
