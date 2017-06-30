@@ -211,6 +211,8 @@
                     ctrl.newProduct.properties[keys[0]] = properties[i][keys[0]];
                 }
                 delete ctrl.newProduct.id;
+                ctrl.newProduct.pack = [10];
+                ctrl.newProduct.charge = 0.0;
                 $http.post((hostFactory.getHost()+hostFactory.getProductAPI() ), ctrl.newProduct).then(function (response) {
 
                     ctrl.refresh();
