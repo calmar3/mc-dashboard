@@ -2,7 +2,11 @@
 (function () {
     'use strict';
 
-    var CommissionCtrl = ['$scope', '$rootScope', '$compile','$http','hostFactory', function ($scope, $rootScope, $compile,$http,hostFactory) {
+    var CommissionCtrl = ['$scope', '$rootScope', '$compile','$http','hostFactory', 'authFactory', function ($scope, $rootScope, $compile,$http,hostFactory, authFactory) {
+
+        if (authFactory.authorize() === false) {
+            return;
+        }
 
         var ctrl = this;
 
@@ -116,7 +120,7 @@
                 setTimeout(function () {
                     ctrl.error = false;
                     $scope.$apply();
-                },1500);
+                },2000);
                 return;
             }
             var order = JSON.parse(JSON.stringify(ctrl.newOrder));
@@ -154,7 +158,7 @@
                     ctrl.success = false;
                     ctrl.switchMode(null);
                     $scope.$apply();
-                },1500);
+                },2000);
 
             }).catch(function (error) {
                 console.log(error);
@@ -162,7 +166,7 @@
                 setTimeout(function () {
                     ctrl.error = false;
                     $scope.$apply();
-                },1500);
+                },2000);
             });
         }
 
@@ -173,7 +177,7 @@
                 setTimeout(function () {
                     ctrl.error = false;
                     $scope.$apply();
-                },1500);
+                },2000);
                 return;
             }
             var order = JSON.parse(JSON.stringify(ctrl.selected.commission));
@@ -192,7 +196,7 @@
                     ctrl.success = false;
                     ctrl.switchMode(null);
                     $scope.$apply();
-                },1500);
+                },2000);
 
             }).catch(function (error) {
                 console.log(error);
@@ -200,7 +204,7 @@
                 setTimeout(function () {
                     ctrl.error = false;
                     $scope.$apply();
-                },1500);
+                },2000);
             });
         }
 
@@ -344,7 +348,7 @@
 
     }];
 
-    CommissionCtrl.$inject = ['$scope', '$rootScope', '$compile','$http','hostFactory'];
+    CommissionCtrl.$inject = ['$scope', '$rootScope', '$compile','$http','hostFactory', 'authFactory'];
 
     angular.module('mc-dashboard').controller('CommissionCtrl', CommissionCtrl);
 

@@ -90,7 +90,7 @@
         parent: 'site',
         url: '/evasioneOrdini',
         data: {
-            roles: []
+            roles: ['warehouseman']
         },
         views: {
             'page@': {
@@ -102,27 +102,11 @@
         params: {
             home: true
         }
-}).state('Gestione Personale', {
-        parent: 'site',
-        url: '/personale',
-        data: {
-            roles: []
-        },
-        views: {
-            'page@': {
-                templateUrl: "views/personal.html",
-                controller: 'PersonalCtrl',
-                controllerAs: 'ctrl'
-            }
-        },
-        params: {
-            home: true
-        }
-    }).state('Gestione Politiche', {
+}).state('Gestione Politiche', {
         parent: 'site',
         url: '/politiche',
         data: {
-            roles: []
+            roles: ['admin']
         },
         views: {
             'page@': {
@@ -138,7 +122,7 @@
         parent: 'site',
         url: '/ordini',
         data: {
-            roles: []
+            roles: ['admin', 'manager']
         },
         views: {
             'page@': {
@@ -171,7 +155,7 @@
       parent: 'site',
       url: '/magazzini_periferici',
       data: {
-        roles: []
+        roles: ['admin']
       },
       views: {
         'page@': {
@@ -187,7 +171,7 @@
         parent: 'site',
         url: '/gestione_bolle',
         data: {
-            roles: []
+            roles: ['manager']
         },
         views: {
             'page@': {
@@ -219,7 +203,7 @@
         parent: 'site',
         url: '/visualizza_bolle',
         data: {
-            roles: []
+            roles: ['manager', 'warehouseman']
         },
         views: {
             'page@': {
@@ -235,7 +219,7 @@
         parent: 'site',
         url: '/registrazione',
         data: {
-            roles: []
+            roles: ['admin']
         },
         views: {
             'page@': {
@@ -251,7 +235,7 @@
         parent: 'site',
         url: '/prodotto',
         data: {
-            roles: []
+            roles: ['admin']
         },
         views: {
             'page@': {

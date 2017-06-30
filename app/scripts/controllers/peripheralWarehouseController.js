@@ -1,7 +1,11 @@
 (function () {
   'use strict';
 
-  var PeripheralWarehouseCtrl = ['$scope', '$rootScope', '$compile','$http','hostFactory', function ($scope, $rootScope, $compile,$http,hostFactory) {
+  var PeripheralWarehouseCtrl = ['$scope', '$rootScope', '$compile','$http','hostFactory', 'authFactory', function ($scope, $rootScope, $compile,$http,hostFactory, authFactory) {
+
+      if (authFactory.authorize() === false) {
+          return;
+      }
 
     var ctrl = this;
 
@@ -57,7 +61,7 @@
         setTimeout(function () {
           ctrl.error = false;
           $scope.$apply();
-        },1500);
+        },2000);
         return;
       }
       var peripheralWarehouse = JSON.parse(JSON.stringify(ctrl.newPeripheralWarehouse));
@@ -72,14 +76,14 @@
           ctrl.success = false;
           ctrl.switchMode(null);
           $scope.$apply();
-        },1500);
+        },2000);
 
       }).catch(function (error) {
         ctrl.error = true;
         setTimeout(function () {
           ctrl.error = false;
           $scope.$apply();
-        },1500);
+        },2000);
       });
     }
 
@@ -96,14 +100,14 @@
           ctrl.success = false;
           ctrl.switchMode(null);
           $scope.$apply();
-        },1500);
+        },2000);
 
       }).catch(function (error) {
         ctrl.error = true;
         setTimeout(function () {
           ctrl.error = false;
           $scope.$apply();
-        },1500);
+        },2000);
       });
     }
 
@@ -192,7 +196,7 @@
 
   }];
 
-  PeripheralWarehouseCtrl.$inject = ['$scope', '$rootScope', '$compile','$http','hostFactory'];
+  PeripheralWarehouseCtrl.$inject = ['$scope', '$rootScope', '$compile','$http','hostFactory', 'authFactory'];
 
   angular.module('mc-dashboard').controller('PeripheralWarehouseCtrl', PeripheralWarehouseCtrl);
 

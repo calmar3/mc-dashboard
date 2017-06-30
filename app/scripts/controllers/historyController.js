@@ -5,7 +5,11 @@
 (function () {
     'use strict';
 
-    var HistoryCtrl = ['$scope', '$rootScope', '$compile', '$http', 'hostFactory', function ($scope, $rootScope, $compile, $http, hostFactory) {
+    var HistoryCtrl = ['$scope', '$rootScope', '$compile', '$http', 'hostFactory', 'authFactory', function ($scope, $rootScope, $compile, $http, hostFactory, authFactory) {
+
+        if (authFactory.authorize() === false) {
+            return;
+        }
 
         var ctrl = this;
 
@@ -52,9 +56,64 @@
             }
         }
 
+        ctrl.InSearchText = null;
+        ctrl.OutSearchText = null;
+
+
+        ctrl.InSearchFilter = function (item) {
+
+
+            if (ctrl.InSearchText && ctrl.InSearchText !== '') {
+                if (item.commission.number.toString().toLowerCase().indexOf(ctrl.InSearchText.toLowerCase()) !== -1) {
+                    return true;
+                }
+                else if (item.commission.source.toLowerCase().indexOf(ctrl.InSearchText.toLowerCase()) !== -1) {
+                    return true;
+                }
+                else if(item.commission.destination.toLowerCase().indexOf(ctrl.InSearchText.toLowerCase()) !== -1){
+                    return true;
+                }
+                else if(item.commission.date.toLowerCase().indexOf(ctrl.InSearchText.toLowerCase()) !== -1){
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }else{
+                return true;
+            }
+        }
+
+
+        ctrl.OutSearchFilter = function (item) {
+
+            if (ctrl.OutSearchText && ctrl.OutSearchText !== '') {
+                if (item.commission.number.toString().toLowerCase().indexOf(ctrl.OutSearchText.toLowerCase()) !== -1) {
+                    return true;
+                }
+                else if (item.commission.source.toLowerCase().indexOf(ctrl.OutSearchText.toLowerCase()) !== -1) {
+                    return true;
+                }
+                else if(item.commission.destination.toLowerCase().indexOf(ctrl.OutSearchText.toLowerCase()) !== -1){
+                    return true;
+                }
+                else if(item.commission.date.toLowerCase().indexOf(ctrl.OutSearchText.toLowerCase()) !== -1){
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }else{
+                return true;
+            }
+        }
+
+
+
+
     }];
 
-    HistoryCtrl.$inject = ['$scope', '$rootScope', '$compile', '$http', 'hostFactory'];
+    HistoryCtrl.$inject = ['$scope', '$rootScope', '$compile', '$http', 'hostFactory', 'authFactory'];
 
     angular.module('mc-dashboard').controller('HistoryCtrl', HistoryCtrl);
 

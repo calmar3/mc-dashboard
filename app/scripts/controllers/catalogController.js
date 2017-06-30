@@ -1,7 +1,11 @@
 (function () {
     'use strict';
 
-    var CatalogCtrl = ['$scope', '$rootScope', '$compile','$http','hostFactory', function ($scope, $rootScope, $compile,$http,hostFactory) {
+    var CatalogCtrl = ['$scope', '$rootScope', '$compile','$http','hostFactory', 'authFactory', function ($scope, $rootScope, $compile,$http,hostFactory, authFactory) {
+
+        if (authFactory.authorize() === false) {
+            return;
+        }
 
       var ctrl = this;
 
@@ -91,7 +95,7 @@
 
     }];
 
-  CatalogCtrl.$inject = ['$scope', '$rootScope', '$compile','$http','hostFactory'];
+  CatalogCtrl.$inject = ['$scope', '$rootScope', '$compile','$http','hostFactory', 'authFactory'];
 
   angular.module('mc-dashboard').controller('CatalogCtrl', CatalogCtrl);
 

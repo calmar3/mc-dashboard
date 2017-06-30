@@ -5,7 +5,11 @@
 (function () {
     'use strict';
 
-    var DeliveryCtrl = ['$scope', '$rootScope', '$compile','$state','$http','hostFactory', function ($scope, $rootScope, $compile,$state,$http,hostFactory) {
+    var DeliveryCtrl = ['$scope', '$rootScope', '$compile','$state','$http','hostFactory', 'authFactory', function ($scope, $rootScope, $compile,$state,$http,hostFactory, authFactory) {
+
+        if (authFactory.authorize() === false) {
+            return;
+        }
 
         var ctrl = this;
         ctrl.batchDel = [];
@@ -153,12 +157,12 @@
                 setTimeout(function () {
                     ctrl.error = false;
                     $scope.$apply();
-                },1500);
+                },2000);
             });
         }
     }];
 
-    DeliveryCtrl.$inject = ['$scope', '$rootScope', '$compile','$state','$http','hostFactory'];
+    DeliveryCtrl.$inject = ['$scope', '$rootScope', '$compile','$state','$http','hostFactory', 'authFactory'];
 
     angular.module('mc-dashboard').controller('DeliveryCtrl', DeliveryCtrl);
 }());
