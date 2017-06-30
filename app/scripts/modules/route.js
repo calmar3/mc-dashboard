@@ -208,7 +208,7 @@
         views: {
             'page@': {
                 templateUrl: "views/deliveryCompleted.html",
-                controller: 'DeliveryCtrl',
+                controller: 'ShowDeliveryCtrl',
                 controllerAs: 'ctrl'
             }
         },

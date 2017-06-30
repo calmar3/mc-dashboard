@@ -25,6 +25,8 @@
         ctrl.genDeliveryNote = genDeliveryNoteFn;
         ctrl.sendDeliveryNote = sendDeliveryNoteFn;
 
+        loadCommission();
+
         function loadCommission() {
             $http.get(hostFactory.getHost() + hostFactory.getAllCommissionsAPI()).then(function (response) {
 
@@ -33,24 +35,10 @@
                     var num_order = item.commission.id;
                     ctrl.batchDel[num_order] = [];
                 });
+
+                console.log(ctrl.commissionsDto);
             })
         }
-
-        function loadDeliveryNotes() {
-            $http.get(hostFactory.getHost() + hostFactory.getSaveDeleteUpdateDeliveryAPI()).then(function (response) {
-
-                ctrl.deliveryNotes = response.data;
-            });
-        }
-
-        if (window.document.URL.match("gestione_bolle")){
-            loadCommission();
-        }
-
-        else {
-            loadDeliveryNotes();
-        }
-
 
         function isCompletedFn(commission) {
             if (commission.completed === "true") {
