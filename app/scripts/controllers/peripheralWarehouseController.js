@@ -1,7 +1,11 @@
 (function () {
   'use strict';
 
-  var PeripheralWarehouseCtrl = ['$scope', '$rootScope', '$compile','$http','hostFactory', function ($scope, $rootScope, $compile,$http,hostFactory) {
+  var PeripheralWarehouseCtrl = ['$scope', '$rootScope', '$compile','$http','hostFactory', 'authFactory', function ($scope, $rootScope, $compile,$http,hostFactory, authFactory) {
+
+      if (authFactory.authorize() === false) {
+          return;
+      }
 
     var ctrl = this;
 
@@ -192,7 +196,7 @@
 
   }];
 
-  PeripheralWarehouseCtrl.$inject = ['$scope', '$rootScope', '$compile','$http','hostFactory'];
+  PeripheralWarehouseCtrl.$inject = ['$scope', '$rootScope', '$compile','$http','hostFactory', 'authFactory'];
 
   angular.module('mc-dashboard').controller('PeripheralWarehouseCtrl', PeripheralWarehouseCtrl);
 

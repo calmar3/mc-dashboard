@@ -1,7 +1,11 @@
 (function () {
     'use strict';
 
-    var PoliciesCtrl = ['$scope', '$rootScope', '$compile','$http','hostFactory', function ($scope, $rootScope, $compile,$http,hostFactory) {
+    var PoliciesCtrl = ['$scope', '$rootScope', '$state', '$compile','$http','hostFactory', 'authFactory', function ($scope, $rootScope, $state, $compile,$http,hostFactory,authFactory) {
+
+        if (authFactory.authorize() === false) {
+            return;
+        }
 
         var ctrl = this;
 
@@ -431,7 +435,7 @@
 
     }];
 
-    PoliciesCtrl.$inject = ['$scope', '$rootScope', '$compile','$http','hostFactory'];
+    PoliciesCtrl.$inject = ['$scope', '$rootScope', '$state', '$compile','$http','hostFactory', 'authFactory'];
 
     angular.module('mc-dashboard').controller('PoliciesCtrl', PoliciesCtrl);
 

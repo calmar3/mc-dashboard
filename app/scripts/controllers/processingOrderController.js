@@ -4,7 +4,11 @@
 (function () {
     'use strict';
 
-    var procOrdCtrl = ['$scope', '$rootScope', '$compile', '$http', '$state', 'hostFactory', function ($scope, $rootScope, $compile, $http, $state, hostFactory) {
+    var procOrdCtrl = ['$scope', '$rootScope', '$compile', '$http', '$state', 'hostFactory', 'authFactory', function ($scope, $rootScope, $compile, $http, $state, hostFactory, authFactory) {
+
+        if (authFactory.authorize() === false) {
+            return;
+        }
 
         var ctrl = this;
 
@@ -340,7 +344,7 @@
         }
     }];
 
-    procOrdCtrl.$inject = ['$scope', '$rootScope', '$compile', '$http', '$state', 'hostFactory'];
+    procOrdCtrl.$inject = ['$scope', '$rootScope', '$compile', '$http', '$state', 'hostFactory', 'authFactory'];
 
     angular.module('mc-dashboard').controller('procOrdCtrl', procOrdCtrl);
 

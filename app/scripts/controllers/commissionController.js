@@ -2,7 +2,11 @@
 (function () {
     'use strict';
 
-    var CommissionCtrl = ['$scope', '$rootScope', '$compile','$http','hostFactory', function ($scope, $rootScope, $compile,$http,hostFactory) {
+    var CommissionCtrl = ['$scope', '$rootScope', '$compile','$http','hostFactory', 'authFactory', function ($scope, $rootScope, $compile,$http,hostFactory, authFactory) {
+
+        if (authFactory.authorize() === false) {
+            return;
+        }
 
         var ctrl = this;
 
@@ -344,7 +348,7 @@
 
     }];
 
-    CommissionCtrl.$inject = ['$scope', '$rootScope', '$compile','$http','hostFactory'];
+    CommissionCtrl.$inject = ['$scope', '$rootScope', '$compile','$http','hostFactory', 'authFactory'];
 
     angular.module('mc-dashboard').controller('CommissionCtrl', CommissionCtrl);
 
