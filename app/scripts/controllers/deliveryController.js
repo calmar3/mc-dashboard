@@ -153,7 +153,7 @@
                 setTimeout(function () {
                     ctrl.error = false;
                     $scope.$apply();
-                },1500);
+                },2000);
             });
         }
     }];

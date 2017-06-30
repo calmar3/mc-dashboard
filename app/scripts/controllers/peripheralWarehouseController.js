@@ -57,7 +57,7 @@
         setTimeout(function () {
           ctrl.error = false;
           $scope.$apply();
-        },1500);
+        },2000);
         return;
       }
       var peripheralWarehouse = JSON.parse(JSON.stringify(ctrl.newPeripheralWarehouse));
@@ -72,14 +72,14 @@
           ctrl.success = false;
           ctrl.switchMode(null);
           $scope.$apply();
-        },1500);
+        },2000);
 
       }).catch(function (error) {
         ctrl.error = true;
         setTimeout(function () {
           ctrl.error = false;
           $scope.$apply();
-        },1500);
+        },2000);
       });
     }
 
@@ -96,14 +96,14 @@
           ctrl.success = false;
           ctrl.switchMode(null);
           $scope.$apply();
-        },1500);
+        },2000);
 
       }).catch(function (error) {
         ctrl.error = true;
         setTimeout(function () {
           ctrl.error = false;
           $scope.$apply();
-        },1500);
+        },2000);
       });
     }
 

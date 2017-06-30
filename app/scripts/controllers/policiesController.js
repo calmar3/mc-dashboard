@@ -5,7 +5,7 @@
 
         var ctrl = this;
 
-        ctrl.customizations = ["Prodotti","Fornitori","Promo"];
+        ctrl.customizations = ["Prodotti","Fornitori","Promo","Proprieta"];
 
         ctrl.selectedTab = 0;
 
@@ -57,6 +57,8 @@
 
         ctrl.panelColours = [];
 
+        ctrl.buttonColours = [];
+
         ctrl.uploadSupplier = uploadSupplierFn;
 
         ctrl.selectSupplier = selectSupplierFn;
@@ -66,6 +68,91 @@
         ctrl.addPack = addPackFn;
 
         ctrl.removePack = removePackFn;
+
+        ctrl.addProperty = addPropertyFn;
+
+        ctrl.loadCustomProperties = loadCustomPropertiesFn;
+
+        ctrl.properties = [];
+
+        ctrl.deleteProperty = deletePropertyFn;
+
+        function deletePropertyFn(index) {
+            if (ctrl.properties[index] !== null && ctrl.properties[index] !== undefined
+                && ctrl.properties[index].length > 0 ){
+                $http.delete(hostFactory.getHost()+hostFactory.getOtherPropertyAPI()+'/'+ctrl.properties[index]).then(function (res) {
+                    ctrl.success = true;
+                    ctrl.message = "eliminata";
+                    setTimeout(function () {
+                        ctrl.success = null;
+                        ctrl.property = "";
+                        ctrl.message = "";
+                        ctrl.loadCustomProperties();
+                        $scope.$apply();
+                    },2000);
+                }).catch(function (error) {
+                    console.log(error);
+                    ctrl.error = true;
+                    ctrl.message = "NON eliminata";
+                    setTimeout(function () {
+                        ctrl.error = null;
+                        ctrl.message = "";
+                        $scope.$apply();
+                    },2000);
+
+                });
+            }
+
+        }
+
+        function addPropertyFn() {
+            if (ctrl.property === null || ctrl.property === undefined || ctrl.property.length < 1){
+                alert("Proprietà non valida");
+            }
+            else{
+                var data = {
+                    "id":ctrl.property,
+                    "productlist":null
+                };
+                $http.post(hostFactory.getHost()+hostFactory.getOtherPropertyAPI(),data).then(function (res) {
+                    ctrl.success = true;
+                    ctrl.message = "aggiunta";
+                    setTimeout(function () {
+                        ctrl.success = null;
+                        ctrl.property = "";
+                        ctrl.message = "";
+                        ctrl.loadCustomProperties();
+                        $scope.$apply();
+                    },2000);
+                }).catch(function (error) {
+                    console.log(error);
+                    ctrl.error = true;
+                    ctrl.message = "NON aggiunta";
+                    setTimeout(function () {
+                        ctrl.error = null;
+                        ctrl.message = "";
+                        ctrl.cleanSupplier();
+                        $scope.$apply();
+                    },2000);
+
+                });
+            }
+        }
+
+        function loadCustomPropertiesFn() {
+            $http.get(hostFactory.getHost()+hostFactory.getOtherPropertyAPI()).then(function (response) {
+                ctrl.properties = [];
+                ctrl.buttonColours = [];
+                for (var i = 0 ; i < response.data.length ; i++){
+                    ctrl.properties.push(response.data[i].id);
+                    ctrl.buttonColours.push(ctrl.colours[ Math.floor(Math.random()*(3-0+1)+0)]);
+                }
+
+
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
 
         function removePackFn(index) {
             ctrl.product.pack.splice(index,1);
@@ -92,7 +179,7 @@
                     ctrl.cleanSupplier();
                     ctrl.loadExternalSuppliers();
                     $scope.$apply();
-                },1500);
+                },2000);
             }).catch(function (error) {
                 console.log(error);
                 ctrl.error = true;
@@ -100,7 +187,7 @@
                     ctrl.error = null;
                     ctrl.cleanSupplier();
                     $scope.$apply();
-                },1500);
+                },2000);
 
             });
         }
@@ -117,7 +204,7 @@
                 setTimeout(function () {
                     ctrl.error = null;
                     $scope.$apply();
-                },1500);
+                },2000);
                 return;
             }
             var today = new Date();
@@ -141,7 +228,7 @@
                     ctrl.cleanSupplier();
                     ctrl.loadExternalSuppliers();
                     $scope.$apply();
-                },1500);
+                },2000);
             }).catch(function (error) {
                 console.log(error);
                 ctrl.error = true;
@@ -149,7 +236,7 @@
                     ctrl.error = null;
                     ctrl.cleanSupplier();
                     $scope.$apply();
-                },1500);
+                },2000);
 
             });
         }
@@ -161,7 +248,7 @@
                 setTimeout(function () {
                     ctrl.error = null;
                     $scope.$apply();
-                },1500);
+                },2000);
                 return;
             }
 
@@ -172,7 +259,7 @@
                     ctrl.cleanSupplier();
                     ctrl.loadExternalSuppliers();
                     $scope.$apply();
-                },1500);
+                },2000);
             }).catch(function (error) {
                 console.log(error);
                 ctrl.error = true;
@@ -180,7 +267,7 @@
                     ctrl.error = null;
                     ctrl.cleanSupplier();
                     $scope.$apply();
-                },1500);
+                },2000);
 
             });
         }
@@ -193,7 +280,7 @@
                     cleanPagination();
                     ctrl.getExpiringBatches();
                     $scope.$apply();
-                },1500);
+                },2000);
             }).catch(function (error) {
                 console.log(error);
                 ctrl.error = true;
@@ -201,7 +288,7 @@
                     ctrl.error = null;
                     cleanPagination();
                     $scope.$apply();
-                },1500)
+                },2000)
 
             });
         }
@@ -215,7 +302,7 @@
                     ctrl.success = null;
                     ctrl.cleanChargeView();
                     $scope.$apply();
-                },1500);
+                },2000);
             }).catch(function (error) {
                 console.log(error);
                 ctrl.error = true;
@@ -223,7 +310,7 @@
                     ctrl.error = null;
                     ctrl.cleanChargeView();
                     $scope.$apply();
-                },1500)
+                },2000)
 
             });
             ctrl.charge = null;
@@ -240,6 +327,7 @@
             cleanPagination();
             ctrl.cleanSupplier();
             ctrl.selectedTab = index;
+            ctrl.property = "";
         }
 
         function loadCategoriesFn() {
