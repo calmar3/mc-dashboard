@@ -120,7 +120,8 @@
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper" style="min-height:{{ctrl.minheight}}px">
       <!-- Content Header (Page header) -->
-      <section class="content-header">
+
+      <section class="content-header" style="margin-top: 4%;">
         <h1>
           {{ctrl.state.current.name}}
           <small>FoodEmperors</small>
@@ -131,7 +132,6 @@
           <li ng-if="ctrl.state.current.name!=='Home'" class="active">{{ctrl.state.current.name}}</li>
         </ol>
       </section>
-
       <!-- Main content -->
       <section class="content">
         <!-- Small boxes (Stat box) -->
