@@ -5,7 +5,11 @@
 (function () {
     'use strict';
 
-    var HistoryCtrl = ['$scope', '$rootScope', '$compile', '$http', 'hostFactory', function ($scope, $rootScope, $compile, $http, hostFactory) {
+    var HistoryCtrl = ['$scope', '$rootScope', '$compile', '$http', 'hostFactory', 'authFactory', function ($scope, $rootScope, $compile, $http, hostFactory, authFactory) {
+
+        if (authFactory.authorize() === false) {
+            return;
+        }
 
         var ctrl = this;
 
@@ -54,7 +58,7 @@
 
     }];
 
-    HistoryCtrl.$inject = ['$scope', '$rootScope', '$compile', '$http', 'hostFactory'];
+    HistoryCtrl.$inject = ['$scope', '$rootScope', '$compile', '$http', 'hostFactory', 'authFactory'];
 
     angular.module('mc-dashboard').controller('HistoryCtrl', HistoryCtrl);
 

@@ -1,7 +1,11 @@
 (function () {
     'use strict';
 
-    var AccountCtrl = ['$scope', '$rootScope', '$compile','$state','$http', '$cookies','hostFactory','userFactory', function ($scope, $rootScope, $compile,$state,$http, $cookies,hostFactory,userFactory) {
+    var AccountCtrl = ['$scope', '$rootScope', '$compile','$state','$http', '$cookies','hostFactory','userFactory', 'authFactory', function ($scope, $rootScope, $compile,$state,$http, $cookies,hostFactory,userFactory, authFactory) {
+
+        if (authFactory.authorize() === false) {
+            return;
+        }
 
         var ctrl = this;
         ctrl.newPassword = "";
@@ -75,7 +79,7 @@
         }
     }];
 
-    AccountCtrl.$inject = ['$scope', '$rootScope', '$compile','$state','$http', '$cookies','hostFactory','userFactory'];
+    AccountCtrl.$inject = ['$scope', '$rootScope', '$compile','$state','$http', '$cookies','hostFactory','userFactory', 'authFactory'];
 
     angular.module('mc-dashboard').controller('AccountCtrl', AccountCtrl);
 }());

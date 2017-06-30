@@ -4,7 +4,11 @@
 (function () {
     'use strict';
 
-    var ProductCtrl = ['$scope', '$rootScope', '$compile', '$state', '$stateParams','$http', 'hostFactory', function ($scope, $rootScope, $compile, $state, $stateParams, $http, hostFactory) {
+    var ProductCtrl = ['$scope', '$rootScope', '$compile', '$state', '$stateParams','$http', 'hostFactory', 'authFactory', function ($scope, $rootScope, $compile, $state, $stateParams, $http, hostFactory, authFactory) {
+
+        if (authFactory.authorize() === false) {
+            return;
+        }
 
         var ctrl = this;
 
@@ -441,7 +445,7 @@
 
     }];
 
-    ProductCtrl.$inject = ['$scope', '$rootScope', '$compile', '$state', '$stateParams','$http', 'hostFactory'];
+    ProductCtrl.$inject = ['$scope', '$rootScope', '$compile', '$state', '$stateParams','$http', 'hostFactory', 'authFactory'];
 
     angular.module('mc-dashboard').controller('ProductCtrl', ProductCtrl);
 
