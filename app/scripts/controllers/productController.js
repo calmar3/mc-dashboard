@@ -87,12 +87,6 @@
 
         ctrl.categoryProducts = [];
 
-        function showProductsFn(category){
-
-            console.log(category);
-
-        }
-
         function searchFilterFn(item) {
 
             if (ctrl.searchText && ctrl.searchText !== '') {
@@ -217,7 +211,7 @@
                     ctrl.newProduct.properties[keys[0]] = properties[i][keys[0]];
                 }
                 delete ctrl.newProduct.id;
-                $http.post((hostFactory.getHost()+hostFactory.getProductAPI() + "/save"), ctrl.newProduct).then(function (response) {
+                $http.post((hostFactory.getHost()+hostFactory.getProductAPI() ), ctrl.newProduct).then(function (response) {
 
                     ctrl.refresh();
                     ctrl.switchMode(null);
