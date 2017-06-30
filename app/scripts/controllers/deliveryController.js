@@ -25,7 +25,11 @@
         ctrl.genDeliveryNote = genDeliveryNoteFn;
         ctrl.sendDeliveryNote = sendDeliveryNoteFn;
 
+        loadCommission();
+
         function loadCommission() {
+
+
             $http.get(hostFactory.getHost() + hostFactory.getAllCommissionsAPI()).then(function (response) {
 
                 ctrl.commissionsDto = response.data;
