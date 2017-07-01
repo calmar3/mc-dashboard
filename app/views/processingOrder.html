@@ -187,7 +187,7 @@
                         </td>
                         <td>{{commEntry.delDate}}</td>
                         <td>{{commEntry.expDate}}</td>
-                        <td>{{commEntry.quantity}}</td>
+                        <td>{{commEntry.remaining}}</td>
                         <td ng-show="{{commEntry.status}} == 0"><input type="checkbox" ng-model='checkStatus'
                                                                        ng-click="ctrl.toggle(commEntry,checkStatus)">
                         </td>
@@ -359,7 +359,7 @@
                                 <td>{{commEntry.product.name}}</td>
                                 <td>{{commEntry.delDate}}</td>
                                 <td>{{commEntry.expDate}}</td>
-                                <td>{{commEntry.quantity}}</td>
+                                <td>{{commEntry.remaining}}</td>
                             </tr>
 
 

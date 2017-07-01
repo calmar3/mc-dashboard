@@ -152,6 +152,7 @@
                 data.batches[i].price = data.batches[i].number*data.batches[i].quantity*data.batches[i].product.price;
                 data.batches[i].status = 0;
                 data.batches[i].sale = 0.0;
+                data.batches[i].remaining = data.batches[i].quantity*data.batches[i].number;
             }
             $http.post(hostFactory.getHost()+hostFactory.getSaveDeleteUpdateCommissionAPI(),data).then(function (response) {
                 loadCommissions();

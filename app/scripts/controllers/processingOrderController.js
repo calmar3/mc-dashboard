@@ -126,7 +126,7 @@
             if (status) {
                 batch.status = 2;
                 batch.delDate = ctrl.currentDate();
-                batch.remaining=batch.quantity;
+                //batch.remaining=batch.quantity;
                 ctrl.deliveredProducts.push(batch);
             }
             else {
@@ -136,7 +136,7 @@
             }
 
             console.log(ctrl.deliveredProducts);
-        }
+        };
 
 
         /**
@@ -222,7 +222,10 @@
                     ctrl.newBatch.status = 1;
                     ctrl.newBatch.expDate = ctrl.selectedBatch.expDate;
                     ctrl.newBatch.price = ctrl.selectedBatch.price;
-                    ctrl.selectedBatch.remaining -= ctrl.newBatch.quantity;
+                    if (ctrl.selectedBatch.remaining > ctrl.newBatch.quantity*ctrl.newBatch.number)
+                      ctrl.selectedBatch.remaining -= ctrl.newBatch.quantity*ctrl.newBatch.number;
+                    else
+                      alert("Lotto insufficiente");
 
                     var idx = ctrl.showOrder.batches.indexOf(ctrl.getBatch);
 
