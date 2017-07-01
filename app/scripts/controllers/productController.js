@@ -56,8 +56,6 @@
         ctrl.switchMode = switchModeFn;                 //mi permette di navigare tra i form della pagina
 
 
-        ctrl.addProduct = addProductFn;
-
         ctrl.updateProduct = updateProductFn;           //mi permette di aggiornare un prodotto
 
         ctrl.eliminateProduct = eliminateProductFn;     //mi permette di eliminare un prodotto
@@ -163,11 +161,6 @@
         }
 
 
-        function addProductFn() {
-            ctrl.add = true;
-            ctrl.product = null;
-        }
-
 
         //funzione che aggiorna i dati relativi a un prodotto selezionato
         function updateProductFn() {
@@ -178,16 +171,8 @@
                 ctrl.product.categories.length !== 0 )
                 delete ctrl.product.categories;
 
+            delete ctrl.product.propertiesId;
             $http.put(hostFactory.getHost()+hostFactory.getProductAPI(), ctrl.product).then(function (response) {
-                ctrl.refresh();
-                ctrl.switchMode(null);
-            }).catch(function (error) {
-                console.log(error);
-            });
-
-            $http.post(hostFactory.getHost()+hostFactory.getProductAPI(), ctrl.product).then(function (response) {
-
-
                 ctrl.refresh();
                 ctrl.switchMode(null);
             }).catch(function (error) {
@@ -308,6 +293,11 @@
         //quando faccio update di un prodotto e voglio aggiungere nuove proprietà indipendenti (oltre alle eventuali già presenti)
         function changeOtherPropertiesStatusFn(selectedProperty) {
 
+          /*  if (ctrl.products.propertylist === null || ctrl.products.propertylist === undefined || ctrl.products.propertylist.length === 0) {
+                ctrl.products.propertylist = {};
+                ctrl.products.propertiesId = [];
+            }*/
+
             var idx = -1;
             ctrl.product.propertylist.forEach(function (item) {
 
@@ -369,6 +359,13 @@
                 ctrl.products = response.data;
                 ctrl.products.orderByField = 'Prodotto';
                 ctrl.products.reverseSort = false;
+                for (var i = 0 ; i < ctrl.products.length ; i++){
+                    if (!ctrl.products[i].propertiesId)
+                        ctrl.products[i].propertiesId = [];
+                    if (!ctrl.products[i].propertylist)
+                        ctrl.products[i].propertylist = [];
+
+                }
             }).catch(function (error) {
                 console.log(error);
             });
