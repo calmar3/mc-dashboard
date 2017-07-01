@@ -124,10 +124,10 @@
         ctrl.toggle = function (batch, status) {
 
             if (status) {
-                batch.status = 2;
-                batch.delDate = ctrl.currentDate();
-                //batch.remaining=batch.quantity;
-                ctrl.deliveredProducts.push(batch);
+              ctrl.appBatch= JSON.parse(JSON.stringify(batch));
+              ctrl.appBatch.status = 2;
+              ctrl.appBatch.delDate = ctrl.currentDate();
+              ctrl.deliveredProducts.push(ctrl.appBatch);
             }
             else {
                 ctrl.idx = ctrl.deliveredProducts.indexOf(batch);
