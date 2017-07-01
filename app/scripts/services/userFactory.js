@@ -30,6 +30,7 @@
                     { label: "Catalogo Prodotti", state: "Catalogo Prodotti", icon: "fa fa-database" },
                     { label: "Gestione Politiche", state: "Gestione Politiche", icon: "fa fa-gears" },
                     { label: "Gestione Magazzini Periferici", state: "Gestione Magazzini Periferici", icon: "fa fa-external-link" },
+                    { label: "Gestione Utenti", state: "Gestione Utente", icon: "fa fa-key"},
                     { label: "Gestione Account", state: "Gestione Account", icon: "fa fa-user"},
                     { label: "Gestione Prodotti", state: "Gestione Prodotti", icon: "fa fa-opencart"},
                     { label: "Registrazione", state: "Registrazione", icon: "fa fa-users"},

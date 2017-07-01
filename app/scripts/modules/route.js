@@ -248,6 +248,23 @@
             home: true,
             product: null
         }
+    }).state('Gestione Utente', {
+        parent: 'site',
+        url: '/gestione_utente',
+        data: {
+            roles: ['admin']
+        },
+        views: {
+            'page@': {
+                templateUrl: "views/manageUser.html",
+                controller: 'ManageUserCtrl',
+                controllerAs: 'ctrl'
+            }
+        },
+        params: {
+            home: true,
+            product: null
+        }
     })
 
   }
