@@ -95,6 +95,9 @@
 
         function searchFilterFn(item) {
 
+            console.log(item);
+            console.log(ctrl.searchText);
+
             if (ctrl.searchText && ctrl.searchText !== '') {
 
                 if (item.name.toString().toLowerCase().indexOf(ctrl.searchText.toLowerCase()) !== -1)
@@ -106,9 +109,9 @@
                 else if(item.stockist.toLowerCase().indexOf(ctrl.searchText.toLowerCase()) !== -1)
                     return true;
 
-                else if(item.propertiesId.indexOf(ctrl.searchText.toLowerCase()) !== -1)
-                    return true;
-
+                else if (item.propertiesId && item.propertiesId !== null)
+                    if(item.propertiesId.indexOf(ctrl.searchText.toLowerCase()) !== -1)
+                        return true;
                 else
                     return false;
             }
@@ -217,7 +220,7 @@
                     ctrl.newProduct.properties[keys[0]] = properties[i][keys[0]];
                 }
                 delete ctrl.newProduct.id;
-                $http.post((hostFactory.getHost()+hostFactory.getProductAPI() + "/save"), ctrl.newProduct).then(function (response) {
+                $http.post((hostFactory.getHost()+hostFactory.getProductAPI()), ctrl.newProduct).then(function (response) {
 
                     ctrl.refresh();
                     ctrl.switchMode(null);
