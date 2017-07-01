@@ -87,7 +87,10 @@
 
         ctrl.categoryProducts = [];
 
+
         function searchFilterFn(item) {
+
+            //console.log(item);
 
             if (ctrl.searchText && ctrl.searchText !== '') {
 
@@ -100,14 +103,26 @@
                 else if(item.stockist.toLowerCase().indexOf(ctrl.searchText.toLowerCase()) !== -1)
                     return true;
 
-                else if(item.propertiesId.indexOf(ctrl.searchText.toLowerCase()) !== -1)
-                    return true;
-
+                else if (item.propertiesId && item.propertiesId !== null)
+                    if(item.propertiesId.toString().indexOf(ctrl.searchText.toLowerCase()) !== -1)
+                        return true;
                 else
                     return false;
+
+                if (angular.isDefined(ctrl.category) && ctrl.category.length > 0) {
+                    if (item.product.category.id.toLowerCase().indexOf(ctrl.category.toLowerCase()) !== -1)
+                        return true;
+                    else if(item.product.category.fatherId.toLowerCase().indexOf(ctrl.category.toLowerCase()) !== -1)
+                        return true;
+                    else
+                        return false;
+                }
             }
             else
                 return true;
+
+
+            //return true;
         }
 
 
@@ -120,7 +135,7 @@
         }
 
 
-        function switchModeFn(mode,index) {
+        function switchModeFn(mode,product) {
 
             ctrl.mode = mode;
             ctrl.deliveryTime = null;
@@ -131,8 +146,8 @@
             ctrl.stockist = null;
             ctrl.otherProperty = null;
 
-            if (index !== null && index!== undefined && index >= 0 )
-                ctrl.product = ctrl.products[index];
+            if (product !== null && product!== undefined)
+                ctrl.product = product;
 
             if(mode == "createProduct") {
                 ctrl.getCategories();
@@ -352,6 +367,8 @@
             //chiamata GET che mi restituisce tutti i prodotti nel DB
             $http.get(hostFactory.getHost()+hostFactory.getProductsAPI()).then(function (response) {
                 ctrl.products = response.data;
+                ctrl.products.orderByField = 'Prodotto';
+                ctrl.products.reverseSort = false;
             }).catch(function (error) {
                 console.log(error);
             });
