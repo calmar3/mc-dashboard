@@ -49,7 +49,7 @@
                         <td>{{product.price | currency:'€'}}</td>
                         <td>
                             <div class="box-footer" ng-if="!product.outdated">
-                                <button class="btn btn-flat" ng-click="ctrl.switchMode('manageProduct',$index)">
+                                <button class="btn btn-flat" ng-click="ctrl.switchMode('manageProduct',product)">
                                     Gestisci
                                 </button>
                             </div>

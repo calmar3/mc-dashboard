@@ -125,6 +125,8 @@
 
             if (status) {
                 batch.status = 2;
+                batch.delDate = ctrl.currentDate();
+                batch.remaining=batch.quantity;
                 ctrl.deliveredProducts.push(batch);
             }
             else {
