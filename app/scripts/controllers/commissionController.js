@@ -153,6 +153,8 @@
                 data.batches[i].status = 0;
                 data.batches[i].sale = 0.0;
                 data.batches[i].remaining = data.batches[i].quantity*data.batches[i].number;
+                var year = parseInt(yyyy);
+                data.batches[i].expDate = dd+'/'+mm+'/'+year;
             }
             $http.post(hostFactory.getHost()+hostFactory.getSaveDeleteUpdateCommissionAPI(),data).then(function (response) {
                 loadCommissions();
