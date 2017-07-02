@@ -53,11 +53,11 @@
             element.checked = !element.checked;
 
             if (element.checked) {
-                ctrl.batchDel[batch.commission.number].push(batch);
+                ctrl.batchDel[batch.commission.id].push(batch);
                 console.log("Checkbox is checked");
             }
             else{
-                ctrl.batchDel[batch.commission.number].splice(ctrl.batchDel.indexOf(batch), 1);
+                ctrl.batchDel[batch.commission.id].splice(ctrl.batchDel.indexOf(batch), 1);
                 console.log("Checkbox is unchecked");
             }
 
@@ -84,7 +84,7 @@
 
         function genDeliveryNoteFn(commissionDto) {
             ctrl.currentCommissionDto = commissionDto;
-            ctrl.currentBatches = ctrl.batchDel[commissionDto.commission.number];
+            ctrl.currentBatches = ctrl.batchDel[commissionDto.commission.id];
         }
 
         function getDate() {
