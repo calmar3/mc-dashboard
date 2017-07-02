@@ -12,9 +12,6 @@
 
         var ctrl = this;
 
-        console.log("processingOrderctrl");
-
-
         /**
          * ALL
          * Funzione principale che prende tutti gli ordini dal backend e li divide per In e Out
@@ -69,7 +66,6 @@
                 ctrl.getAllCommission();
             } else {
                 ctrl.showOrder = order;
-                console.log(ctrl.showOrder);
                 var i;
                 for (i = 0; i < order.batches.length; i++)
                     ctrl.selectedBatches[i] = 0;
@@ -134,8 +130,6 @@
                 ctrl.deliveredProducts.splice(ctrl.idx, 1);
 
             }
-
-            console.log(ctrl.deliveredProducts);
         };
 
 
@@ -213,7 +207,6 @@
 
                     //SelectedBatch: Batch in ingresso
                     //newBatch: Batch in uscita
-                    console.log(ctrl.selectedBatch);
 
                     ctrl.newBatch = ctrl.getBatch;
 
@@ -271,7 +264,6 @@
             }
 
 
-            console.log(ctrl.selectedBatches);
 
             $http.post(hostFactory.getHost() + hostFactory.postBatchesAPI(), batchToSend).then(function (response) {
 
