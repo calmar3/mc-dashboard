@@ -29,6 +29,7 @@
                             <th>Destinazione</th>
                             <th>Data</th>
                             <th>Tempo Consegna</th>
+                            <th>Completato</th>
                         </tr>
                         <tr style="cursor:pointer;" ng-repeat="commission in ctrl.commissions | filter:ctrl.searchFilter" ng-class="{'selected': ctrl.selected === commission}"
                             ng-click="ctrl.select(commission)">
@@ -36,7 +37,8 @@
                             <td>{{commission.commission.source}}</td>
                             <td>{{commission.commission.destination}}</td>
                             <td>{{commission.commission.date}}</td>
-                            <td>{{commission.commission.deliveryTime}} g </td>
+                            <td>{{commission.completed}} g </td>
+                            <td ><input type="checkbox" id ="checked" ng-checked="commission.commission.completed === true" ng-disabled = "true"></td>
                         </tr>
 
                         </tbody></table>
@@ -191,7 +193,7 @@
             <!-- /.box-body -->
             <div class="box-footer clearfix">
                 <div class="btn-group pull-right">
-                    <button type="button" ng-disabled="ctrl.selected.batches.length < 1 " class="btn btn-default" ng-click="ctrl.updateCommission()" >Salva</button>
+                    <button type="button" ng-disabled="ctrl.selected.batches.length < 1 || ctrl.selected.commission.completed" class="btn btn-default" ng-click="ctrl.updateCommission()" >Salva</button>
                     <button type="button" class="btn btn-default" ng-click="ctrl.switchMode(null)">Indietro</button>
                 </div>
 
@@ -426,7 +428,7 @@
             <!-- /.box-body -->
             <div class="box-footer clearfix">
                 <div class="btn-group pull-right">
-                    <button type="button" class="btn btn-default" ng-click="ctrl.deleteCommission()">Elimina</button>
+                    <button type="button" class="btn btn-default" ng-disabled ="ctrl.selected.commission.completed" ng-click="ctrl.deleteCommission()">Elimina</button>
                     <button type="button" class="btn btn-default" ng-click="ctrl.switchMode(null)" ng-disabled = "ctrl.selected === null">Indietro</button>
                 </div><br><br>
                 <div class="row">
