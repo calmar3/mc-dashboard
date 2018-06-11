@@ -25,10 +25,11 @@
                     userFactory.setUser(JSON.parse(cookie).user);
                     callback(true);
                 }
-                else {
-                    console.log("Non autorizzato");
+
+            }).catch(function (reason) {
+                    console.log(reason);
                     callback(false);
-                }
+
             });
         }
 

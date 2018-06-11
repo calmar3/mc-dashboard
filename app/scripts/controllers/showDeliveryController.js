@@ -18,6 +18,8 @@
             $http.get(hostFactory.getHost() + hostFactory.getSaveDeleteUpdateDeliveryAPI()).then(function (response) {
 
                 ctrl.deliveryNotes = response.data;
+            }).catch(function (reason) {
+                console.log(reason);
             });
         }
 

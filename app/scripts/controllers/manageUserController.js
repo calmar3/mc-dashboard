@@ -23,7 +23,9 @@
         function loadUsers() {
             $http.get(hostFactory.getHost()+hostFactory.getUserAPI()).then(function (response) {
                 ctrl.users = response.data;
-            })
+            }).catch(function (reason) {
+                console.log(reason)
+            });
         }
 
         function viewUserFn(user) {
@@ -40,6 +42,8 @@
         function modifyUserFn() {
             $http.post(hostFactory.getHost()+hostFactory.getUserAPI(), ctrl.currUser).then(function (response) {
                 $state.go('Gestione Utente');
+            }).catch(function (reason) {
+                console.log(reason);
             })
         }
     }];

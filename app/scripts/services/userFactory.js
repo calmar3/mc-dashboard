@@ -35,9 +35,6 @@
                     { label: "Gestione Prodotti", state: "Gestione Prodotti", icon: "fa fa-opencart"},
                     { label: "Registrazione", state: "Registrazione", icon: "fa fa-users"},
                     { label: "Storico", state: "Storico", icon: "fa fa-history"}
-
-
-
                 ];
             }
             else if (userFactory.user.role === "manager"){

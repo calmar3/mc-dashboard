@@ -39,6 +39,8 @@
                 });
 
                 console.log(ctrl.commissionsDto);
+            }).catch(function (reason) {
+                console.log(reason);
             })
         }
 
